@@ -1,0 +1,24 @@
+t4f-data-structure-basic
++ HashMap: Segments?
++ ConcurrentHashMap: how, perf?
++ Collections.synchronizedHashmap
++ traverse tree
++ Linked Lists
++ Breadth First Search
++ Bit Manipulation
++ Binary Trees
++ Tries
++ Binary Search
++ Factory Design Pattern
++ Stacks
++ Merge Sort
++ Memory (Stack vs. Heap)
++ Queues
++ Quick Sort
++ Recursion
++ Vectors/ArrayLists
++ Tree Insert/Find/etc.
++ Big+O Time
++ Hash Tables
+
+#levels of a binary tree : log2(n) + 1

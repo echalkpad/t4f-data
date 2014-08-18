@@ -1,0 +1,110 @@
+PARSER_BEGIN(UQLParser)
+
+package com.demo.stage1;
+
+import java.io.StringReader;
+import java.io.Reader;
+
+public class UQLParser {
+
+    public UQLParser(String s) 
+    {
+        this((Reader)(new StringReader(s))); 
+        
+    }
+    
+   
+    public static void main(String args[])
+    {
+        try
+        {
+                String query = args[0];
+                UQLParser parser = new UQLParser(query);
+                parser.parse();
+        }
+        catch(Exception e)
+        {
+                e.printStackTrace();
+        }
+    }
+}
+PARSER_END(UQLParser) 
+
+/**  And now, the actual parsing specifications...... */
+
+/** Skip these characters, they are considered "white space" **/
+SKIP :                              
+{
+    " "
+    | "\t"
+    | "\r"
+    | "\n"
+
+}
+
+
+TOKEN: /*RESERVED TOKENS FOR UQL */
+{
+      <AND: "and">
+   |  <OR:  "or">
+   |  <MOVIE: "title">
+   |  <ACTOR: "actor">
+   |  <DIRECTOR: "director">
+   |  <KEYWORD: "keyword">
+   |  <LPAREN: "(">
+   |  <RPAREN: ")">
+   |  <EQUALS: "=">
+   |  <NOTEQUAL: "<>">
+}
+
+TOKEN : /* the keywords and comparators - QUOTEDVALUE accounts for escaped quotes as well */
+{
+        < STRING : (["A"-"Z","a"-"z","0"-"9"])+ >
+|       < QUOTED_STRING: "\"" (~["\""])+ "\"" >
+}
+
+
+/** 
+ *  Top level
+ */
+void parse() :
+{
+}
+{
+    expression()   <EOF>       // a query followed by optional sort
+}
+
+/**
+ * An expression is defined to be a queryTerm followed by zero or more
+ * query terms joined by either an AND or an OR.   If two query terms are joined with 
+ * AND then both conditions must be met.  If two query terms are joined with an OR, then
+ * one of the two conditions must be met.  
+ */
+void expression() :
+{
+}
+{            queryTerm()    
+            (
+              ( <AND> | <OR> ) 
+              queryTerm() )*
+
+}
+
+/**
+ * Query terms may consist of a parenthetically separated expression or
+ * may be a query criteria of the form queryName = something or queryName <> something.
+ *
+ */
+void queryTerm() :
+{
+}
+{
+        ( <MOVIE> | <DIRECTOR> | <KEYWORD> | <ACTOR> )
+        ( <EQUALS> | <NOTEQUAL> ) 
+        ( <STRING> | <QUOTED_STRING> )
+        |
+        <LPAREN> expression() <RPAREN>
+}
+
+
+

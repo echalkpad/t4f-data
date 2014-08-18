@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the AOS Community (AOS) under one or more
+  contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The AOS licenses this file
+  to you under the Apache License, Version 2.0 (the 
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:core="urn:io:aos:xsd:protocol:core:${t4f-xsd-model-2.version}" 
+           xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+           elementFormDefault="unqualified" 
+           attributeFormDefault="unqualified" 
+           targetNamespace="urn:io:aos:xsd:protocol:core:${t4f-xsd-model-2.version}" 
+           version="${t4f-xsd-model-2.version}">
+
+  <xs:import namespace="urn:io:aos:xsd:common:service:${t4f-xsd-model-2.version}" 
+             schemaLocation="../XSD/common-service-${t4f-xsd-model-2.version}.xsd" />
+
+	<xs:simpleType name="INSSType">
+		<xs:restriction base="xs:string">
+			<xs:length value="11"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResponseType">
+				<xs:sequence>
+					<xs:element name="Quality" type="xs:string"/>
+				</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="MessageIdType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="13"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PublicationIdType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="13"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="IdentifierType">
+				<xs:sequence>
+					<xs:element name="Quality" type="xs:string"/>
+				</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageType">
+		<xs:sequence>
+			<xs:element name="PublicationId" type="core:PublicationIdType" minOccurs="0"/>
+			<xs:element name="DestinationContext" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="core:EhboxIdentifierType">
+							<xs:sequence minOccurs="0">
+								<xs:element name="Mandate" minOccurs="0">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="core:IdentifierType">
+												<xs:sequence minOccurs="0">
+													<xs:element name="Name" type="xs:string" minOccurs="0"/>
+												</xs:sequence>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ContentContext">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:choice>
+							<xs:element name="CryptedContent" type="xs:base64Binary" xmime:expectedContentTypes="*/*"/>
+							<xs:element name="Content" type="core:ContentType"/>
+						</xs:choice>
+						<xs:element name="ContentSpecification" type="core:ContentSpecificationType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Meta" type="core:MetaType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="CopyMailTo" minOccurs="0" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="80"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="MessageId" type="core:MessageIdType"/>
+	</xs:complexType>
+	<xs:complexType name="PublicationMessageType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="DestinationContext" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="core:EhboxIdentifierType">
+								<xs:sequence minOccurs="0">
+									<xs:element name="Mandate" minOccurs="0">
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="core:IdentifierType">
+													<xs:sequence minOccurs="0">
+														<xs:element name="Name" type="xs:string" minOccurs="0"/>
+													</xs:sequence>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MessageIdForReply" type="core:MessageIdType"/>
+				<xs:element name="MessageIdForReplyToAll" type="core:MessageIdType"/>
+			</xs:choice>
+			<xs:element name="ContentContext">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:choice>
+							<xs:element name="CryptedContent" type="xs:base64Binary" xmime:expectedContentTypes="*/*"/>
+							<xs:element name="Content" type="core:ContentType"/>
+						</xs:choice>
+						<xs:element name="ContentSpecification" type="core:ContentSpecificationType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Meta" type="core:MetaType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="CopyMailTo" minOccurs="0" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="80"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="PublicationId" type="core:PublicationIdType"/>
+	</xs:complexType>
+	<xs:complexType name="FreeInformationsType">
+		<xs:choice>
+			<xs:element name="FreeText" type="xs:string"/>
+			<xs:element name="Table">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Row" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="LeftCell" type="xs:string"/>
+									<xs:element name="RightCell" type="xs:string"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="Title"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="OldFreeInformation">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:base64Binary">
+							<xs:attribute name="Render" use="required">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="DocumentType">
+		<xs:sequence>
+			<xs:element name="Title">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="400"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="BinaryContent" type="xs:base64Binary" xmime:expectedContentTypes="*/*"/>
+				<xs:element name="TextContent" type="xs:string"/>
+			</xs:choice>
+			<xs:element name="DownloadFileName">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="80"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MimeType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Signing" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence minOccurs="0">
+						<xs:element name="SigningDownloadFileName">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+									<xs:maxLength value="80"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:choice>
+							<xs:element name="BinarySigningContent" type="xs:base64Binary" xmime:expectedContentTypes="*/*"/>
+							<xs:element name="TextSigningContent" type="xs:string"/>
+						</xs:choice>
+					</xs:sequence>
+					<xs:attribute name="SigningType" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:minLength value="1"/>
+								<xs:maxLength value="50"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NewsType">
+		<xs:sequence>
+			<xs:element name="Title">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="400"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="BinaryContent" type="xs:base64Binary" xmime:expectedContentTypes="*/*"/>
+				<xs:element name="TextContent" type="xs:string"/>
+			</xs:choice>
+			<xs:element name="MimeType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EhboxIdentifierType">
+		<xs:complexContent>
+			<xs:extension base="core:IdentifierType">
+				<xs:sequence>
+					<xs:element name="Quality" type="xs:string"/>
+					<xs:element name="User" minOccurs="0">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="core:INSSType">
+									<xs:attribute name="FirstName" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="100"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="LastName" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="100"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MetaType">
+		<xs:sequence>
+			<xs:element name="Type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="25"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Value" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="25"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContentType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Document" type="core:DocumentType"/>
+				<xs:element name="News" type="core:NewsType"/>
+			</xs:choice>
+			<xs:element name="FreeInformations" type="core:FreeInformationsType" minOccurs="0"/>
+			<xs:element name="INSSPatient" type="core:INSSType" minOccurs="0"/>
+			<xs:element name="Annex" type="core:DocumentType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContentInfoType">
+		<xs:sequence>
+			<xs:element name="INSSPatient" type="core:INSSType" minOccurs="0"/>
+			<xs:element name="ContentType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="DOCUMENT"/>
+						<xs:enumeration value="NEWS"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Title">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="400"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MimeType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="HasFreeInformations" type="xs:boolean"/>
+			<xs:element name="HasAnnex" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContentSpecificationType">
+		<xs:sequence>
+			<xs:element name="ApplicationName" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="25"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="HasPriority" type="xs:boolean" default="false"/>
+			<xs:element name="ConfirmBypassedEncryption" type="xs:boolean" default="false"/>
+			<xs:element name="RegisteredPost" type="xs:boolean" default="false"/>
+			<xs:element name="AcknowledgementOfReceipt" type="xs:boolean" default="false"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultContentSpecificationType">
+		<xs:sequence>
+			<xs:element name="HasPriority" type="xs:boolean" default="false"/>
+			<xs:element name="ConfirmByPassedEncryption" type="xs:boolean" default="false"/>
+			<xs:element name="RegisteredPost" type="xs:boolean" default="false"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageInfoType">
+		<xs:sequence>
+			<xs:element name="PublicationDate" type="xs:date"/>
+			<xs:element name="ExpirationDate" type="xs:date"/>
+			<xs:element name="Size" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BoxIdType">
+		<xs:complexContent>
+			<xs:extension base="core:IdentifierType">
+				<xs:sequence>
+					<xs:element name="Quality" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SenderType">
+		<xs:sequence>
+			<xs:element name="Quality" type="xs:string"/>
+			<xs:element name="Name" type="xs:string"/>
+			<xs:element name="FirstName" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

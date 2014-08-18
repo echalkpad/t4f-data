@@ -1,0 +1,65 @@
+extend Lucene by implementing own Directory class,
+  or 
+implement new IndexReader and IndexWriter (a-la-Lucandra)?
+
+do we use distributed memory cache? (hazelcast...)
+are there json, avro... requirements?
+need for special queries? (spatial with geohash...)
+
+lucene on hbase 
++ https://github.com/jasonrutherglen/HBASE-SEARCH
++ https://github.com/jasonrutherglen/LUCENE-FOR-HBASE
++ http://www.infoq.com/articles/LuceneHbase
++ http://www.infoq.com/articles/LuceneSpatialSupport 
++ https://github.com/akkumar/hbasene
++ https://github.com/thkoch2001/lucehbase - https://github.com/thainb/lucehbase.git)
++ http://bizosyshsearch.sourceforge.net/ 
++ https://issues.apache.org/jira/browse/HBASE-3529 Add search to HBase + HBASE-3954
++ https://issues.apache.org/jira/browse/HBASE-2233 Support both Hadoop 0.20, 0.21, and 0.22
++ https://issues.apache.org/jira/browse/HBASE-4002
++ https://issues.apache.org/jira/browse/HBASE-2000
+
+hbase secondary indexes
++ https://github.com/hbase-trx/hbase-transactional-tableindexed/Transaction and indexing extensions for hbase
++ http://www.lilyproject.org/lily/about/playground/hbaseindexes.html Lily indexes
++ https://github.com/ykulbak/ihbase support faster scans at the expense of larger RAM consumption
+
+lucene on cassandra
++ https://github.com/tjake/Solandra and previous https://github.com/tjake/Lucandra
++ http://code.google.com/p/lucene-on-cassandra/ 
++ http://www.elasticsearch.org/
++ http://wiki.apache.org/solr/SolrCloud
++ https://github.com/bixolabs/cascading.solr
++ https://github.com/NGDATA/lilyproject
++ http://katta.sourceforge.net/
++ http://anismiles.wordpress.com/2010/05/19/apache-lucene-and-cassandra/
++ http://anismiles.wordpress.com/2010/05/27/lucandra-an-inside-story/
+
+cassandra secondary indexes
++ https://issues.apache.org/jira/browse/CASSANDRA-4324 Implement Lucene FST in for key index
++ https://issues.apache.org/jira/browse/CASSANDRA-2915 Lucene based Secondary Indexes
+
+hadoop append
++ https://svn.apache.org/repos/asf/hadoop/common/branches/branch-0.20-append/ 
++ https://github.com/facebook/hadoop-20-append 
++ https://github.com/trendmicro/hbase/tree/security  + https://github.com/trendmicro/hadoop-common  
+
+solr & solrcloud
+
+elasticsearch
+
+senseidb
++ https://github.com/senseidb/sensei
+
+msc
++ http://sna-projects.com/sna/  SNA LinkedIn
++ http://voldemortlucene.svn.sourceforge.net/viewvc/voldemortlucene/trunk/
++ http://www.mongodb.org/display/DOCS/Geospatial+Indexing  Geospatial Index
++ http://code.google.com/p/hop/ Hadoop online
++ http://labs.yahoo.com/node/476 S4
+
+helpful links
++ https://issues.apache.org/jira/browse/HDFS-347 DFS read performance suboptimal when client co-located on nodes with data + HDFS-265
++ https://issues.apache.org/jira/browse/LUCENE-2756 MultiSearcher.rewrite() incorrectly rewrites queries  + LUCENE-3191
++ http://lucene.grantingersoll.com/2008/03/28/why-lucene-isnt-that-good-javalobby/   http://java.dzone.com/news/why-lucene-isnt-good?page=0%2C1  
++ http://mail-archives.apache.org/mod_mbox/hbase-user/201102.mbox/%3CAANLkTinZwuyBea=bM2EP0A2hEBDBuRCwutowmOqWWZ5D@mail.gmail.com%3E

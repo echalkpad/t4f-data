@@ -1,0 +1,27 @@
+-------------------------------------------------------------------------------
+| LESS                                                                        |
+-------------------------------------------------------------------------------
+less +G file1
+-------------------------------------------------------------------------------
+G end of file
+g begin of file
+b, or Page Up   move backward one page
+y, k, or Up     move backward one line
+f, Space, or Page Down  move forward one page
+e, j, Down, or Enter     move forward one line
+/characters     search forward in the file for lines containing the specified characters
+?characters     search backward in the file ...
+n     repeat the previous search
+:e file_name     examine a new file
+:n     examine the next file
+:p     examine the previous file
+h, or ?     display help
+q     quit
+/string    Search forward for string
+?string    Search back for string
+n    Search for next instance of string
+N    Search for previous instance of string
+-------------------------------------------------------------------------------
+less file1 file2 file3
+When viewing several files at the same time, you can use :n for examining the next file and :p for the previous file.
+-------------------------------------------------------------------------------

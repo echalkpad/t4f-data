@@ -1,0 +1,38 @@
+DataNucleus Tutorial for JDO
+============================
+
+This contains the DataNucleus Tutorial. The files are laid out as follows
+
+org/datanucleus/samples/jdo/tutorial/package-hsql.orm
+This defines the ORM for how the Product and Book classes are persisted by JDO into HSQL datastores
+
+org/datanucleus/samples/jdo/tutorial/Book.java
+Representation of a Book object
+
+org/datanucleus/samples/jdo/tutorial/Product.java
+Representation of a Product object
+
+org/datanucleus/samples/jdo/tutorial/Main.java
+Class controlling the persistence of objects.
+
+
+pom.xml
+Files used by Maven2 for building and running the tutorial.
+
+build.xml
+File used by Ant for building the tutorial.
+
+datanucleus.properties
+This file contains the property settings for where you will be persisting your data.
+You will need to update this file to match your database location etc.
+
+log4j.properties
+Log4J configuration file
+
+
+Now please refer to the relevant README.* file for the environment in which to run the tutorial.
+
+
+
+
+(c) Copyright 2008-2010 DataNucleus

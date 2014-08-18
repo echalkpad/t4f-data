@@ -1,0 +1,2207 @@
+-------------------------------------------------------------------------------
+  _______    ____      _       _                 
+ _______    |    \ ___| |_ ___| |___ _ _ ___ ___ 
+  ________  |  |  | .'|  _| .'| | .'| | | -_|  _|
+ ________   |____/|__,|_| |__,|_|__,|_  |___|_|  
+                                    |___|        
+ ____          _____            _____ _       _ _ 
+|    \ ___ _ _|     |___ ___   |   __| |_ ___| | |
+|  |  | -_| | |  |  | . |_ -|  |__   |   | -_| | |
+|____/|___|\_/|_____|  _|___|  |_____|_|_|___|_|_|
+                    |_|                           
+
+ #datalayer-devops-shell
+-------------------------------------------------------------------------------
+| BASH DOCUMENTATION                                                          |
+-------------------------------------------------------------------------------
++ http://tldp.org/
++ http://www.tldp.org/guides.html
++ http://www.tldp.org/LDP/abs/html/index.html
++ http://www.tldp.org/LDP/Bash-Beginners-Guide/html/index.html
+-------------------------------------------------------------------------------
+useradd user1
+passwd user1
+-------------------------------------------------------------------------------
+ALT^arrow_left ALT^arrow_right: go to the beginning or the end of the line
+source file.properties
+#/!bin/bash
+username=...
+mysql -u $username
+CTRL^R: go back in history
+CTRL^...: go forward in history
+-------------------------------------------------------------------------------
+screen -list // list all the screens
+screen -S aq // Create a new screen
+screen -r aq // Join an existing screen
+screen -D -r '1234.somescreensession'
+-------------------------------------------------------------------------------
+dmesg
+-------------------------------------------------------------------------------
+1. Download Ubuntu Desktop
+2. Open the Terminal (in /Applications/Utilities/ or query Terminal in Spotlight).
+3. Convert the .iso file to .img using the convert option of hdiutil (e.g.,hdiutil convert -format UDRW -o ~/path/to/target.img ~/path/to/ubuntu.iso)
+Note: OS X tends to put the .dmg ending on the output file automatically.
+4. Run diskutil list to get the current list of devices.
+5. Insert your flash media.
+6. Run diskutil list again and determine the device node assigned to your flash media (e.g. /dev/disk2).
+7. Run diskutil unmountDisk /dev/diskN (replace N with the disk number from the last command; in the previous example, N would be 2).
+8. Execute sudo dd if=/path/to/downloaded.img of=/dev/rdiskN bs=1m (replace /path/to/downloaded.img with the path where the image file is located; for example, ./ubuntu.imgor ./ubuntu.dmg).
+    Using /dev/rdisk instead of /dev/disk may be faster
+    If you see the error dd: Invalid number '1m', you are using GNU dd. Use the same command but replace bs=1m with bs=1M
+    If you see the error dd: /dev/diskN: Resource busy, make sure the disk is not in use. Start the 'Disk Utility.app' and unmount (don't eject) the drive
+9. Run diskutil eject /dev/diskN and remove your flash media when the command completes.
+10. Restart your Mac and press alt/option key while the Mac is restarting to choose the USB stick.
+-------------------------------------------------------------------------------
+| SHELL                                                                       |
+-------------------------------------------------------------------------------
+rename 's/ACDC/AC-DC/' *.xxx
+-------------------------------------------------------------------------------
+| SSH                                                                         |
+-------------------------------------------------------------------------------
+Host *
+  ServerAliveInterval 120
+-------------------------------------------------------------------------------
+| GIT                                                                         |
+-------------------------------------------------------------------------------
+git config --global user.name "Eric Charles"
+git config --global user.email eric@aos.io
+---
+mkdir openaos
+cd openaos
+git init
+touch README
+git add README
+git commit -m 'first commit'
+git remote add origin git@github.com:echarles/openaos.git
+git push origin master
+---
+Careful: git reset --hard WILL DELETE YOUR WORKING DIRECTORY CHANGES
+Assuming you are sitting on that commit, then this command will wack it...
+git reset --hard HEAD~1
+The HEAD~1 means the commit before head.
+Or, you could look at the output of git log, find the commit id of the commit you want to back up to, and then do this:
+git reset --hard <sha1-commit-id>
+---
+git clone git://...
+git clone --depth 1 git://...
+---
+git fetch remote branch: You need to create a local branch that tracks a remote branch.
+The following command will create a local branch named daves_branch, tracking the remote branch origin/daves_branch. When you push your changes the remote branch will be updated.
+git checkout --track origin/daves_branch
+OR us fetch followed by checkout ...
+git fetch <remote> <rbranch>:<lbranch> 
+git checkout <lbranch>
+... where <rbranch> is the remote branch or source ref and <lbranch> is the as yet non-existent local branch or destination ref you want to track and which you probably want to name the same as the remote branch or source ref. This is explained under options in the explanation of <refspec>.
+---
+Fetching a remote
+When working with other people's repositories, there are four basic Git commands you will need:
+  git clone
+  git fetch
+  git merge
+  git pull
+These commands all act on a repository's remote URL.
+Clone
+To grab a complete copy of another user's repository, you will use git clone, like this:
+git clone https://github.com/user/repo.git
+# Clones a repository to your computer
+When you run git clone, the following actions occur:
+  A new folder called repo is made
+  It is initialized as a Git repository
+  All of the repository's files are downloaded there
+  git clone checks out the default branch (usually called master)
+  git clone creates a remote named origin, pointing to the URL you cloned from
+You can choose from several different URLs when cloning a repository. While logged in to GitHub, these URLs are available in the sidebar:
+Remote url list
+Fetch
+Fetching from a repository grabs all the new branches and tags without copying those changes into your repository. You'd use git fetch to look for updates made by other people.
+If you already have a local repository with a remote URL set up for the desired project, you can grab all the new information by using git fetch <em>remotename</em> in the terminal:
+git fetch remotename
+# Fetches updates made to an online repository
+Otherwise, you can always add a new remote.
+Merge
+Merging combines your local changes with changes made by others.
+Typically, you'd merge a branch on your online repository with your local branch:
+git merge remotename/branchname
+# Merges updates made online with your local work
+Pull
+git pull is a convenient shortcut for completing both git fetch and git mergein the same command:
+git pull remotename/branchname
+# Grabs online updates and merges them with your local work
+Because pull performs a merge on the retrieved changes, you should ensure that your local work is committed before running the pull command. If you run into a merge conflict you cannot resolve, or if you decide to quit the merge, you can use git merge --abort to take the branch back to where it was in before you pulled.
+---
+git pull upstream <branch>
+---
+git checkout -b <branch-name>
+git checkout <branch-name> = git branch <branch-name>; git checkout <branch-name>; git pull origin <branch-name>
+git checkout -b <branch-name> origin/<branch-name>
+git checkout master
+git merge <branch-name>
+git branch -a
+git branch -m old_branch new_branch
+git branch -D <branch-name>
+git push origin :branch #delete remote branch in origin
+git push origin --delete <branch-name>
+---
+git fetch --tag
+git checkout -b tag_name tag_name
+---
+Before you can start working locally on a remote branch, you need to fetch it as called out in answers below.
+To fetch a branch, you simply need to:
+git fetch origin
+This will fetch all of the remote branches for you. You can see the branches available for checkout with:
+git branch -v -a
+With the remote branches in hand, you now need to check out the branch you are interested in, giving you a local working copy:
+git checkout -b test origin/test
+EDIT - The answer below actually improves on this. On Git>=1.6.6 you can just do:
+git fetch
+git checkout test
+---
+git fetch upstream
+git checkout master
+git reset --hard upstream/master  
+git push origin master --force
+---f
+git fetch
+git checkout -b branch_name branch_name
+git branch --set-upstream-to=upstream/branch_name branch_name
+Given a branch foo and a remote upstream:
+As of Git 1.8.0:
+git branch -u upstream/foo
+Or, if local branch foo is not the current branch:
+git branch -u upstream/foo foo
+Or, if you like to type longer commands, these are equivalent to the above two:
+git branch --set-upstream-to=upstream/foo
+git branch --set-upstream-to=upstream/foo foo
+As of Git 1.7.0:
+git branch --set-upstream foo upstream/foo
+Notes:All of the above commands will cause local branch foo to track remote branch foo from remote upstream. The old (1.7.x) syntax is deprecated in favor of the new (1.8+) syntax. The new syntax is intended to be more intuitive and easier to remember.
+---
+git show af60e1012d9d3f41bef1db62aff3ab49c040e2fb
+---
+git checkout <sha>
+git checkout <sha> file/to/restore
+git checkout <sha>~1 file/to/restore
+---
+git remote add origin git@github.com:echarles/openaos.git
+git push origin master
+---
+git remote add upstream git://...
+git fetch upstream
+git merge upstream master
+# if fatal: 'upstream' does not point to a commit > git pull upstream master
+git push origin master
+---
+git merge upstream/master ?
+---
+mkdir test
+git init --bare
+git remote rm origin
+git remote add origin git@aos.be:test
+git push origin master
+git remote show origin
+git diff --no-prefix --staged
+---
+git diff master..branch
+---
+git squash
+git cherry-pick
+---
+git whatchanged
+git log --name-status
+git log --name-only
+git log --stat
+---
+git show <sha>
+git diff <sha>^ <sha>
+---
+git reset HEAD .
+git reset HEAD^ .
+---
+If you want to retrieve a file in your history and if you know the path the file was at, you can do this:
+git log -- /path/to/file
+This should show a list of commits which touched that file. Then, you can find the version of the file you want, and display it with...
+git show <SHA> -- /path/to/file
+(or restore it into your working copy with git checkout <SHA> -- /path/to/file)
+--------------
+GIT COMPLETION
+--------------
+https://github.com/git/git/tree/master/contrib/completion
+---
+Git Auto Completion: Execute the following in your terminal:
+cd ~
+curl https://github.com/git/git/raw/master/contrib/completion/git-completion.bash -OL
+vim .bash_profile
+# add the following line:
+source ~/git-completion.bash
+# go back to terminal and execute:
+source .bash_profile
+Now, hitting tab will autocomplete your git commands, including branch names, e.g.:
+git checkout <TAB>
+shows you the available branches and tags
+git checkout fix-2<TAB>
+completes it to
+git checkout fix-29237810012
+----------
+GIT CLIENT
+----------
+git on linux
++ gitg
++ giggle
++ gitk
++ git-cola
+svn co https://svn.github.com/echarles/openaos.git openaos
+----------
+GIT SERVER
+----------
+http://tumblr.intranation.com/post/766290565/how-set-up-your-own-private-git-server-linux
+How to set up your own private Git server on Linux
+Update 2: as pointed out by Tim Huegdon, several comments on a Hacker News thread pointing here, and the excellent Pro Git book, Gitolite seems to be a better solution for multi-user hosted Git than Gitosis. I particularly like the branch–level permissions aspect, and what that means for business teams. I’ve left the original article intact.
+Update: the ever–vigilant Mike West has pointed out that my instructions for permissions and git checkout were slightly askew. These errors have been rectified.
+One of the things I’m attempting to achieve this year is simplifying my life somewhat. Given how much of my life revolves around technology, a large part of this will be consolidating the various services I consume (and often pay for). The mention of payment is important, as up until now I’ve been paying the awesome GitHub for their basic plan.
+I don’t have many private repositories with them, and all of them are strictly private code (this blog; Amanda’s blog templates and styles; and some other bits) which don’t require collaborators. For this reason, paying money to GitHub (awesome though they may be) seemed wasteful.
+So I decided to move all my private repositories to my own server. This is how I did it.
+Set up the server
+These instructions were performed on a Debian 5 “Lenny” box, so assume them to be the same on Ubuntu. Substitute the package installation commands as required if you’re on an alternative distribution.
+First, if you haven’t done so already, add your public key to the server:
+ssh myuser@server.com mkdir .ssh
+scp ~/.ssh/id_rsa.pub myuser@server.com:.ssh/authorized_keys
+Now we can SSH into our server and install Git:
+ssh myserver.com
+sudo apt-get update
+sudo apt-get install git-core
+…and that’s it.
+Adding a user
+If you intend to share these repositories with any collaborators, at this point you’ll either:
+    Want to install something like Gitosis (outside the scope of this article, but this is a good, if old, tutorial); or
+    Add a “shared” Git user.
+We’ll be following the latter option. So, add a Git user:
+sudo adduser git
+Now you’ll need to add your public key to the Git user’s authorized_keys:
+sudo mkdir /home/git/.ssh
+sudo cp ~/.ssh/authorized_keys /home/git/.ssh/
+sudo chown -R git:git /home/git/.ssh
+sudo chmod 700 !$
+sudo chmod 600 /home/git/.ssh/*
+Now you’ll be able to authenticate as the Git user via SSH. Test it out:
+ssh git@myserver.com
+Add your repositories
+If you were to not share the repositories, and just wanted to access them for yourself (like I did, since I have no collaborators), you’d do the following as yourself. Otherwise, do it as the Git user we added above.
+If using the Git user, log in as them:
+login git
+Now we can create our repositories:
+mkdir myrepo.git
+cd !$
+git --bare init
+The last steps creates an empty repository. We’re assuming you already have a local repository that you just want to push to a remote server.
+Repeat that last step for each remote Git repository you want.
+Log out of the server as the remaining operations will be completed on your local machine.
+Configure your development machine
+First, we add the remotes to your local machine. If you’ve already defined a remote named origin (for example, if you followed GitHub’s instructions), you’ll want to delete the remote first:
+git remote rm origin
+Now we can add our new remote:
+git remote add origin git@server.com:myrepo.git
+git push origin master
+And that’s it. You’ll probably also want to make sure you add a default merge and remote:
+git config branch.master.remote origin && git config branch.master.merge refs/heads/master
+And that’s all. Now you can push/pull from origin as much as you like, and it’ll be stored remotely on your own myserver.com remote repository.
+Bonus points: Make SSH more secure
+This has been extensively covered by the excellent Slicehost tutorial, but just to recap:
+Edit the SSH config:
+sudo vi /etc/ssh/sshd_config
+And change the following values:
+Port 2207
+...
+PermitRootLogin no
+...
+AllowUsers myuser git
+...
+PasswordAuthentication no
+Where 2207 is a port of your choosing. Make sure to add this so your Git remote:
+git remote add origin ssh://git@myserver.com:2207/~/myrepo.git
+-------------------------------------------------------------------------------
+| SVN                                                                         |
+-------------------------------------------------------------------------------
+svn help
+usage: svn <subcommand> [options] [args]
+Subversion command-line client, version 1.6.15.
+Type 'svn help <subcommand>' for help on a specific subcommand.
+Type 'svn --version' to see the program version and RA modules
+or 'svn --version --quiet' to see just the version number.
+Most subcommands take file and/or directory arguments, recursing
+on the directories.  If no arguments are supplied to such a
+command, it recurses on the current directory (inclusive) by default.
+-------------------------------------------------------------------------------
+Available subcommands:
+ add
+ blame (praise, annotate, ann)
+ cat
+ changelist (cl)
+ checkout (co)
+ cleanup
+ commit (ci)
+ copy (cp)
+ delete (del, remove, rm)
+ diff (di)
+ export
+ help (?, h)
+ import
+ info
+ list (ls)
+ lock
+ log
+ merge
+ mergeinfo
+ mkdir
+ move (mv, rename, ren)
+ propdel (pdel, pd)
+ propedit (pedit, pe)
+ propget (pget, pg)
+ proplist (plist, pl)
+ propset (pset, ps)
+ resolve
+ resolved
+ revert
+ status (stat, st)
+ switch (sw)
+ unlock
+ update (up)
+-------------------------------------------------------------------------------
+Changesets
+Before we proceed further, we should warn you that there's going to be a lot of discussion of “changes” in the pages ahead. A lot of people experienced with version control systems use the terms “change” and “changeset” interchangeably, and we should clarify what Subversion understands as a changeset.
+Everyone seems to have a slightly different definition of changeset, or at least a different expectation of what it means for a version control system to have one. For our purposes, let's say that a changeset is just a collection of changes with a unique name. The changes might include textual edits to file contents, modifications to tree structure, or tweaks to metadata. In more common speak, a changeset is just a patch with a name you can refer to.
+-------------------------------------------------------------------------------
+In Subversion, a global revision number N names a tree in the repository: it's the way the repository looked after the Nth commit. It's also the name of an implicit changeset: if you compare tree N with tree N−1, you can derive the exact patch that was committed. For this reason, it's easy to think of revision N as not just a tree, but a changeset as well. If you use an issue tracker to manage bugs, you can use the revision numbers to refer to particular patches that fix bugs—for example, “this issue was fixed by r9238.” Somebody can then run svn log -r 9238 to read about the exact changeset that fixed the bug, and run svn diff -c 9238 to see the patch itself. And (as you'll see shortly) Subversion's svn merge command is able to use revision numbers. You can merge specific changesets from one branch to another by naming them in the merge arguments: passing -c 9238 to svn merge would merge changeset r9238 into your working copy.
+svn propset svn:externals "eggtoolpalette -r853 http://svn.gnome.org/svn/libegg/trunk/libegg/toolpalette/" .
+-------------------------------------------------------------------------------
+svn commit -m "Added eggtoolpalette"
+-------------------------------------------------------------------------------
+svn log | more
+-------------------------------------------------------------------------------
+svn up
+svn up -rXXXX
+-------------------------------------------------------------------------------
+svn diff -r 63:64 .
+-------------------------------------------------------------------------------
+| MANAGEMENT                                                                  |
+-------------------------------------------------------------------------------
++ 
+-------------------------------------------------------------------------------
+| BASH                                                                        |
+-------------------------------------------------------------------------------
+sort
+uniq
+wc
+wc -l
+ls -lh
+list=`*.csv`
+for file in $list
+do
+cat $file >> new_file.csv
+cat -vet
+done
+$table=yourtable
+hive -e "load data local inpath '$file' into table $table"
+cat *.csv > output.csv
+netstat -npl
+netstat -nr
+netstat -a -t --numeric-ports -p
+sockstat -l | grep sshd
+jflex flex lex
+chmod -R 755 . # default permission
+tty
+script -a /dev/pts/1
+xmllint
+-------------------------------------------------------------------------------
+$ cat /proc/meminfo
+$ less /proc/meminfo
+$ more /proc/meminfo
+$ egrep --color 'Mem|Cache|Swap' /proc/meminfo
+Sample outputs:
+MemTotal:        8120568 kB
+MemFree:         2298932 kB
+Cached:          1907240 kB
+SwapCached:            0 kB
+SwapTotal:      15859708 kB
+SwapFree:       15859708 kB
+$ free -m
+-------------------------------------------------------------------------------
+command | tee file
+-------------------------------------------------------------------------------
+w3m
+-------------------------------------------------------------------------------
+lspci
+lsusb
+dmesg |grep eth0
+-------------------------------------------------------------------------------
+more /etc/fstab
+fdisk -l
+du -hs /path/to/directory | sort
+df -h
+Usually I will put -h to make it size human readable.
+Another good tools to check the disk space for directories, we use du. You may realized that when you type ls -l, the size of every directories have the same size 4096, it is because directories is actually a file. But for us, we want to know how large the load it store instead the directory file itself.
+To show all directories size including sub directories, type
+du -h
+To calculate the current directory size you are in (-s stand for summary)
+du -sh
+To show all the 1 level sub directories size (which you are not interested at sub sub directories.)
+du -sh *
+To show the size of specific directory
+du -sh /home
+To show the size of all sub directories of a specific directory
+du -sh /home/*
+-------------------------------------------------------------------------------
+| KERNEL                                                                      |
+-------------------------------------------------------------------------------
++ process
+ls /proc/<pid>/...
+netstat -lnap
+mount
+pidof ...
+top -p pid
+htop ... F5
+pidstat -d -p ALL 5 10
+ps -auxww
+ps -axfus
+strace
+ltrace
+renice
+top
+----------------------
+mtr
+dig +trace hostname
+traceroute
+----------------------
+file descriptor output types (stdout1 2 and stderr3)
+strace echo "1"
+> /dev/null 1>&2
+----------------------
++ file
+stat <file>
+time ls -R / > /dev/null
+(do it twice)
+----------------------
++ io
+iostat
+iostat -x 1
+vmstat 1
+netstat -l -p
+sockstat -4 -l | grep :80 | awk '{print $3}' | head -1
+----------------------
+time smtp-source -A -C1500 -l 100 -m 100000 -s 500 -d -c -f nm@test.de -t te 213.157.22.218:25
+time smtp-source -L -s 40 -m 100 -l 4096 -d -c -f me@elasticinbox.com -t test@elasticinbox.com ElasticInbox-LB-1070648408.eu-west-1.elb.amazonaws.com:2400
+for i in `seq -w 1 1000`; do lsof -a -u dweiss -c java > snap.$i; sleep 5; done
+find queue-jms/src/test/ -name *.java  -print | xargs sed -i 's/\t/        /g'
+find /tmp/ -name 'aos-bu-*' -print0 | xargs -0 rm -fr
+tr 'A-Z' 'a-z' < subtitles_124.txt | tr -sc 'A-Za-z' '\n' | sort | less | uniq -c | sort -n -r | less
+tr ";" "," < in.csv | tr "\"" "" > out.csv
+echo $?
+tar xvfj *.bz2
+tar xvfz .tar.gz
+----------------------
+locate file
+----------------------
+bzcat stackoverflow.com-Posts.7z | hdfs dfs -put - /user/srowen/Posts.xml
+----------------------
+patch -p0 --dry-run < file.patch
+----------------------
+ubuntu startup scripts
+vi /etc/init.d <script>
+update-rc.d <script> defaults
+update-rc.d <script> remove
+----------------------
+fedora startup scripts
+have a fedora core box which needs to run different scripts on startup to connect to other boxes on the network.
+After a bit of fiddling around, I found what appears to be the best solution for me, using ntsysv and init.d. Here's how it's done;
++ make a new file in the /etc/init.d/ directory
++ add your script to this file with the following lines at the top;
+#!/bin/bash
+# chkconfig: 345 85 15
+# description: of your file
++ enter this in the shell;
+chkconfig --add startup_filename
++ type ntsysv - your startup script should now be in the list, checked and ready for action!
+-------------------------------------------------------------------------------
+Simple Commands Complex Commands The For Structure Example For Syntax The While Structure Example While Syntax The If Structure Example Simple If Syntax Example Complex If Syntax The Case Structure Example Case Syntax The Parent & Sub-Shell Structure The Function Structure Example Function Syntax Special Commands Comment Structure
+Built-In Commands
+(Simple, Complex & Special Commands)
+Back in the man pages the next section is called USAGE and goes on to talk about pipelines and lists. Most of what it says here can be understood by any UNIX user so I will skip this for now but there will be some examples later showing various implementations of these definitions. The issue I want to deal with next is the simple, complex and special commands. This is nowhere near as bad as it sounds.
+Simple Commands
+Simple commands are just straight UNIX commands that exist regardless of the surrounding shell environment. Like our old favourites ls -l or df -al or lpr -Pprinter filename. There are large numbers of commands that fall into this category but the following list is a selection of the more useful when scripting.
+    sort Sorts lines in ascending, descending and unique order
+    grep Searches for regular expressions in strings or files
+    basename Strips the path from a path string to leave just the filename
+    dirname Removes the file from a path string to leave just the pathname
+    cut Chops up a text string by characters or fields
+    wc Count the characters, words, or lines
+    [ (test) ] Predicate or conditional processor
+    tr 'a' 'b' Transform characters
+    expr Simple arithmetic processor
+    bc Basic Calculator
+    eval Evaluate variables
+    echo Output strings
+    date Create date strings
+    nawk Manipulate text strings
+    head | tail Access lines in files
+Some of the above commands can be very complex indeed, especially when assembled into pipelines and lists. However, these are still referred to as simple commands - presumably because they stand alone. Take a close look at the man pages for all of the above commands, you will find them invaluable during your scripting sojourn.
+Complex Commands
+Complex commands are just the shells internal commands which are used to group simple commands into controlled sets based on your requirements. These include the loop constructs and conditional test structures. These cannot stand alone. An if requires a then and a fi at the very least. Lets take a look at the man pages again at this point.
+The for structure:
+It says on my systems man page for name [ in word ... ] do list done as a syntax description of the for command construct. Well, it is correct but does not really show the layout of the command at all. Look at the example below and you can see straight away what is supposed to happen.
+Example for syntax
+alphabet="a b c d e"            # Initialise a string
+count=0                    # Initialise a counter
+for letter in $alphabet            # Set up a loop control
+do                    # Begin the loop
+    count=`expr $count + 1`        # Increment the counter
+    echo "Letter $count is [$letter]"    # Display the result
+done                    # End of loop
+So in plain English, for each letter found in alphabet loop between do and done and process the list of commands found. Lets take this one line at a time from the top. This is the way the sh likes to have its variables set. There is no leading word as in the csh (set) just start with the variable name. There are also no blanks either side of the equal sign. Indeed, if you put a blank in, the shell will give you an error message for your trouble. This also gives rise to the difference between the top two lines in this example. Because I want to include spaces in my string for alphabet, I must enclose the whole string in double quotes. On the next line this is not required as there are no embedded blanks in the value of count. When setting variables, no blanks are allowed. Everywhere else, sh loves blanks.
+In line 3 the for statement creates a loop construct by selecting the next letter from alphabet each time through the loop and executing the list found between the do and the done for each letter. This process also strips away any blanks (before and after) each letter found in alphabet . The do and done statements are not executed as such, they simply mark the beginning and end of the loop list. They are however a matched pair, leave one out and the shell will complain.
+Inside the loop are two simple commands (apparently!). The first one just increments the loop counter by adding one to its current value. Note the use of the back-quote here to force the execution of the expr command before setting the new value of count. There will be more about this later.
+The next line is something we have seen before, just a display command showing the values of the variables. Note the use of the $ symbol to request the value of the variables.
+The while structure:
+There is another similarly structured command in the sh called while. Its syntax structure is listed as while list do list done which you should now be able to translate yourself into something that looks like the example below.
+Example while syntax
+alphabet="a b c d e"                        # Initialise a string
+count=0                                # Initialise a counter
+while [ $count -lt 5 ]                        # Set up a loop control
+do                                # Begin the loop
+    count=`expr $count + 1`                    # Increment the counter
+    position=`bc $count + $count - 1`               # Position of next letter
+    letter=`echo "$alphabet" | cut -c$position-$position`    # Get next letter
+    echo "Letter $count is [$letter]"                # Display the result
+done                                # End of loop
+Most of this is the same construct, I have just replaced the for loop set-up with its equivalent while syntax. Instead of stepping through the letters in alphabet, the loop control now monitors the size of the count with [ $count -lt 5]. The -lt flag here represents less-than and is part of the UNIX test command, which is implied by the square brackets. Any other command, list or variable could be put here as long as its substituted value equates to an integer. A zero value will exit the loop, anything else and the loop will continue to process. From the above you can work out that test returns 1 for true and 0 for false. Have a look at the man pages for test at this point, you will find it a very useful command with great flexibility.
+The if structure:
+Next in complexity is if list then list [ elif list then list ] ... [ else list ] fi, or the if construct. What does that lot mean? Well usually if statements in any language are associated with predication and so as you would expect there is some more implied use of the UNIX test command. Lets generate an example to see the structure in a more usual form. The square brackets in the echo statement have no relevance other than to clarify the output when executed (See - Debugging). However, the square brackets in the if and elif lines are mandatory to the structure.
+Example simple if syntax
+if [ -f $dirname/$filename ]
+then
+    echo "This filename [$filename] exists"
+elif [ -d $dirname ]
+then
+    echo "This dirname [$dirname] exists"
+else
+    echo "Neither [$dirname] or [$filename] exist"
+fi
+You can see here more examples of what test can do. The -f flag tests for existence of a plain file, while -d tests for existence of a directory. There is no limit (that I can discover) to the number of elif's you can use in one if statement. You can also stack up the tests into a list using a double pipe or double ampersand as in Example complex if syntax below. Here the use of the double pipe (||) is the syntax for a logical or whereas the double ampersand (&&) is the logical and.
+Example complex if syntax
+if [ -f $dir/$file ] || [ -f $dir/$newfile ]
+then
+    echo "Either this filename [$file] exists"
+    echo "Or this filename [$newfile] exists"
+elif [ -d $dir ]
+then
+    echo "This dirname [$dir] exists"
+else
+    echo "Neither [$dir] or [$file or $newfile] exist"
+fi
+In the sh if construct it is important to put the then word on its own line or sh will complain about an invalid test. Also important is the blank inside each end of the test. Without this the test will generate a syntax error - usually "test expected!" which is a bit meaningless.
+case structure:
+Next is the case word in [ pattern [ pattern ] ... ) list ;; ] esac which is probably the most complicated construct to decode from the simple syntax listed above. It is a bit like a multi-line if statement linked with logical or symbols (||). It is commonly used to process a list of parameters passed into a script as arguments when the actual parameters could be in any order or of any value. The layout is shown in 8.2.4.1 below, which is a section from a print script.
+Example case syntax
+size=0                    # Default Char Point Size (!)
+page=660                # Default Page Point Size
+while [ "$1" != "" ]            # When there are arguments...
+do                    # Process the next one
+case $1                # Look at $1
+in
+    -l)    lines=47;            # If it's a "-l", set lines
+  page=470;            # Set the Landscape Page Point
+  options="$options -L -l";    # Set the Landscape Options
+  shift;;                # Shift one argument along
+    -p)    lines=66;            # If it's a "-p", set lines
+  options="$options -l";        # Set the Portrait Options
+  shift;;                # Shift one argument along
+    -s)    size=$2;            # If it's a "-s", set size
+  shift 2;;            # Shift two arguments along
+    *)    echo "Option [$1] not one of  [p, l, s]";    # Error (!)
+  exit;;                # Abort Script Now
+esac
+if [ $size = 0 ]            # If size still un-set...
+then
+    size=`echo "$page / $lines" | bc`    # Set from pages over lines
+else                    # or
+    lines=`echo "$page / $size" | bc`    # Set lines
+fi
+done
+options="$options$lines -s$size"    # Build complete option list
+lp -P$PRINTER $options $filename    # Output print file to printer
+Here we see a while loop, exiting when no more parameters are found on input line, enclosing a case statement. The case statement repeatedly tests $1 against a list of possible matches indicated by the right parentheses. The star (*) at the end is the default case and will match anything left over. When a match is found, the list of commands following the right parentheses are executed up to the double semi-colon. In each of these lists, there is a shift statement which shifts the input parameters one place left (so $2 becomes $1 etc.), allowing the next parameter to be tested on the next pass through the loop. In the case of the "-s" parameter, an extra following argument is expected, the size value, which is why the shift instruction contains the additional argument 2 (shifting the parameters 2 spaces left). This effectively allows the processing of all the passed arguments in any order and includes an exit for an invalid parameter condition via the star match. The if statement at the end checks if the size parameter has been set then uses the bc command to set either size or lines accordingly. When complete, the final options are created and passed to the lp command to print the file.
+The parent and sub-shell structure:
+Then there are two easy ones the ( list ) and { list; } constructs which simply execute the whole list of commands in a separate sub-shell ( ) or in the parent shell { } with a note that the blanks between the { } are mandatory.
+The function structure:
+Lastly in the complex command section we come to what is probably the most underused but most useful construct for serious scripters. The function definition. The syntax is deceptively simple which I guess is what leads most users to assume it's not worth learning about. How wrong they are. Just take a look at the example below to see what I mean.
+Example function syntax
+i_upper_case()
+{
+    echo $1 | tr 'abcdefghijklmnopqrstuvwxyz' \
+       'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+}
+This is a very simple function called i_upper_case , you can probably guess what it does. The backslash at the end of the echo line is a UNIX feature that allows a command line to be continued on the next line. It tells the system to ignor the next character - in this case the newline. Note that it gets its input argument from a passed parameter ($1). So to make use of this function within a script you simply need to call it with an argument as follows:
+i_upper_case "fred"
+or
+name="fred"
+i_upper_case $name
+And you will get back FRED in either case. A more appropriate usage would be something like:
+small_name="$input_argument"
+large_name=`i_upper_case "$small_name"`
+echo "Large Name = [$large_name]"
+Which allows the case to be changed and put into a new variable. The advantage of doing this at all is that you don't have to re-code the same thing over again when you want to use the feature several times within the script. Note the use here of the double quotes around the variables to the right of the equal signs - this is to preserve any blanks within the strings which would otherwise be treated as argument separators and hence the function would only process the first argument in the list. What this means is:
+small_name="fred smith"
+large_name=`i_upper_case "$small_name"`    # Quoted parameter
+echo "Large Name = [$large_name]"
+Will display FRED SMITH, whereas:
+small_name="fred smith"
+large_name=`i_upper_case $small_name`    # Unquoted parameter
+echo "Large Name = [$large_name]"
+Will display FRED only. This bug can be traced back to the function definition which only reads in the $1 parameter. Changing this to read the $@ parameter would correct the bug for this function. But beware, this type of fix would not be appropriate in all situations. Try and think generically when creating functions and make them as useful as possible in all scenarios.
+There are two very basic rules to remember when dealing with functions:
+   You cannot use a function until it is defined. Thus all function definitions should appear either at the top of the script or in a start-up file such as ~/.profile.
+    Functions can be nested to any depth, as long as the first rule is not violated.
+At the end of the complex command section there is a reminder message that all of the keywords used in these complex commands are reserved words and not therefore available as variable names. This means that you can screw up any UNIX command by using it as a variable but you cannot screw up a complex shell reserved word.
+echo()
+{
+    /usr/bin/user/my_echo "$@"
+}
+Is perfectly okay as a function definition and the sh will happily use your echo function whenever an echo command is required within the script body.
+while()
+{
+    /usr/bin/user/my_while "$@"
+}
+Is not okay and the function definition will fail at runtime.
+Special Commands:
+The following are a set of special commands which the shell provides as stand alone statements. Input and output redirection is permitted for all these commands unlike the complex commands. You cannot redirect the output from a while loop construct, only the simple or special commands used within the loop list.
+   The colon ( : ) does nothing! A zero exit code is returned. Can be used to stand in for a command but I must admit not to finding a real use for this command.
+   The dot ( .   filename) reads in commands from another file (See Startup Files & Environment for details). If the filename following the dot is not in the current working directory, then the shell searches along the PATH variable looking for a match. The first match that is found is the file that is used. The file is read into the shell and the commands found are executed within the current environment.
+   The break ( break [ n ] ) command causes an exit from inside a for or while loop. The optional n indicates the number of levels to break out from - the default is one level. Although not stated in the syntax rules, I have used this statement in an if then else fi construct to good effect in Simple Utility Functions where it causes an exit from the function but does not cause an exit from the calling script.
+   The continue ( continue [ n ] ) command resumes the next iteration of the enclosing for or while loop at the [ optional nth ] enclosing loop. Can't say I've used this one either.
+   The cd ( cd [ argument ] ) command is the the change directory command for the shell. The directory is specified with argument which defaults to HOME. The environment variable CDPATH is used as a search path for directories specified by argument.
+    The echo ( echo [ argument ] ) command is the shell output statement. See the man pages for echo(1) for full details.
+   The eval ( eval [ argument ] ) command reads the arguments into the shell and then attempts to execute the resulting command. This allows pre-emptive parameter substitution of hidden parameters or commands.
+   The exec ( exec [ argument ] ) command reads in the command specified by arguments and executes them in place of this shell without creating a new process. Input an output arguments may appear and, if no others are given, will cause the shell input and or output to be modified.
+   The exit ( exit [ n ] ) command causes a shell to exit with the exit status specified by the n parameter. If the n parameter is omitted, the exit status is that of the last executed command within the shell.
+   The export ( export [ variable ] ) command we have already met and is the command which makes shell variables global in scope. Without a variable, export will list currently exported variables.
+    The getopts command is provided to support command syntax standards - see getopts(1) and intro(1) man pages for details.
+   The hash ( hash [ -r ] [ name ] ) command remembers the location in the search path (PATH variable) of the command name. The option -r causes the shell to forget the location of name. With no options the command will list out details about current remembered commands. This has the effect of speeding up access to some commands.
+   The newgrp ( newgrp [ argument ] ) command is equivalent to exec newgrp argument. See newgrp(1M) for usage and description. The newgrp command logs a user into a new group by changing a user's real and effective group ID. The user remains logged in and the current directory is unchanged. The execution of newgrp always replaces the current shell with a new shell, even if the command terminates with an error (unknown group).
+    The pwd ( pwd ) command literally prints the current working directory. Usually used to set the CWD variable internally.
+   The read ( read name ) command will be seen in several examples. It allows the shell to pause and request user input for the variable name, which is then accepted as the variables value.
+   The readonly ( readonly [ name ] ) command sets a variable as imutable. Once named in this command they cannot be reassigned new values.
+   The return ( return [ n ] ) command causes a function to exit with the return value n. If the n is omitted, the return value is the exit status of the last command executed within the function. Unlike exit this does not result in termination of the calling script.
+   The shift ( shift [ n ] ) command causes the positional parameters to be moved to the left ($2 becomes $1, etc.) by the value of n, which defaults to one.
+    The test command is used to evaluate conditional expressions. See the man pages for test(1) for full details and usages.
+    The times command prints the accumulated user and system times for processes run from the shell.
+   The trap ( trap [ argument ] [ n ] ) command allows conditional execution of the commands contained within argument dependant on the shell receiving numeric or symbolic signal(s) n.
+    The type ( type [ name ] ) command indicates how name would be interpreted if used as a command name.
+    The ulimit and umask commands exist in their own right as UNIX commands. See man pages.
+   The unset ( unset [ name ] ) command allows names to be unset. This removes the values from the variable or function. The names PATH, PS1, PS2, MAILCHECK, and IFS cannot be unset.
+   The wait ( wait [ n ] ) command waits for the background process n to terminate and report its termination status; where n is the process id. With no arguments, all current background processes are waited for.
+Most of these special commands get used somewhere in this book and more detailed explanations will follow at that time.
+Comment structure:
+The next thing on my systems man page is a reference to the hash (#) comment character. It states that any word beginning with # causes that word and all the following characters up to a newline to be ignored. There are no notes about the first line exceptions that I gave in The Basic Shells when we were dealing with shell indicators (The #! sequence)
+Home Next Preface Introduction Basic Shells Shell Syntax Built-In Commands Command Substitution Startup & Environment Pipes, Lists & Redirection Input & Output Using Files Design Considerations Functions Debugging Putting It All Together Appendix Code Examples Page 205 This page was brought to you by rhreepe@injunea.demon.co.uk
+-------------------------------------------------------------------------------
+TOMCAT
+-------------------------------------------------------------------------------
+setenv.sh
+JAVA_HOME="/usr/lib/jvm/java-gcj"
+JAVA_HOME="/usr/lib/jvm/java-6-sun"
+JAVA_OPTS="-Xms128m -Xmx1024m -XX:MaxPermSize=512m -Djava.ext.dirs=$JVM_EXT_DIRS -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port=10201"
+OPENOFFICE_HOME="/usr/lib/openoffice"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/agenda.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/aprtisdoc.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/agenda.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/aportisdoc.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/bsh.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/classes.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/commonwizards.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/fax.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/form.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/hsqldb.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/java_uno.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/java_uno_accessbridge:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/js.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/juh.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/jurt.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/jut.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/letter.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/officebean.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/pexcel.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/pocketword.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/query.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/report.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/ridl.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/sandbox.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/ScriptFramework.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/ScriptProviderForBeanShell:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/ScriptProviderForJava.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/ScriptProviderForJava.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/sdbc_hsqldb.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/table.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/unoil.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/unoloader.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/web.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/xalan.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/xercesImpl.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/xmerge.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/XMergeBridge.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/xml-apis.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/XSLTFilter.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/XSLTValidate.jar:"$CLASSPATH"
+CLASSPATH="$OPENOFFICE_HOME"/program/classes/xt.jar:"$CLASSPATH"
+echo $CLASSPATH
+----------
+SERVER.XML
+----------
+URIEncoding="UTF-8"
+<Connector connectionTimeout="20000" port="80" URIEncoding="UTF-8" protocol="HTTP/1.1" redirectPort="8443"/>
+-------------------------------------------------------------------------------
+| GUAVA                                                                      |
+-------------------------------------------------------------------------------
++ splitters and joiners (that work right)
+final static Splitter onWhiteSpace = Splitter.on(CharMatcher.WHITESPACE);
++ type inferencing factory methods
+Map<String, String> dictionary = Maps.newHashMap();
+Map<String, Integer> table = ImmutableMap.of("abc", 1, "def", 2);
++ orderings that make sense and do cool things
+Ordering.natural().immutableSortedCopy(iterable)
++ reading a resource all in a gulp (note the predefined charset that never requires a throw):
+Resources.readLines(Resources.getResource("foo.csv"), Charsets.UTF-8)
+-------------------------------------------------------------------------------
+| MAVEN                                                                       |
+-------------------------------------------------------------------------------
+mvn release:prepare -Darguments="-DskipTests"
+mvn install -Dmaven.findbugs.enable
+mvn dependency:unpack-dependencies build-helper:attach-test-classes (Running tests from a maven test-jar)
+mvn dependency:sources
+mvn dependency:resolve -Dclassifier=javadoc
+-DdownloadSources=true -DdownloadJavadocs=true
+-------------------------------------------------------------------------------
+| SPAMASSASSIN                                                                |
+-------------------------------------------------------------------------------
+apt-get install spamassassin
+spamassassin -D < nospam-corporate-umg-1.txt 2> out
+vi /etc/spamassassin/local.cf
+#   Set the threshold at which a message is considered spam (default: 5.0)
+#
+required_score 11.0
+score RCVD_IN_XBL 0 0 0 0
+vi /etc/default/spamassassin
+# Change to one to enable spamd
+ENABLED=1
+tail -f /var/log/syslog
+create /nonexisting/.spamassassin ???
+/etc/init.d/spamassassin start
+-------------------------------------------------------------------------------
+| OPENOFFICE                                                                 |
+-------------------------------------------------------------------------------
+apt-get build-dep openoffice.org
+apt-get install x-window-system-core
+apt-get install gnome-desktop-environment
+apt-get install gdm
+apt-cache search openoffice*
+apt-get remove openoffice*
+sudo apt-get remove --purge openoffice.org-base
+sudo apt-get remove --purge openoffice.org-calc
+sudo apt-get remove --purge openoffice.org-draw
+sudo apt-get remove --purge openoffice.org-impress
+sudo apt-get remove --purge openoffice.org-math
+sudo apt-get remove --purge openoffice.org-writer
+sudo apt-get remove --purge openoffice.org-l10n-*
+sudo apt-get remove --purge openoffice.org-core
+sudo apt-get remove --purge openoffice.org-common
+sudo apt-get install fakeroot alien
+tar zxvf OOo_2.0.0_LinuxIntel_install.tar.gz
+cd OOO680_m3_native_packed-2_en-US.8968/RPMS/
+fakeroot alien -d *.rpm
+dpkg -i *.deb
+cd desktop-integration/
+sudo dpkg -i openoffice.org-debian-menus_2.0.0-3_all.deb
+apt-get source openoffice.org
+apt-get build-dep openoffice.org (to install build dependencies)
+   [ somehow broken yet probably because of the various |'s ]
+cd <source directory>
+debuild
+dpkg-deb  -c openoffice.org-core_2.2.0-1ubuntu3_i386.deb
+dpkg -i *.deb
+-------------------------------------------------------------------------------
+| IMAGEMAGICK                                                                |
+-------------------------------------------------------------------------------
+--------------------
+A.1. GET IF FROM APT
+--------------------
+apt-get install imagemagick
+----------------------------
+A.2. OR BUILD IT FROM SOURCE
+----------------------------
+apt-get update
+apt-get install build-essential
+apt-get build-dep imagemagick
+./configure
+but you might need some special parameters (check the installation docs for details on all the configurations available parameters) for ex.:
+./configure --with-perl=no --with-magick-plus-plus=no --enable-shared --with-gs-font-dir=/usr/share/fonts/type1/gsfonts --x-includes=/usr/include/X11 --x-libraries=/usr/lib/X11
+Now we can proceed with the actual compilation:
+make
+and if there are no errors with the installation:
+make install
+(this will install the files under /usr/local, since we have not overwritten the default prefix).
+As a reminder that older software might not compile on newer and modern OSs (compilers, libraries, etc) the compilation fails on recent Debian Etch versions with:
+png.c: In function 'WriteOneJNGImage':
+png.c:7639: warning: dereferencing type-punned pointer will break strict-aliasing rules
+png.c:7705: warning: dereferencing type-punned pointer will break strict-aliasing rules
+make[1]: *** [png.lo] Error 1
+make[1]: Leaving directory `/usr/local/src/ImageMagick-5.5.7/coders'
+make: *** [all-recursive] Error 1
+This is caused by newer versions of libpng12, and in order to compile imagemagick successfully I had to install version 1.2.8rel-7
+(opposed to the latest version that is currently installed on etch 1.2.13-4)
+----------
+B. TEST IT
+----------
+Once the installation is completed we can verify the version we installed is working fine with:
+/usr/local/bin/identify -version
+Version: ImageMagick 5.5.7 12/21/06 Q16 http://www.imagemagick.org
+Copyright: Copyright (C) 2003 ImageMagick Studio LLC
+or
+/usr/local/bin/convert -version
+Version: ImageMagick 5.5.7 12/21/06 Q16 http://www.imagemagick.org
+Copyright: Copyright (C) 2003 ImageMagick Studio LLC
+and to get the listing of which image formats are supported on our system:
+identify -list format
+Format  Mode  Description
+8BIM*  rw-  Photoshop resource format
+8BIMTEXT*  rw-  Photoshop resource text format
+8BIMWTEXT*  rw-  Photoshop resource wide text format
+APP1*  rw-  Raw application information
+APP1JPEG*  rw-  Raw JPEG binary data
+-------
+convert picture.png picture.jpg 
+-------
+JMagick
+-------
+apt-get install jmagick
+Download source from :
++ http://www.yeo.id.au/jmagick/
++ http://www.jmagick.org/download.html
+jMagick 6.2.4-1 for ImageMagick 6.2.4, 6.2.5
+apt-get install libmagick++9-dev
+./configure
+./make
+-------
+cp libJMagick.so /usr/lib
+scp /usr/lib/libJMagick.so root@172.16.1.206:/usr/lib/
+OR apt-get install jmagick ??? => UselibJMagick.so from apt !?!
+cp /usr/lib/jni/libJMajick.so /usr/lib
+-------------------------------------------------------------------------------
+| EC2                                                                         |
+-------------------------------------------------------------------------------
+ec2metadata
+-------------------------------------------------------------------------------
+| MME                                                                         |
+-------------------------------------------------------------------------------
+http://www.flashinsider.com/2006/07/26/how-to-create-your-own-youtube-site/
+http://blog.go4teams.com/?p=56
+-------------------------------------------------------------------------------
+| FFMPEG                                                                      |
+-------------------------------------------------------------------------------
++ MPG>MP3: ffmpeg -i video.flv -acodec copy audio.mp3
++ MPG>OGG: ffmpeg -i 1.mp4 -acodec libvorbis -vcodec libtheora -f ogg output.ogg
++ MPG>FLV; ffmpeg -i video.mpg -ar 22050 -ab 32 -f flv -s 320x240 -aspect 4:3 -y video.flv
++ AVI>FLV: ffmpeg -i video.avi -acodec mp3 -ar 22050 -ab 32 -f flv -s 320x240 video.flv
++ FLV Metadata: flvtool2 -U video.flv
++ Thumbnail: ffmpeg -y -i video.mpg -vframes 1 -ss 00:00:02 -an -vcodec png -f rawvideo -s 320x240 video.jpg
++ Play: ffplay video.flv
+screenrecorder: ffmpeg -y -f alsa -ac 2 -i pulse -f x11grab -r 25 -s 1920x1080 -i :0.0 -vcodec libx264 -vpre lossless_ultrafast -crf 22 -acodec libmp3lame -ar 44100 -ab 126k -threads 3 ~/Desktop/screencast.mkv
+Add in /etc/apt/sources.list
+## Medibuntu - Ubuntu 7.04 "feisty fawn"
+## Please report any bug on https://bugs.launchpad.net/medibuntu/
+deb http://packages.medibuntu.org/ feisty free non-free
+#deb-src http://packages.medibuntu.org/ feisty free non-free
+apt-get update
+apt-get install ffmpeg
+apt-get install libavcodec0d ?
+apt-get install w32codecs ?
+apt-get install libavformat0d ?
+apt-get install libpostproc0d ?
+apt-get install mpg123 ?
+apt-get install avifile-mjpeg-plugin ?
+apt-get install libavifile-0.7c2 ?
+apt-get install libswfdec0.3 ?
+19 ffmpeg commands for all needs
+Published on September 22nd, 2008 by Jean-Baptiste Jung. 137 Comments -
+ffmpeg is a multiplatform, open-source library for video and audio files. I have compiled 19 useful and amazing commands covering almost all needs: video conversion, sound extraction, encoding file for iPod or PSP, and more.
+Getting infos from a video file
+ffmpeg -i video.avi
+Turn X images to a video sequence
+ffmpeg -f image2 -i image%d.jpg video.mpg
+This command will transform all the images from the current directory (named image1.jpg, image2.jpg, etc…) to a video file named video.mpg.
+Turn a video to X images
+ffmpeg -i video.mpg image%d.jpg
+This command will generate the files named image1.jpg, image2.jpg, …
+The following image formats are also availables : PGM, PPM, PAM, PGMYUV, JPEG, GIF, PNG, TIFF, SGI.
+Encode a video sequence for the iPpod/iPhone
+ffmpeg -i source_video.avi input -acodec aac -ab 128kb -vcodec mpeg4 -b 1200kb -mbd 2 -flags +4mv+trell -aic 2 -cmp 2 -subcmp 2 -s 320x180 -title X final_video.mp4
+Explanations :
+    Source : source_video.avi
+    Audio codec : aac
+    Audio bitrate : 128kb/s
+    Video codec : mpeg4
+    Video bitrate : 1200kb/s
+    Video size : 320px par 180px
+    Generated video : final_video.mp4
+Encode video for the PSP
+ffmpeg -i source_video.avi -b 300 -s 320x240 -vcodec xvid -ab 32 -ar 24000 -acodec aac final_video.mp4
+Explanations :
+    Source : source_video.avi
+    Audio codec : aac
+    Audio bitrate : 32kb/s
+    Video codec : xvid
+    Video bitrate : 1200kb/s
+    Video size : 320px par 180px
+    Generated video : final_video.mp4
+Extracting sound from a video, and save it as Mp3
+ffmpeg -i source_video.avi -vn -ar 44100 -ac 2 -ab 192 -f mp3 sound.mp3
+Explanations :
+    Source video : source_video.avi
+    Audio bitrate : 192kb/s
+    output format : mp3
+    Generated sound : sound.mp3
+Convert a wav file to Mp3
+ffmpeg -i son_origine.avi -vn -ar 44100 -ac 2 -ab 192 -f mp3 son_final.mp3
+Convert .avi video to .mpg
+ffmpeg -i video_origine.avi video_finale.mpg
+Convert .mpg to .avi
+ffmpeg -i video_origine.mpg video_finale.avi
+Convert .avi to animated gif(uncompressed)
+ffmpeg -i video_origine.avi gif_anime.gif
+Mix a video with a sound file
+ffmpeg -i son.wav -i video_origine.avi video_finale.mpg
+Convert .avi to .flv
+ffmpeg -i video_origine.avi -ab 56 -ar 44100 -b 200 -r 15 -s 320x240 -f flv video_finale.flv
+Convert .avi to dv
+ffmpeg -i video_origine.avi -s pal -r pal -aspect 4:3 -ar 48000 -ac 2 video_finale.dv
+Or:
+ffmpeg -i video_origine.avi -target pal-dv video_finale.dv
+Convert .avi to mpeg for dvd players
+ffmpeg -i source_video.avi -target pal-dvd -ps 2000000000 -aspect 16:9 finale_video.mpeg
+Explanations :
+    target pal-dvd : Output format
+    ps 2000000000 maximum size for the output file, in bits (here, 2 Gb)
+    aspect 16:9 : Widescreen
+Compress .avi to divx
+ffmpeg -i video_origine.avi -s 320x240 -vcodec msmpeg4v2 video_finale.avi
+Compress Ogg Theora to Mpeg dvd
+ffmpeg -i film_sortie_cinelerra.ogm -s 720x576 -vcodec mpeg2video -acodec mp3 film_terminÃ©e.mpg
+Compress .avi to SVCD mpeg2
+NTSC format:
+ffmpeg -i video_origine.avi -target ntsc-svcd video_finale.mpg
+PAL format:
+ffmpeg -i video_origine.avi -target pal-svcd video_finale.mpg
+Compress .avi to VCD mpeg2
+NTSC format:
+ffmpeg -i video_origine.avi -target ntsc-vcd video_finale.mpg
+PAL format:
+ffmpeg -i video_origine.avi -target pal-vcd video_finale.mpg
+Multi-pass encoding with ffmpeg
+ffmpeg -i fichierentree -pass 2 -passlogfile ffmpeg2pass fichiersortie-2
+#!/bin/sh
+# name of this script: m4a2mp3.sh
+# m4a to mp3
+for i in *.m4a; do
+faad "$i"
+x=`echo "$i" | sed -e 's/.m4a/.wav/'`
+y=`echo "$i" | sed -e 's/.m4a/.mp3/'`
+lame -h -b 192 "$x" "$y"
+rm "$x"
+done
+#!/bin/sh
+for i in *.mp4; do
+ffmpeg -i "$i" -f mp3 -ab 192000 -vn "$i".mp3
+done
+ffmpeg -i 1.mp4  -f mp3 -ab 192000 -vn 1.mp3
+-------------------------------------------------------------------------------
+| FLVTOOL2                                                                    |
+-------------------------------------------------------------------------------
+apt-get install ruby
+download from http://rubyforge.org/projects/flvtool2/
+Untar it and execute the following commands inside the untared directory:
+ruby setup.rb config
+ruby setup.rb setup
+sudo ruby setup.rb install
+You can then use flvtool2 as a shell command.
+-------------------------------------------------------------------------------
+| MYSQL                                                                       |
+-------------------------------------------------------------------------------
+/etc/init/mysql.conf: exec /usr/sbin/mysqld --skip-grant-tables
+Access denied for user ‘root’@'localhost’ (using password: NO)
+Who is fault? No matter. Probably, because of my root user doesn’t have password.
+What to do? Finally i did next:
+1. Stopped mysql server: i simply found mysqld process in windows task manager and stopped it.
+2. Created init.txt file with next content:
+UPDATE mysql.user SET Password=PASSWORD(’mypassword’) WHERE User=’root’;
+FLUSH PRIVILEGES;
+grant all privileges on *.* to root@localhost identified by ‘mypassword’ with grant option;
+grant all privileges on mydatabase.* to root@localhost identified by ‘mypassword’ with grant option;
+3. Run mysql server from command line as:
+mysqld –init-file=F:\mysql\bin\init.txt
+show processlist
+-------------------------------------------------------------------------------
+| SSH MULTIPLE KEYS                                                           |
+-------------------------------------------------------------------------------
+In quite a few situations its preferred to have ssh keys dedicated for a service or a specific role. Eg. a key to use for home / fun stuff and another one to use for Work things, and another one for Version Control access etc. Creating the keys is simple, just use
+ssh-keygen -t rsa -f ~/.ssh/id_rsa.work -C "Key for Word stuff"
+Use different file names for each key. Lets assume that there are 2 keys, ~/.ssh/id_rsa.work and ~/.ssh/id_rsa.misc . The simple way of making sure each of the keys works all the time is to now create config file for ssh:
+touch ~/.ssh/config
+chmod 600 ~/.ssh/config
+echo "IdentityFile ~/.ssh/id_rsa.work" >> ~/.ssh/config
+echo "IdentityFile ~/.ssh/id_rsa.misc" >> ~/.ssh/config
+This would make sure that both the keys are always used whenever ssh makes a connection. However, ssh config lets you get down to a much finer level of control on keys and other per-connection setups. And I recommend, if you are able to, to use a key selection based on the Hostname. My ~/.ssh/config looks like this :
+Host *.home.lan
+ IdentityFile ~/.ssh/id_dsa.home
+ User kbsingh
+Host *.vpn
+ IdentityFile ~/.ssh/id_rsa.work
+ User karanbir
+ Port 44787
+Host *.d0.karan.org
+ IdentityFile ~/.ssh/id_rsa.d0
+ User admin
+ Port 21871
+Of course, if I am connecting to a remote host that does not match any of these selections, ssh will default back to checking for and using the 'usual' key, ~/.ssh/id_dsa or ~/.ssh/id_rsa
+Host myshortname realname.example.com
+Hostname realname.example.com
+IdentityFile ~/.ssh/realname_rsa # private key for realname
+Host myother realname2.example.org
+Hostname realname2.example.org
+IdentityFile ~/.ssh/realname2_rsa
+...almost helped me all the way. I have a different username on the server, so I had to add the User keyword to my file:
+Host           friendly-name
+HostName       long.and.cumbersome.server.name
+IdentityFile   ~/.ssh/private_ssh_file
+User           username-on-remote-machine
+Now you can connect using the friendly-name:
+ssh friendly-name
+-------------------------------------------------------------------------------
+| SSH PORT FORWARDING                                                         |
+-------------------------------------------------------------------------------
+ssh -oForwardAgent=yes -L60030:jobtracker.hadoop.staging.qutics.com:50030 ubuntu@jobtracker.hadoop.staging.qutics.com
+---
+ssh -i ~/.ssh/Hadoop_main.pem -L60030:jobtracker.hadoop.staging.qutics.com:50030 ubuntu@jobtracker.hadoop.staging.qutics.com
+browse localhost:60030
+ssh -N -f -L 22343:localhost:22343 user01@web01
+ssh -N -f -L 443:webgate.ec.europa.eu:443
+ssh -N -f -L 11002:provide.castiron.com:443 user01@web01
+ssh -N -f -L 443:webgate.ec.europa.eu:443
+ssh -N -f -L 11002:provide.castiron.com:443 user01@web01
+The main issue we had with those ssh is that we must configure a keep alive for ssh session.
+You need to add in the /etc/ssh/sshd_config conf file of the tunnel source server:
+TCPKeepAlive yes
+KeepAlive yes
+ClientAliveInterval 60
+and restart sshd.
+-------------------------------------------------------------------------------
+| SSH REMOTE SSH WITH X11                                                     |
+-------------------------------------------------------------------------------
+ssh -Y -l echarles hostname
+-------------------------------------------------------------------------------
+| SSH MULTIPLE PORTS                                                          |
+-------------------------------------------------------------------------------
+$ more sshd_config
+# Package generated configuration file
+# See the sshd_config(5) manpage for details
+# What ports, IPs and protocols we listen for
+Port 22
+Port 443
+# Use these options to restrict which interfaces/protocols sshd will bind to
+#ListenAddress ::
+#ListenAddress 0.0.0.0
+Protocol 2
+# HostKeys for protocol version 2
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_dsa_key
+#Privilege Separation is turned on for security
+UsePrivilegeSeparation yes
+# Lifetime and size of ephemeral version 1 server key
+KeyRegenerationInterval 3600
+ServerKeyBits 768
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
+# Authentication:
+LoginGraceTime 120
+PermitRootLogin yes
+StrictModes yes
+RSAAuthentication yes
+PubkeyAuthentication yes
+#AuthorizedKeysFile    %h/.ssh/authorized_keys
+# Don't read the user's ~/.rhosts and ~/.shosts files
+IgnoreRhosts yes
+# For this to work you will also need host keys in /etc/ssh_known_hosts
+RhostsRSAAuthentication no
+# similar for protocol version 2
+HostbasedAuthentication no
+# Uncomment if you don't trust ~/.ssh/known_hosts for RhostsRSAAuthentication
+#IgnoreUserKnownHosts yes
+# To enable empty passwords, change to yes (NOT RECOMMENDED)
+PermitEmptyPasswords no
+# Change to yes to enable challenge-response passwords (beware issues with
+# some PAM modules and threads)
+ChallengeResponseAuthentication no
+# Change to no to disable tunnelled clear text passwords
+#PasswordAuthentication yes
+# Kerberos options
+#KerberosAuthentication no
+#KerberosGetAFSToken no
+#KerberosOrLocalPasswd yes
+#KerberosTicketCleanup yes
+# GSSAPI options
+#GSSAPIAuthentication no
+#GSSAPICleanupCredentials yes
+X11Forwarding yes
+X11DisplayOffset 10
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive yes
+#UseLogin no
+#MaxStartups 10:30:60
+#Banner /etc/issue.net
+# Allow client to pass locale environment variables
+AcceptEnv LANG LC_*
+Subsystem sftp /usr/lib/openssh/sftp-server
+# Set this to 'yes' to enable PAM authentication, account processing,
+# and session processing. If this is enabled, PAM authentication will
+# be allowed through the ChallengeResponseAuthentication and
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication via ChallengeResponseAuthentication may bypass
+# the setting of "PermitRootLogin without-password".
+# If you just want the PAM account and session checks to run without
+# PAM authentication, then enable this but set PasswordAuthentication
+# and ChallengeResponseAuthentication to 'no'.
+UsePAM yes
+-------------------------------------------------------------------------------
+| PASSWORDLESS SSH                                                            |
+-------------------------------------------------------------------------------
+ssh-keygen -t rsa -C "<youremail>" -P ""
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+ssh localhost
+cat ~/.ssh/id_rsa.pub | ssh git@172.16.1.156 'cat >> ~/.ssh/authorized_keys'
+cat ~/.ssh/id_rsa.pub | ssh git@localhost 'cat >> ~/.ssh/authorized_keys'
+-------------------------------------------------------------------------------
+First log in on A as user a and generate a pair of authentication keys. Do not enter a passphrase:
+a@A:~> ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/a/.ssh/id_rsa):
+Created directory '/home/a/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/a/.ssh/id_rsa.
+Your public key has been saved in /home/a/.ssh/id_rsa.pub.
+The key fingerprint is:
+3e:4f:05:79:3a:9f:96:7c:3b:ad:e9:58:37:bc:37:e4 a@A
+Now use ssh to create a directory ~/.ssh as user b on B. (The directory may already exist, which is fine):
+a@A:~> ssh b@localhost mkdir -p .ssh
+b@localhost's password:
+Finally append a's new public key to b@B:.ssh/authorized_keys and enter b's password one last time:
+a@A:~> cat .ssh/id_rsa.pub | ssh b@B 'cat >> .ssh/authorized_keys'
+b@B's password:
+From now on you can log into B as b from A as a without password:
+a@A:~> ssh b@B hostname
+B
+change the rights of EVERY file in my homefolder, this is done with the -R flag. It might be nicer if you dont use it at all and type (chmod 755 /Users/USERNAME/)
+chmod -R 755 /home/eric/
+change the permissions of the .ssh folder
+chmod 700 ~/.ssh
+change the permissions of the .ssh folders content
+chmod 600 ~/.ssh/*
+Typically you want the .ssh directory permissions to be 700 (drwx------) 
+and the public key (.pub file) to be 644 (-rw-r--r--). 
+Your private key (id_rsa) should be 600 (-rw-------).
+FEDORA 10: But the problem was SElinux. I disabled it and everything went smoothly.
+1.Temporary (If you cannot reboot)
+echo 0 > /selinux/enforce
+2.Permanent (If you can reboot)
+vim /etc/selinux/config
+and make SELINUX=disabled.
+-------------------------------------------------------------------------------
+Home ~ Personal ~ Resume ~ Code and Classes and Research ~ Favorite Links ~ Comics Pit
+There are a few cases where having passwordless access to a machine is convenient or necessary. I'm always looking up a series of commands that I can just copy and paste to do it right quick. Here they are.
+   Generate your key pair - One of the login modes of ssh is to use a SSH key pair. A key pair is made up of both a private and a public key. The private key is kept on your local machine while your public key is what you distribute to all the machines you want to log in to. There are a few flavors of keys you can generate, rsa1 (for SSH1), dsa (SSH2), or rsa (SSH2). According to my IT guy he likes DSA. You can (and should) associate a password with your key pair, so that only you can use it even if someone else manages to gain access to your account. If you have more than one key pair, using the same password for all key pairs will make them all active at the same time. You can also vary the number of bits used for the key. The more bits you use the harder it will be to crack, but I believe at a nominal performance drop. I was recommended to use 2048 bits. Very well, 2048 bit DSA key it is.
+   ssh-keygen -t dsa -b 2048
+   # Type in strong password
+   If for some reason you need an rsa key, you can just replace the type with the appropiate argument, -t rsa or -t rsa1.
+   NOTE: You need to make sure the permissions of the files in this directory are set to allow read/write for the user only (-rw-----++ or chmod 600 *). The most important files to do this for are the authorized_keys and private keys files. Sometimes logging in will silently fail if you don't have the permissions set correctly.
+   Copy public key to remote machine - Once you made your key pair, you should copy your public key to the remote machine preferably using an encrypted method such as scp and add it to your .ssh/authorized_keys file. You can do this with a single command.
+   cat ~/.ssh/id_dsa.pub | ssh user@remote.machine.com 'cat >> .ssh/authorized_keys'
+   # If you need to make a .ssh directory on the remote machine
+   cat ~/.ssh/id_dsa.pub | ssh user@remote.machine.com 'mkdir .ssh; cat >> .ssh/authorized_keys'
+   SSH Agent - Now that you have a pair, you can try logging into the remote machine as you normally would. You will be prompted for your key pair password. If you left it blank when you created your keys you may simply press enter (and SHAME on you). If you press enter at this point and you had a password you will then be prompted for your remote account password. You can avoid having to do this by using ssh-agent. This will allow you to type in your password for the key pair once on a given machine and reuse it over and over again. ssh-agent stores information about your keys in the memory of that system, so if you move to another system or the machine is rebooted you will have to run ssh-agent again. ssh-agent also will output some environment variables that you can use to gain access to the keys in memory. I have a couple of aliases that help me out with this. One thing to consider is adding a time limit to how long your keys will be active in memory. If you want them to last for only a day you can add -t 86400 (those are seconds) to your ssh-agent command.
+   # For tcsh
+   # Activates the key pairs and stores some helper files.  Run this once per
+   # machine you want to log from.
+   alias agent 'rm -f "$HOME"/.ssh/`hostname`.agent ; ssh-agent -t 86400 | grep -v echo > "$HOME"/.ssh/`hostname`.agent ; source "$HOME"/.ssh/`hostname`.agent ; ssh-add'
+   # Run this in any shell after 'agent' to "activate" the keys.
+   alias sshagent 'if (-e "$HOME"/.ssh/`hostname`.agent) source "$HOME"/.ssh/`hostname`.agent ; endif'
+   # For bash
+   alias agent='rm -f "$HOME"/.ssh/`hostname`.agent ; ssh-agent -t 86400 | grep -v echo > "$HOME"/.ssh/`hostname`.agent ; source "$HOME"/.ssh/`hostname`.agent ; ssh-add'
+   alias sshagent='if [ -e "$HOME"/.ssh/`hostname`.agent ]; then source "$HOME"/.ssh/`hostname`.agent ; fi'
+Now you should simply be able to run agent once on the machine, and then sshagent once per shell. You can then log into the remote machine without having to type in a password. If your ssh agent expires (you'll know, because you'll be propted for your password), then run agent again.
+   Root access - You can also give users the ability to log into the machine as root without having to give the root password out. Just add the users public key to list of root's authorized_keys, and then the user can log into the machine using root as the user name.
+   # Admin does
+   cat ~user/.ssh/id_dsa.pub | ssh root@remote.machine.com 'cat >> .ssh/authorized_keys'
+   # User does
+   agent
+   sshagent; ssh root@remote.machine.com
+   # Or by typing the key pair's password
+   ssh root@remote.machine.com
+   It is recommended that once you have the ability to log in remotely as root with keys, you should disable password-based logins via ssh by making sure the following line is in /etc/ssh/sshd_config:
+   PermitRootLogin   without-password
+-------------------------------------------------------------------------------
+jclouds-virtualbox uses the current user.name and private key  for sending commands to localhost over ssh.
+The current user (user.name) should have passwordless ssh. On a *nix system, you can enable this feature using `ssh-keygen` and `ssh-copy-id`.
+- ssh-keygen \- creates the public and private keys (by default in `${user.home}/.ssh/id_rsa.pub` and `${user.home}/.ssh/id_rsa`)
+$ ssh-keygen
+- ssh-copy-id \- copies the user’s public key to a specified host’s `authorized_keys` file. 
+ssh-copy-id also assigns proper permission to the remote-host’s home, ~/.ssh, and ~/.ssh/authorized_keys
+In this case:
+$ ssh-copy-id -i ~/.ssh/id_rsa your-user@localhost
+If your system does not have an `ssh-copy-id` command, use something like this:
+ $ cat ~/.ssh/id_rsa.pub | ssh your-user@localhost "cat -> ~/.ssh/authorized_keys"
+-------------------------------------------------------------------------------
+| PASSWORDLESS SUDO                                                           |
+-------------------------------------------------------------------------------
+You need to have passwordless sudo rights on localhost. This is done by editing the sudoers file (/etc/sudoers). Use caution when editing this file, as introducing errors will lock you out of the system. Therefore, it is recommended to edit this file through the visudo command.
+The sudoers file should have a line like this (replace your-user):
+> your-user    ALL=(ALL)   NOPASSWD: ALL
+-------------------------------------------------------------------------------
+| CRON                                                                        |
+-------------------------------------------------------------------------------
++ https://help.ubuntu.com/community/CronHowto
+-------------------------------------------------------------------------------
+| AUTOMATIC BACKUP                                                            |
+-------------------------------------------------------------------------------
+The loss of critical data can prove devastating. Still, millions of professionals ignore backing up their data. While individual reasons vary, one of the most common explanations is that performing routine backups can be a real chore. Because machines excel at mundane and repetitive tasks, the key to reducing the inherent drudgery and the natural human tendency for procrastination, is to automate the backup process.
+More dW content related to: how to automate scp
+If you use Linux, you already have access to extrƒemely powerful tools for creating custom backup solutions. The solutions in this article can help you perform simple to more advanced and secure network backups using open source tools that are part of nearly every Linux distribution.
+Simple backups
+This article follows a step-by-step approach that is quite straightforward once you follow the basic steps.
+Let's begin with a simple, yet powerful archive mechanism on our way to a more advanced distributed backup solution. Let's examine a handy script called arc, which will allow us to create backup snapshots from a Linux shell prompt.
+Listing 1. The arc shell script
+  #!/bin/sh
+  tar czvf $1.$(date +%Y%m%d%-%H%M%S).tgz $1
+  exit $?
+The arc script accepts a single file or directory name as a parameter and creates a compressed archive file with the current date embedded into the resulting archive file's name. For example, if you have a directory called beoserver, you can invoke the arc script, passing it the beoserver directory name to create a compressed archive such as: beoserver.20040321-014844.tgz
+The use of the date command to embed a date and timestamp helps to organize your archived files. The date format is Year, Month, Day, Hour, Minutes, and Seconds ++ although the use of the seconds field is perhaps a bit much. View the man page for the date command (man date) to learn about other options. Also, in Listing 1, we pass the -v (verbose) option to tar. This causes tar to display all of the files it's archiving. Remove the -v option if you'd like the backup to proceed silently.
+Listing 2. Archiving the beoserver directory
+  $ ls
+  arc  beoserver
+  $ ./arc beoserver
+  beoserver/
+  beoserver/bookl.dat
+  beoserver/beoserver_ab_off
+  beoserver/beoserver_ab_on
+  $ ls
+  arc  beoserver  beoserver.20040321-014844.tgz
+Advanced backups
+This simple backup example is useful; however, it still includes a manual backup process. The industry's best practices recommend backing up often, onto multiple media, and to separate geographic locations. The central idea is to avoid relying entirely on any single storage media or single location.
+We'll tackle this challenge in our next example, where we'll examine a fictitious distributed network, illustrated in Figure 1, which shows a system administrator with access to two remote servers and an offsite data storage server.
+Figure 1. Distributed network
+The backup files on Server #1 and #2 will be securely transmitted to the offsite storage server, and the entire distributed backup process will occur on a regular basis without human intervention. We'll use a set of standard tools that are part of the Open Secure Shell tool suite (OpenSSH), as well as the tape archiver (tar), and the cron task scheduling service. Our overall plan will be to use cron for scheduling, shell programming and the tar application during the backup process, OpenSSH secure shell (ssh) encryption for remote access, and authentication, and secure shell copy (scp) to automate file transfers. Be sure to review each tool's man page for additional information.
+Secure remote access using public/private keys
+In the context of digital security, a key is a piece of data which is used to encrypt or decrypt other pieces of data. The public and private key scheme is interesting because data encrypted with a public key can only be decrypted with the associated private key. You may freely distribute a public key so that others can encrypt the messages they send you. One of the reasons that public/private key schemes have revolutionized digital security is because the sender and receiver don't have to share a common password. Among other things, public/private key cryptography has made e-commerce and other secure transactions possible. In this article, we'll create and use public and private keys to create a highly secure distributed backup solution.
+Each machine involved in the backup process must be running the OpenSSH secure shell service (sshd) with port 22 accessible through any intermediate firewall. If you access remote servers, then there is a good chance you're already using secure shell.
+Our goal will be to provide machines with secure access without requiring the need to manually provide passwords. Some people think that the easiest way to do this is to set up password-less access: do not do this. It is not secure. Instead, the approach we'll use in this article will take perhaps an hour of your time, set up a system which gives all the convenience of "passphraseless" accounts ++ but is recognized as being highly secure.
+Let's begin by ensuring that OpenSSH is installed and proceed to check its version number. At the time this article was written, the latest OpenSSH release was version 3.8, released on February 24, 2004. You should consider using a recent and stable release, and at the very least use a release which is newer than version 2.x. Visit the OpenSSH Security page for details regarding older version-specific vulnerabilities (see the link in Resources later in this article). At this point in time, OpenSSH is quite stable and has proven to be immune to many of the vulnerabilities which have been reported for other SSH tools.
+At a shell prompt, type ssh with the capital V option to check the version number:
+$ ssh -V
+OpenSSH_3.5p1, SSH protocols 1.5/2.0, OpenSSL 0x0090701f
+If ssh returns a version number greater than 2.x, the machine is in relatively good shape. However, it is recommended that you use the latest stable releases of all software, and this is especially important for security-related software.
+Our first step is to log in to the offsite storage server machine using the account, which will have the privilege of being able to access servers 1 and 2 (see Figure 1).
+$ ssh accountname@somedomain.com
+Once logged on to the offsite storage machine, use the ssh-keygen program to create
+a public/private key pair using the -t dsa option. The -t option is required, and is used
+to specify the type of encryption key we're interested in generating. We'll use the Digital
+Signature Algorithm (DSA), which will enable us to use the newer SSH2 protocol.
+See the ssh-keygen man page for more details.
+During the execution of ssh-keygen, you'll be prompted for the location where the ssh
+keys will be stored before you're asked for a passphrase. Simply press enter when asked
+where to save the key and the ssh-keygen program will create a hidden directory called .ssh
+(if one doesn't already exist) along with two files, a public and private key file.
+An interesting feature of ssh-keygen is that it will allow you to simply press enter
+when prompted for a passphrase. If you don't supply a passphrase, then ssh-keygen will
+generate keys which are not encrypted! As you can imagine, this isn't a good idea.
+When asked for a passphrase, make sure to enter a reasonably long string message which
+contains alphanumeric characters rather than a simple password string.
+Listing 3. Always choose a good passphrase
+  [offsite]:$ ssh-keygen -t dsa
+  Generating public/private dsa key pair.
+  Enter file in which to save the key (/home/accountname/.ssh/id_dsa):
+  Enter passphrase (empty for no passphrase): (enter passphrase)
+  Enter same passphrase again: (enter passphrase)
+  Your identification has been saved in /home/accountname/.ssh/id_dsa.
+  Your public key has been saved in /home/accountname/.ssh/id_dsa.pub.
+  The key fingerprint is:
+  7e:5e:b2:f2:d4:54:58:6a:fa:6b:52:9c:da:a8:53:1b accountname@offsite
+Because the .ssh directory which ssh-keygen creates is a hidden "dot" directory,
+pass the -a option to the ls command to view the newly created directory:
+[offsite]$ ls -a
+. .. .bash_logout .bash_profile .bashrc .emacs .gtkrc .ssh
+Enter the hidden .ssh directory and list the contents:
+[offsite]$ cd .ssh
+[offsite]$ ls -lrt
+id_dsa id_dsa.pub
+We now have a private key (id_dsa) and a public key (id_dsa.pub) in the hidden .ssh directory.
+You can examine the contents of each key file using a text editor such as vi or emacs,
+or simply by using the less or cat commands. You'll notice that the contents consist of
+alphanumeric characters encoded in base64.
+Next, we need to copy and install the public key on servers 1 and 2.
+Do not use ftp. Rather, use the secure copy program to transmit the public keys
+onto each of the remote machines:
+Listing 4. Installing the public keys on the remote servers
+  [offsite]$ scp .ssh/id_dsa.pub accountname@server1.com:offsite.pub
+  accountname@server1.com's password: (enter password, not new
+  passphrase!)
+  id_dsa.pub 100% |*****************************| 614 00:00
+  [offsite]$ scp .ssh/id_dsa.pub accountname@server2.com:offsite.pub
+  accountname@server2.com's password: (enter password, not new
+  passphrase!)
+  id_dsa.pub 100% |*****************************| 614 00:00
+After we install the new public keys, we'll be able to sign on to each machine
+using the passphrase we specified when creating the private and public keys.
+For now, log in to each machine and append the contents of the offsite.pub
+file to a file called authorized_keys, which is stored in each remote machine's .ssh directory.
+We can use a text editor or simply use the cat command to append the offsite.pub
+file's contents onto the authorized_keys file:
+Listing 5. Add offsite.pub to your list of authorized keys
+  [offsite]$ ssh accountname@server1.com
+  accountname@server1.com's password: (enter password, not new
+  passphrase!)
+  [server1]$ cat offsite.pub >> ./ssh/authorized_keys
+The next step involves employing a bit of extra security. First, we change the access rights for the .ssh directory so that only the owner has read, write, and execute privileges. Next, we'll make sure that the authorized_keys file can only be accessed by the owner. And finally, we'll remove the previously uploaded offsite.pub key file, since it's no longer required. It's important to ensure that access permissions are properly set because the OpenSSH server may refuse to use keys which have non-secure access rights.
+Listing 6. Changing permissions with chmod
+  [server1]$ chmod 700 .ssh
+  [server1]$ chmod 600 ./ssh/authorized_keys
+  [server1]$ rm offsite.pub
+  [server1]$ exit
+After completing the same process on server2, we are ready to return to the offsite storage machine to test the new passphrase type access. >From the offsite server you could type the following:
+[offsite]$ ssh -v accountname@server1.com
+Use the -v, or verbose flag option, to display debugging information while verifying that your account is now able to access the remote server using the new passphrase rather than the original password. The debug output displays important information which you might not otherwise see, in addition to offering a high level view of how the authentication process works. You won't need to specify the -v flag on subsequent connections; but it is quite useful to do so while testing a connection.
+Automating machine access using ssh-agent
+The ssh-agent program acts like a gatekeeper, securely providing access to security keys as needed. Once ssh-agent is started, it sits in the background and makes itself available to other OpenSSH applications such as ssh and scp programs. This allows the ssh program to request an already decrypted key, rather than asking you for the private key's secret passphrase each time it's required.
+Let's take a closer look at ssh-agent. When ssh-agent runs it outputs shell commands:
+Listing 7. ssh-agent in action
+  [offsite]$ ssh-agent
+  SSH_AUTH_SOCK=/tmp/ssh-XX1O24LS/agent.14179; export SSH_AUTH_SOCK;
+  SSH_AGENT_PID=14180; export SSH_AGENT_PID;
+  echo Agent pid 14180;
+We can instruct the shell to execute the output commands which ssh-agent displays using the shell's eval command:
+[offsite]$ eval `ssh-agent`
+Agent pid 14198
+The eval command tells the shell to evaluate (execute) the commands generated by the ssh-agent program. Make sure that you specify the back-quote character (`) and not a single quote! Once executed, the eval `ssh-agent` statement will return the agent's process identifier. Behind the scenes, the SSH_AUTH_SOCK and SSH_AGENT_PID shell variables have been exported and are now available. You can view their values by displaying them to the shell console:
+[offsite]$ echo $SSH_AUTH_SOCK
+/tmp/ssh-XX7bhIwq/agent.14197
+The $SSH_AUTH_SOCK (short for SSH Authentication Socket) is the location of a local socket which applications can use to speak to ssh-agent. To ensure that the SSH_AUTH_SOCK and SSH_AGENT_PID variables are always registered, enter the eval `ssh-agent` statement into your ~/.bash_profile.
+ssh-agent has now become a background process which is visible using the top and ps commands.
+Now we're ready to share our passphrase with ssh-agent. To do so, we must use a program called ssh-add, which adds (sends) our passphrase to the running ssh-agent program.
+
+Listing 8. ssh-add for hassle-free login
+  [offsite]$ ssh-add
+  Enter passphrase for /home/accountname/.ssh/id_dsa: (enter passphrase)
+  Identity added: /home/accountname/.ssh/id_dsa
+  (/home/accountname/.ssh/id_dsa)
+
+Now when we access server1, we're not prompted for a passphrase:
+[offsite]$ ssh accountname@server1.com
+[server1]$ exit
+If you're not convinced, try removing (kill -9) the ssh-agent process and reconnecting to server1. This time, you'll notice that server1 will request the passphrase for the private key stored in the id_dsa file in the .ssh directory:
+[offsite]$ kill -9 $SSH_AGENT_PID
+[offsite]$ ssh accountname@server1.com
+Enter passphrase for key '/home/accountname/.ssh/id_dsa':
+Simplifying key access using keychain
+So far, we've learned about several OpenSSH programs (ssh, scp, ssh-agent and ssh-add), and we've created and installed private and public keys to enable a secure and automated login process. You may have realized that most of our setup work only has to be done once. For example, the process of creating the keys, installing them, and getting ssh-agent to execute via a .bash_profile only has to be done once per machine. That's the really good news.
+The less than ideal news is that ssh-add must be invoked each time we sign on to the offsite machine and ssh-agent isn't immediately compatible with the cron scheduling process which we'll need to automate our backups. The reason that cron processes can't communicate with ssh-agent is that cron jobs are executed as child processes by cron and thus do not inherit the $SSH_AUTH_SOCK shell variable.
+Fortunately, there is a solution which not only eliminates limitations associated with ssh-agent and ssh-add, but also allows us to use cron to automate all sorts of processes requiring secure passwordless access to other machines. In his 2001 three-part developerWorks series, OpenSSH key management (see Resources for a link), Daniel Robbins presented a shell script called keychain, which is a front-end to ssh-add and ssh-agent and which simplifies the entire passwordless process. Over time, the keychain script has undergone a number of improvements and is now maintained by Aron Griffis, with a recent 2.3.2-1 release posted on June 17, 2004.
+The keychain shell script is a bit too large to list in this article because the well-written script includes lots of error checking, ample documentation, and a generous serving of cross-platform code. However, keychain can be quickly downloaded from the project's Web site (see Resources for a link).
+Once you download and install keychain, using it is remarkably easy. Simply log in to each machine and add the following two lines to each .bash_profile:
+keychain id_dsa
+. ~/.keychain/$HOSTNAME-sh
+The first time you log back in to each machine, keychain will prompt you for the passphrase. However, keychain won't ask you to reenter the passphrase on subsequent login attempts unless the machine has been restarted. Best of all, cron tasks are now able to use OpenSSH commands to securely access remote machines without requiring the interactive use of passphrases. Now we have the best of both worlds, added security and ease of use.
+
+Listing 9. Initializing keychain on each machine
+  KeyChain 2.3.2; http://www.gentoo.org/projects/keychain
+  Copyright 2002-2004 Gentoo Technologies, Inc.; Distributed under the
+  GPL
+  * Initializing /home/accountname/.keychain/localhost.localdomain-sh
+  file...
+  * Initializing /home/accountname/.keychain/localhost.localdomain-csh
+  file...
+  * Starting ssh-agent
+  * Adding 1 key(s)...
+  Enter passphrase for /home/accountname/.ssh/id_dsa: (enter passphrase)
+
+Scripting a backup process
+Our next task is to create the shell scripts, which will perform the necessary backup operations. The goal is to perform a complete database backup of servers 1 and 2. In our example, each server is running the MySQL database server and we'll use the mysqldump command-line utility to export a few database tables to an SQL import file.
+Listing 10. The dbbackup.sh shell script for server 1
+  #!/bin/sh
+  # change into the backup_agent directory where data files are stored.
+  cd /home/backup_agent
+  # use mysqldump utility to export the sites database tables
+  mysqldump -u sitedb -pG0oDP@sswrd --add-drop-table sitedb --tables
+  tbl_ccode tbl_machine tbl_session tbl_stats > userdb.sql
+  # compress and archive
+  tar czf userdb.tgz userdb.sql
+On server 2, we'll place a similar script which backs up the unique tables present in the site's database. Each script is flagged as executable using:
+[server1]:$ chmod +x dbbackup.sh
+With a dbbackup.sh file on servers 1 and 2, we return to the offsite data server, where we'll create a shell script to invoke each remote dbbackup.sh script prior to initiating a transfer of the compressed (.tgz) data files.
+Listing 11. backup_remote_servers.sh shell script for use on the offsite data server
+  #!/bin/sh
+  # use ssh to remotely execute the dbbackup.sh script on server 1
+  /usr/bin/ssh backup_agent@server1.com "/home/backup_agent/dbbackup.sh"
+  # use scp to securely copy the newly archived userdb.tgz file
+  # from server 1.  Note the use of the date command to timestamp
+  # the file on the offsite data server.
+  /usr/bin/scp backup_agent@server1.com:/home/backup_agent/userdb.tgz
+  /home/backups/userdb-$(date +%Y%m%d-%H%M%S).tgz
+  # execute dbbackup.sh on server 2
+  /usr/bin/ssh backup_agent@server2.com "/home/backup_agent/dbbackup.sh"
+  # use scp to transfer transdb.tgz to offsite server.
+  /usr/bin/scp backup_agent@server2.com:/home/backup_agent/transdb.tgz
+  /home/backups/transdb-$(date +%Y%m%d-%H%M%S).tgz
+The backup_remote_servers.sh shell script uses the ssh command to execute a script on the remote servers. Because we've set up passwordless access, the ssh command is able to execute commands on servers 1 and 2 remotely from the offsite server. The entire authentication process is now handled automatically, thanks to keychain.
+Scheduling
+Our next and final task involves scheduling the execution of the backup_remote_servers.sh shell script on the offsite data storage server. We'll add two entries to the cron scheduling server to request execution of the backup script twice per day, at 3:34 am and again at 8:34 pm. On the offsite server invoke the crontab program with the edit (-e) option.
+[offsite]:$ crontab -e
+The crontab invokes the default editor, as specified using the VISUAL or EDITOR shell environment variables. Next, type two entries and save and close the file.
+
+Listing 12. Crontab entries on the offsite server
+  34 3 * * * /home/backups/remote_db_backup.sh
+  34 20 * * * /home/backups/remote_db_backup.sh
+A crontab line contains two main sections, a time schedule section followed by a command section. The time schedule is divided into fields for specifying when a command should be executed:
+Listing 13. Crontab format
+         +---- minute
+         | +----- hour
+         | | +------ day of the month
+         | | | +------ month
+         | | | | +---- day of the week
+         | | | | | +- command to execute
+         | | | | | |
+        34 3 * * * /home/backups/remote_db_backup.sh
+
+Verifying your backups
+You should routinely check your backups to ensure that the process is working correctly. Automating processes can remove unnecessary drudgery, but should never be a way of escaping due diligence. If your data is worth backing up, then it's also worth spot checking from time to time.
+Consider adding a cron job to remind yourself to check your backups at least once per month. In addition, it's a good idea to change security keys every once in a while, and you can schedule a cron job to remind you of that as well.
+Additional security precautions
+For added security, consider installing and configuring an Intrusion Detection System (IDS), such as Snort, on each machine. Presumably, an IDS will notify you when an intrusion is underway or has recently occurred. With an IDS in place, you'll be able to add other levels of security such as digitally signing and encrypting your backups.
+Popular open source tools such as GNU Privacy Guard (GnuPG), OpenSSL and ncrypt enable securing archive files via shell scripts, but doing so without the extra level of shielding that an IDS provides isn't recommended (see Resources for more information on Snort).
+Conclusion
+This article has shown you how to allow your scripts to execute on remote servers and how to perform secure and automated file transfers. I hope you'll feel inspired to start thinking about protecting your own valuable data and building new solutions using open source tools like OpenSSH and Snort.
+About the author
+ Carlos Justiniano is a software architect with Ecuity, Inc. His interests include communications and distributed computing. Carlos has written for a number of technical journals. He is also the founder and architect for the Linux-based ChessBrain project, which has been awarded a 2005 Guinness World Record involving distributed computation. You can reach him at carlos.justiniano@ecuityinc.com.
+UPDATE AOS.LIB
++ All
+UPDATE AOS.DIST
++ aos.dist/aos.community.server.war
++ aos.dist/aos.db.jar
++ aos.dist/aos.util.jar
+DEPLOY WEBAPP
++ Backup C:\aos.community.server
++ C:\jakarta-tomcat-5.5.7\bin\shutdown.bat
++ Delete C:\aos.community.server
++ Copy aos.dist/aos.community.server.war to C:\
++ Change log4j
++ Dezip
++ Place Context.xml in C:\jakarta-tomcat-5.5.7\conf\
++ Configure conf\web.xml and set <servlet>
+       <servlet-name>default</servlet-name>
+       <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+       <init-param>
+           <param-name>debug</param-name>
+           <param-value>0</param-value>
+       </init-param>
+       <init-param>
+           <param-name>listings</param-name>
+           <param-value>false</param-value>
+       </init-param>
+       <load-on-startup>1</load-on-startup>
+   </servlet>
++ Configure server.xml and set in the <Connector/> tag the URIEncoding="UTF-8" attribute
++ C:\jakarta-tomcat-5.5.7\bin\startup.bat
+CREATE DB
++ !!! Migrate DB
++ Export DB-AOS
++ Backup aos.dist/DB-AOS directory
++ Delete aos.dist/DB-AOS directory
++ Launch AOSDBServerLauncher.bat
++ Launch AOSDBCreatorLauncher.bat
+INSTALL OOo
++ Install Open Office 2.0
++ Set OFFICE_HOME=C:\Program Files\OpenOffice.org 2.0\
++ Set PATH=%OFFICE_HOME%\program\;%PATH%
++ Set CLASSPATH=%OFFICE_HOME%\program\classes\juh.jar
+-------------------------------------------------------------------------------
+| BENCHMARK                                                                   |
+-------------------------------------------------------------------------------
+ab -c 10 -n 100000 http://localhost:8080/app/
+-------------------------------------------------------------------------------
+| GPG                                                                        |
+-------------------------------------------------------------------------------
+http://www.apache.org/dist/james/server/james-binary-2.3.2.tar.gz
+http://www.apache.org/dist/james/server/james-binary-2.3.2.tar.gz.asc
+http://www.apache.org/dist/james/KEYS
+And tried verifying the signature for the download using:
+gpg --import KEYS
+gpg --verify apache-james-2.3.2.tar.gz.asc
+gpg: Signature made Tue 11 Aug 2009 08:35:01 NZST using RSA key ID A6EE6908
+gpg: Can't check signature: public key not found
+This doesn't look good!
+Looking through the KEYS file there doesn't appear to be a key for A6EE6908
+Fetching the key from pgpkeys.mit.edu produces the following:
+gpg --keyserver pgpkeys.mit.edu --recv-key A6EE6908
+gpg: requesting key A6EE6908 from hkp server pgpkeys.mit.edu
+gpg: key A6EE6908: public key "Robert Burrell Donkin (CODE SIGNING KEY) <rdonkin@apache.org>" imported
+gpg: no ultimately trusted keys found
+gpg: Total number processed: 1
+gpg:               imported: 1  (RSA: 1)
+
+And the fingerprint looks like this:
+gpg --fingerprint A6EE6908
+pub   8192R/A6EE6908 2009-08-07
+    Key fingerprint = 597C 729B 0237 1932 E77C  B9D5 EDB8 C082 A6EE 6908
+uid                  Robert Burrell Donkin (CODE SIGNING KEY) <rdonkin@apache.org>
+sub   8192R/B800EFC1 2009-08-07
+[dhcp-78-195-249:~/tmp/gora-0.2] mattmann% gpg --import < KEYS
+gpg: key 3592721E: "Henry Saputra (CODE SIGNING KEY) <hsaputra@apache.org>" not changed
+gpg: key B876884A: "Chris Mattmann (CODE SIGNING KEY) <mattmann@apache.org>" not changed
+gpg: key C601BCA7: public key "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>" imported
+gpg: Total number processed: 3
+gpg:               imported: 1  (RSA: 1)
+gpg:              unchanged: 2
+[dhcp-78-195-249:~/tmp/gora-0.2] mattmann% $HOME/bin/verify_gpg_sigs
+Verifying Signature for file gora-0.2-src.tar.gz.asc
+gpg: Signature made Thu Apr 19 09:04:21 2012 PDT using RSA key ID C601BCA7
+gpg: Good signature from "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 2A23 D53F 8D27 5CB6 91E1  89C1 F45E 7970 C601 BCA7
+Verifying Signature for file gora-0.2-src.zip.asc
+gpg: Signature made Thu Apr 19 09:04:21 2012 PDT using RSA key ID C601BCA7
+gpg: Good signature from "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 2A23 D53F 8D27 5CB6 91E1  89C1 F45E 7970 C601 BCA7
+Verifying Signature for file gora-accumulo-0.2-src.tar.gz.asc
+gpg: Signature made Thu Apr 19 09:39:30 2012 PDT using RSA key ID C601BCA7
+gpg: Good signature from "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 2A23 D53F 8D27 5CB6 91E1  89C1 F45E 7970 C601 BCA7
+Verifying Signature for file gora-accumulo-0.2-src.zip.asc
+gpg: Signature made Thu Apr 19 09:39:30 2012 PDT using RSA key ID C601BCA7
+gpg: Good signature from "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 2A23 D53F 8D27 5CB6 91E1  89C1 F45E 7970 C601 BCA7
+Verifying Signature for file gora-cassandra-0.2-src.tar.gz.asc
+gpg: Signature made Thu Apr 19 09:40:05 2012 PDT using RSA key ID C601BCA7
+gpg: Good signature from "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 2A23 D53F 8D27 5CB6 91E1  89C1 F45E 7970 C601 BCA7
+Verifying Signature for file gora-cassandra-0.2-src.zip.asc
+gpg: Signature made Thu Apr 19 09:40:05 2012 PDT using RSA key ID C601BCA7
+gpg: Good signature from "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 2A23 D53F 8D27 5CB6 91E1  89C1 F45E 7970 C601 BCA7
+Verifying Signature for file gora-core-0.2-src.tar.gz.asc
+gpg: Signature made Thu Apr 19 09:05:59 2012 PDT using RSA key ID C601BCA7
+gpg: Good signature from "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 2A23 D53F 8D27 5CB6 91E1  89C1 F45E 7970 C601 BCA7
+Verifying Signature for file gora-core-0.2-src.zip.asc
+gpg: Signature made Thu Apr 19 09:05:59 2012 PDT using RSA key ID C601BCA7
+gpg: Good signature from "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 2A23 D53F 8D27 5CB6 91E1  89C1 F45E 7970 C601 BCA7
+Verifying Signature for file gora-hbase-0.2-src.tar.gz.asc
+gpg: Signature made Thu Apr 19 09:38:51 2012 PDT using RSA key ID C601BCA7
+gpg: Good signature from "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 2A23 D53F 8D27 5CB6 91E1  89C1 F45E 7970 C601 BCA7
+Verifying Signature for file gora-hbase-0.2-src.zip.asc
+gpg: Signature made Thu Apr 19 09:38:51 2012 PDT using RSA key ID C601BCA7
+gpg: Good signature from "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 2A23 D53F 8D27 5CB6 91E1  89C1 F45E 7970 C601 BCA7
+Verifying Signature for file gora-sql-0.2-src.tar.gz.asc
+gpg: Signature made Thu Apr 19 09:40:41 2012 PDT using RSA key ID C601BCA7
+gpg: Good signature from "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 2A23 D53F 8D27 5CB6 91E1  89C1 F45E 7970 C601 BCA7
+Verifying Signature for file gora-sql-0.2-src.zip.asc
+gpg: Signature made Thu Apr 19 09:40:41 2012 PDT using RSA key ID C601BCA7
+gpg: Good signature from "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 2A23 D53F 8D27 5CB6 91E1  89C1 F45E 7970 C601 BCA7
+Verifying Signature for file gora-tutorial-0.2-src.tar.gz.asc
+gpg: Signature made Thu Apr 19 09:41:16 2012 PDT using RSA key ID C601BCA7
+gpg: Good signature from "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 2A23 D53F 8D27 5CB6 91E1  89C1 F45E 7970 C601 BCA7
+Verifying Signature for file gora-tutorial-0.2-src.zip.asc
+gpg: Signature made Thu Apr 19 09:41:16 2012 PDT using RSA key ID C601BCA7
+gpg: Good signature from "Lewis John McGibbney (CODE SIGNING KEY) <lewismc@apache.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 2A23 D53F 8D27 5CB6 91E1  89C1 F45E 7970 C601 BCA7
+Checksums look good:
+[dhcp-78-195-249:~/tmp/gora-0.2] mattmann% $HOME/bin/verify_md5_checksums
+md5sum: stat '*.bz2': No such file or directory
+gora-0.2-src.tar.gz: OK
+gora-accumulo-0.2-src.tar.gz: OK
+gora-cassandra-0.2-src.tar.gz: OK
+gora-core-0.2-src.tar.gz: OK
+gora-hbase-0.2-src.tar.gz: OK
+gora-sql-0.2-src.tar.gz: OK
+gora-tutorial-0.2-src.tar.gz: OK
+gora-0.2-src.zip: OK
+gora-accumulo-0.2-src.zip: OK
+gora-cassandra-0.2-src.zip: OK
+gora-core-0.2-src.zip: OK
+gora-hbase-0.2-src.zip: OK
+gora-sql-0.2-src.zip: OK
+gora-tutorial-0.2-src.zip: OK
+[dhcp-78-195-249:~/tmp/gora-0.2] mattmann%
+curl -O http://people.apache.org/~jghoman/giraph-0.1.0-incubating-rc0/giraph-0.1.0-incubating-src.tar.gz
+curl -O http://people.apache.org/~jghoman/giraph-0.1.0-incubating-rc0/giraph-0.1.0-incubating-src.tar.gz.asc
+curl -O http://people.apache.org/~jghoman/giraph-0.1.0-incubating-rc0/giraph-0.1.0-incubating-src.tar.gz.md5
+curl -O http://www.apache.org/dist/incubator/giraph/KEYS
+gpg --import KEYS
+gpg: key 3D0C92B9: public key "Owen O'Malley (Code signing) <omalley@apache.org>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1  (RSA: 1)
+gpg: 3 marginal(s) needed, 1 complete(s) needed, PGP trust model
+gpg: depth: 0  valid:   2  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 2u
+$HOME/bin/verify_gpg_sigs
+Verifying Signature for file giraph-0.1.0-incubating-src.tar.gz.asc
+gpg: Signature made Tue Jan 31 14:50:26 2012 PST using RSA key ID FCA366B7
+gpg: Can't check signature: No public key
+gpg --verify giraph-0.1.0-incubating-src.tar.gz.asc giraph-0.1.0-incubating-src.tar.gz
+$HOME/bin/verify_md5_checksums
+md5sum: stat '*.bz2': No such file or directory
+md5sum: stat '*.zip': No such file or directory
+giraph-0.1.0-incubating-src.tar.gz: OK
+MD5
+---
+http://raamdev.com/2008/howto-install-md5sum-sha1sum-on-mac-os-x/
+-------------------------------------------------------------------------------
+| BITTORRENT                                                                 |
+-------------------------------------------------------------------------------
+ctorrent -s 1 -e 12 -C 32 -p 400 -u http://www.sumotracker.org/announce file.torrent
+ctorrent  -d -s out-folder -e 12 -C 32 -i 173.12.23.23 -p 6881 file.torrent
+I needed a command line BitTorrent client for my Fedora Core 6, and started to look for some options, I found ctorrent, which I could see has the options I may need, and as it is written in C should be fast, I know there is another one written in python also.
+Let's see how to install and use this one. (ctorrent)
+First we need to install it.
+yum install ctorrent
+(you will need extras repository for this)
+If you run
+ctorrent
+with no arguments this is what you get.
+CTorrent dnh2 Original code Copyright: YuHong(992126018601033)
+WARNING: THERE IS NO WARRANTY FOR CTorrent. USE AT YOUR OWN RISK!!!
+Generic Options:
+-h/-H Show this message.
+-x Decode metainfo(torrent) file only, don't download.
+-c Check exist only. don't download.
+-v Verbose output (for debugging).
+Download Options:
+-e int Exit while seed hours later. (default 72 hours)
+-E num Exit after seeding to ratio (UL:DL).
+-i ip Listen for connection on ip. (default all ip's)
+-p port Listen port. (default 2706 -> 2106)
+-s save_as Save file/directory/metainfo as...
+-C cache_size Cache size,unit MB. (default 16MB)
+-f Force seed mode. skip hash check at startup.
+-b bf_filename Bit field filename. (use it carefully)
+-M max_peers Max peers count.
+-m min_peers Min peers count.
+-z slice_size Download slice/block size, unit KB. (default 16, max 128).
+-n file_number Which file download.
+-D rate Max bandwidth down (unit KB/s)
+-U rate Max bandwidth up (unit KB/s)
+-P peer_id Set Peer ID [-CD0201-]
+-S host:port Use CTCS server
+Make metainfo(torrent) file Options:
+-t With make torrent. must specify this option.
+-u url Tracker's url.
+-l piece_len Piece length.(default 262144)
+eg.
+hong> ctorrent -s new_filename -e 12 -C 32 -p 6881 eg.torrent
+home page: http://ctorrent.sourceforge.net/
+see also: http://www.rahul.net/dholmes/ctorrent/
+bug report: dholmes@ct.boxmail.com
+original author: bsdi@sina.com
+-------------------------------------------------------------------------------
+| IRC                                                                        |
+-------------------------------------------------------------------------------
+http://webchat.freenode.net/
+-------------------------------------------------------------------------------
+(/connect freenode)
+/server irc.freenode.net
+/join #james
+-------------------------------------------------------------------------------
+IRC Information.....
+
+IRC Class - Basic IRC Commands
+
+    IRC - Internet Relay Chat
+    Helpful Tips
+    Basic IRC Commands 
+
+    
+
+    mIRC Setup Tutorial
+    PIRCH Setup Tutorial 
+
+Just as you are able to surf the net with a few tricks to help make things easier, IRC is very similar. Below you will find some of the more common IRC commands that we use often. For a far more complete list, please visit our mIRC Commands page.
+
+/join
+    Type /join #channelname -- to join a channel of your choice 
+    Example: /join #bossmom 
+    What it looks like: 
+      
+    [18:44] *** Now talking in #beginner 
+    --Op-- bossmom has joined the channel 
+    [18:44] *** Topic is 'Beginner's Help/Chat Channel....All Are Welcome Here!! ®© [ENGLISH]' 
+    [18:44] *** Set by X on Sun Jul 23 16:10:34
+
+/me
+    The /me is an action message. 
+    Type /me 'does anything' 
+    Example: /me waves hello 
+    What it looks like: 
+    * bossmom waves hello
+
+/msg
+    Type /msg nickname (message) to start a private chat. 
+    Example: /msg puddytat Hey tat, how are you? 
+    What it looks like: 
+    -> *puddytat* Hey tat, how are you?
+
+/nick
+    /nick changes your nickname 
+    Example: type /nick newnickname (limit 9 characters) 
+    What it looks like: I typed /nick luv2quilt 
+    *** bossmom is now known as luv2quilt
+
+/notice
+    A notice is used to send a short message to another person without opening up a private window. 
+    Type /notice nickname (message) 
+    Example: /notice badnick Please change your nickname for this family channel. 
+    What it looks like: 
+    -> -badnick- Please change your nickname for this family channel. 
+/part
+    Type /part -- to leave one channel 
+    Type /partall -- to leave all the channels you are in
+
+/ping
+    Type /ping nickname. What this command does is give you the ping time, or lag time, between you and the person you pinged. Lag can be explained as the amount of time it takes for you to type your message and for others to read your messages. Unfortunately, lag is always a part of IRC, although most times it's not a problem, just a nuisance. 
+    Example: /ping luv2quilt 
+    What it looks like: 
+    [19:04] -> [luv2quilt] PING 
+    [19:04] [luv2quilt PING reply]: 0secs
+
+/query
+    Similar to the /msg, except it forces a window to pop open. 
+    Type /query nickname (message) 
+    Example: /query Sofaspud^ Sooo....what's new? 
+    What it looks like: 
+    <luv2quilt> soooo....what's new?
+
+/quit
+    Type /quit to leave IRC altogether. This disconnects mirc from the server. 
+    Example: /quit Going out for dinner...nite all 
+    What it looks like: 
+    *** Quits: saca (Leaving)
+
+/ignore
+    Unfortunately, there will be times when you don't want to talk to someone, or else someone may be harassing you. 
+    By typing /ignore nickname 3, you will not receive anymore messages from that person. 
+    Example: /ignore luv2quilt 3 
+    To Unignore them, type /ignore -r luv2quilt 3 
+    What it looks like: 
+    *** Added *!*bossmom@*.dialup.netins.net to ignore list 
+    *** Removed *!*bossmom@*.dialup.netins.net from ignore list
+
+/whois
+    Type /whois nickname to see a bit more information about another user. You'll see what server another person is using, or what their ISP is. Pretty helpful when you don't recognize a nickname that wants to chat. You may recognize the IP, (Internet Protocol) and then feel more comfortable carrying on a conversation. You'll also be able to see what other channels a person is in, which might be a good indicator if you really want to talk with them or not. 
+    Example: /whois bossmom 
+    What it looks like: 
+    luv2quilt is bossmom@elwo-01-094.dialup.netins.net * Enjoy the Journey........ 
+    luv2quilt on @#bossmom 
+    luv2quilt using Seattle.WA.US.Undernet.org the time for school is during a recession. 
+    luv2quilt has been idle 18secs, signed on Sun Jul 23 18:47:26 
+    luv2quilt End of /WHOIS list.
+
+/chat
+    This opens up a DCC/CHAT window to another user. What's nice about these is that you can continue to chat even if you get disconnected from your server. 
+    Word of Caution: Do NOT accept dcc/chats nor dcc/gets from anyone that you don't know. 
+    Type /chat nickname. 
+    Example: /chat oddjob^ 
+    What it looks like: 
+    Chat with oddjob^ 
+    Waiting for acknowledgement...
+
+/help
+    There's one more very helpful command, and probably the one you'll use a lot when first starting out. In fact, I still use it quite a lot, and that's the built-in help menu of mIRC. 
+    Type /help, you'll see the the mIRC Help Menu open up. You can do a search from there, or you can type /help topic. Either way, a TON of information at your fingertips. 
+    Example: /help Basic IRC Commands 
+
+You are doing great so far. If you haven't yet read some Basic IRC Tips, I'd encourage you to take a peek, otherwise we are ready to setup your IRC client. Please choose one of the following clients you would like to learn:
+
+    mIRC Setup Tutorial
+    PIRCH Setup Tutorial 
+
+Let's move on with the next step -- getting online with IRC :) 
+-------------------------------------------------------------------------------
+| MAC OSX                                                                     |
+-------------------------------------------------------------------------------
++ iTerm2
+-------------------------
+For Internet Recovery mode on boot by pressing CMD+OPTION(ALT)+R. you need to press before hearing the booting sound.
+-------------------------
+MAC-BE-KEYBOARD on UBUNTU
+-------------------------
+{ = ALT + (
+[ = SHIFT + ALT + (
+| = SHIFT + ALT + L
+~ = (FN +) ALT + N(-N)
+\ = ALT + SFT + /
+DELETE = FN BACKSPACE
+ALT TAB Swich between applications
+ALT @ Switch between windows
+------------------------- 
+-------
+NETWORK
+-------
+sudo scutil --set HostName eric
+----------
+SPOTLIGHT
+---------
+sudo mdutil -a -i off
+sudo su
+chmod 0000 /Library/Spotlight
+chmod 0000 /System/Library/Spotlight
+chmod 0000 /System/Library/CoreServices/Search.bundle
+chmod 0000 /System/Library/PreferencePanes/Spotlight.prefPane
+chmod 0000 /System/Library/Services/Spotlight.service
+chmod 0000 /System/Library/Contextual Menu Items/SpotlightCM.plugin
+chmod 0000 /System/Library/StartupItems/Metadata
+chmod 0000 /usr/bin/mdimport
+chmod 0000 /usr/bin/mdcheckschema
+chmod 0000 /usr/bin/mdfind
+chmod 0000 /usr/bin/mdls
+chmod 0000 /usr/bin/mdutil
+chmod 0000 /usr/bin/md
+After a reboot, open a new Terminal and do sudo su to make a root shell, then:
+rm -r /.Spotlight-V100
+rm -r /private/var/tmp/mds
+exit
+sudo mdutil -E /
+--------------
+/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app
+--------------
+SCREEN RECORD
+--------------
+...
+---------------------------------------
+Screen Capture #screenshot #printscreen
+---------------------------------------
+Switch to the screen that you wan to to do screen capture
+Hold down Apple key ⌘ + Shift + 3 and release all
+then use your mouse to click on the screen
+Done. You will see a picture file in at your desktop. That’s the screen capture picture.
+You can also do a screen capture for a portion of your screen.
+Switch to the screen that you wan to to do screen capture
+Hold down Apple key ⌘ + Shift + 4 and release all key
+-------------------------------------------------------------------------------
+| ANDROID                                                                     |
+-------------------------------------------------------------------------------
+mkdir android ; cd android ; repo init -u git://android.git.kernel.org/platform/manifest.git ; repo sync ; make"
+-------------------------------------------------------------------------------
+| CHROMIUM                                                                    |
+-------------------------------------------------------------------------------
+javascript:(function(){ window.location.href='url1'; window.open('url2');})();
+-------------------------------------------------------------------------------
+| SPAM ASSASSIN                                                               |
+-------------------------------------------------------------------------------
+apache-james roy.james@xemaps.com
+http://wiki.apache.org/spamassassin/Rules/SL_HELO_NON_FQDN_1
+http://wiki.apache.org/spamassassin/Rules/HELO_LOCALHOST
+http://wiki.apache.org/spamassassin/Rules/RCVD_NUMERIC_HELO
+http://wiki.apache.org/spamassassin/Rules/SPF_NEUTRAL
+-------------------------------------------------------------------------------
+| GRAPHITE                                                                    |
+-------------------------------------------------------------------------------
+echo "gaugor:333|g" | nc -u graphite.qutics.com 8125
+https://github.com/etsy/statsd
+-------------------------------------------------------------------------------
+| AWS                                                                         |
+-------------------------------------------------------------------------------
+When you boot an Amazon Linux EC2 instance it boots with a 8GB EBS volume.
+If you need more space you need to add additional drives. For this you need to use EBS volumes.
+Before you start the process please have look at the current partition blocks loaded in your server. 
+You can do so using the contents of partition file.
+
+# cat /proc/partitions
+major minor  #blocks  name 
+202        1    8388608 xvda1
+
+Now you goto EBS volume manager in AWS console and create a new volume, make sure the zone is the same in which your EC2 instance is running.
+Once the volume is created you need to attach this to an instance. 
+You can right click on the created volume and say attach. Select the instance then device will populate automatically, you can either leave it or change if you need specific device name.
+Now check the partition file again. You can see a new device being added.
+
+# cat /proc/partitions
+major minor  #blocks  name 
+202        1    8388608 xvda1
+202      128   26214400 xvdf
+
+The volume attached is not ready for use. 
+It is like a new hard disk. You need to partition and format the same. 
+In our case I am going to use the full disk as one partition. 
+So I am going to skip the fdisk setup and jumping right into formatting the volume.
+
+# sudo mkfs.ext3 /dev/xvdf
+mke2fs 1.41.12 (17-May-2010)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+Stride=0 blocks, Stripe width=0 blocks
+1638400 inodes, 6553600 blocks
+327680 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=4294967296
+200 block groups
+32768 blocks per group, 32768 fragments per group
+8192 inodes per group
+Superblock backups stored on blocks:
+    32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208, 4096000
+Writing inode tables: done                            
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information: done
+ This filesystem will be automatically checked every 21 mounts or
+180 days, whichever comes first.  Use tune2fs -c or -i to override.
+
+The format process can take few seconds just be patient.
+The drive is ready to use, and to do the same we need mount it.
+-------------------------------------------------------------------------------
+sudo apt-get install apache2
+sudo mkdir /vol
+sudo mount /dev/xvdf /vol
+sudo cp /vol/000-default /etc/apache2/sites-enabled/
+cat /vol/hosts
+sudo vi /etc/hosts
+---
+10.47.144.106 echarles.net www.echarles.net blog.echarles.net edmond.echarles.net eleonore.echarles.net
+10.47.144.106 ibayart.com www.ibayart.com blog.ibayart.com
+10.47.144.106 u-mangate.com www.u-mangate.com blog.u-mangate.com
+10.47.144.106 aos.io www.aos.io blog.aos.io
+10.47.144.106 datashield.io www.datashield.io blog.datashield.io
+10.47.144.106 datalayer.io www.datalayer.io blog.datalayer.io
+10.47.144.106 datalayer.be www.datalayer.be blog.datalayer.be
+10.47.144.106 place.io www.place.io blog.place.io
+10.47.144.106 tipi.io www.tipi.io blog.tipi.io
+10.47.144.106 placestory.com www.placestory.com blog.placestory.com
+10.47.144.106 socialitude.com www.socialitude.com blog.socialitude.com
+
+10.47.144.106 www.cib-bic.be www.cib-sa.be
+10.47.144.106 www.credit-regional-wallon.be
+---
+vi /root/.bashrc
+source /vol/.bash_profile
+---
+cd /vol
+ls
+lost+found
+df
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/xvda1             8256952   1298868   6874200  16% /
+tmpfs                  3826296         0   3826296   0% /dev/shm
+/dev/xvdf             25803068    176196  24316152   1% /vol
+
+If you wish this device to mount automatically when you reboot the server make sure you add this to your /etc/fstab file.
+/dev/xvdf  /vol/    ext3    noatime,nodiratime        0   0
+
+# more /etc/fstab
+LABEL=cloudimg-rootfs   /    ext4   defaults    0 0
+/dev/xvdf /vol auto noatime 0 0
+-------------------------------------------------------------------------------
+cd /
+rm -fr /opt # if needed...
+sudo ln -s /vol opt
+sudo ln -s /opt/env a
+cd /var
+sudo ln -s /opt/var-data data
+cd 
+ln -s /opt/env/dot-aos .aos
+ln -s /opt/env/bash_profile .bash_profile
+placestory-store-reset-restart.sh
+jps
+-------------------------------------------------------------------------------
+ssh-keygen -t rsa -P ""
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+ssh localhost
+-------------------------------------------------------------------------------
+| S3                                                                          |
+-------------------------------------------------------------------------------
+http://www.slideshare.net/echarles/savedfiles?s_title=storm-distributed-and-faulttolerant-realtime-computation&user_login=nathanmarz
+http://s3.amazonaws.com/ppt-download/storm-strange-loop-110920101342-phpapp01.pdf?response-content-disposition=attachment&Signature=1jx8dEs5XsAUwVzFuxAbcR8Uqq8%3D&Expires=1354693255&AWSAccessKeyId=AKIAIW74DRRRQSO4NIKA
+-------------------------------------------------------------------------------                                                    
+ _____         _ _ 
+|  _  |___ ___|_|_|
+|     |_ -|  _| | |
+|__|__|___|___|_|_|
+                   
+ #ascii                   
+-------------------------------------------------------------------------------                                                    
+Character   Hex Value   Decimal Value   Symbol
+NewLine     -   -   <NL>
+WhiteSPace  -   -   <WSP>
+KanjiSPace (WideSpace)  -   -   <KSP>
+NULL    00  0   <NULL>
+StartOfHeading  01  1   <SOH>
+StartofTeXt     02  2   <STX>
+EndofTeXt   03  3   <ETX>
+EndOfTrans.     04  4   <EOT>
+ENQuiry     05  5   <ENQ>
+ACKnowlege  06  6   <ACK>
+BELL    07  7   <BELL>
+BackSpace   08  8   <BS>
+HorizTab    09  9   <HT>
+LineFeed    0A  10  <LF>
+VerticalTab     0B  11  <VT>
+FormFeed    0C  12  <FF>
+CarriageReturn  0D  13  <CR>
+ShiftOut    0E  14  <SO>
+ShiftIn     0F  15  <SI>
+DataLinkEscape  10  16  <DLE>
+DeviceControl1  11  17  <DC1>
+DeviceControl2  12  18  <DC2>
+DeviceControl3  13  19  <DC3>
+DeviceControl4  14  20  <DC4>
+NegativeAcK     15  21  <NAK>
+SYNchron.Idle   16  22  <SYNI>
+EndTransBlock   17  23  <ETB>
+CANcel  18  24  <CAN>
+EndofMedium     19  25  <EM>
+SUBstitute  1A  26  <SUB>
+ESCape  1B  27  <ESC>
+FileSeparator   1C  28  <FS>
+GroupSeparator  1D  29  <GS>
+RecordSep.  1E  30  <RS>
+UnitSeparator   1F  31  <US>
+SPace   20  32  <SP>
+!   21  33  -
+"   22  34  -
+#   23  35  -
+$   24  36  -
+%   25  37  -
+&   26  38  -
+'   27  39  -
+(   28  40  -
+)   29  41  -
+*   2A  42  -
++   2B  43  -
+,   2C  44  -
+-   2D  45  -
+.   2E  46  -
+/   2F  47  -
+0   30  48  -
+1   31  49  -
+2   32  50  -
+3   33  51  -
+4   34  52  -
+5   35  53  -
+6   36  54  -
+7   37  55  -
+8   38  56  -
+9   39  57  -
+:   3A  58  -
+;   3B  59  -
+<   3C  60  -
+=   3D  61  -
+>   3E  62  -
+?   3F  63  -
+@   40  64  -
+A   41  65  -
+B   42  66  -
+C   43  67  -
+D   44  68  -
+E   45  69  -
+F   46  70  -
+G   47  71  -
+H   48  72  -
+I   49  73  -
+J   4A  74  -
+K   4B  75  -
+L   4C  76  -
+M   4D  77  -
+N   4E  78  -
+O   4F  79  -
+P   50  80  -
+Q   51  81  -
+R   52  82  -
+S   53  83  -
+T   54  84  -
+U   55  85  -
+V   56  86  -
+W   57  87  -
+X   58  88  -
+Y   59  89  -
+Z   5A  90  -
+[   5B  91  -
+\   5C  92  -
+]   5D  93  -
+^   5E  94  -
+_   5F  95  -
+`   60  96  -
+a   61  97  -
+b   62  98  -
+c   63  99  -
+d   64  100     -
+e   65  101     -
+f   66  102     -
+g   67  103     -
+h   68  104     -
+i   69  105     -
+J   6A  106     -
+k   6B  107     -
+l   6C  108     -
+m   6D  109     -
+n   6E  110     -
+o   6F  111     -
+p   70  112     -
+q   71  113     -
+r   72  114     -
+s   73  115     -
+t   74  116     -
+u   75  117     -
+v   76  118     -
+w   77  119     -
+x   78  120     -
+y   79  121     -
+z   7A  122     -
+{   7B  123     -
+|   7C  124     -
+}   7D  125     -
+~   7E  126     -
+DELete  7F  127     -
+-------------------------------------------------------------------------------

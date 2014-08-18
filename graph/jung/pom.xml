@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the AOS Community (AOS) under one or more
+  contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The AOS licenses this file
+  to you under the Apache License, Version 2.0 (the 
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>datalayer-graph-jung</artifactId>
+  <name>Datalayer Graph JUNG</name>
+  <packaging>jar</packaging>
+  <parent>
+    <groupId>io.datalayer</groupId>
+    <artifactId>datalayer-graph</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>..</relativePath>
+  </parent>
+  <dependencies>
+      <dependency>
+        <groupId>net.sf.jung</groupId>
+        <artifactId>jung-api</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.jung</groupId>
+        <artifactId>jung-visualization</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.jung</groupId>
+        <artifactId>jung-graph-impl</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.jung</groupId>
+        <artifactId>jung-algorithms</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.jung</groupId>
+        <artifactId>jung-io</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.jung</groupId>
+        <artifactId>jung-3d</artifactId>
+      </dependency>
+<!--       <dependency> -->
+<!--         <groupId>java3d</groupId> -->
+<!--         <artifactId>j3d-core-utils</artifactId> -->
+<!--       </dependency> -->
+      <dependency>
+        <groupId>net.sf.jung</groupId>
+        <artifactId>jung-jai</artifactId>
+      </dependency>
+  </dependencies>
+</project>

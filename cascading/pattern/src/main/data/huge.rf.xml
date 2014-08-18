@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<PMML version="4.1" xmlns="http://www.dmg.org/PMML-4_1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dmg.org/PMML-4_1 http://www.dmg.org/v4-1/pmml-4-1.xsd">
+ <Header copyright="Copyright (c) 2014 eric" description="Random Forest Tree Model">
+  <Extension name="user" value="eric" extender="Rattle/PMML"/>
+  <Application name="Rattle/PMML" version="1.4"/>
+  <Timestamp>2014-05-15 16:15:29</Timestamp>
+ </Header>
+ <DataDictionary numberOfFields="4">
+  <DataField name="label" optype="categorical" dataType="string">
+   <Value value="0"/>
+   <Value value="1"/>
+  </DataField>
+  <DataField name="var0" optype="continuous" dataType="double"/>
+  <DataField name="var1" optype="continuous" dataType="double"/>
+  <DataField name="var2" optype="continuous" dataType="double"/>
+ </DataDictionary>
+ <MiningModel modelName="randomForest_Model" functionName="classification">
+  <MiningSchema>
+   <MiningField name="label" usageType="predicted" invalidValueTreatment="asIs"/>
+   <MiningField name="var0" usageType="active" invalidValueTreatment="asIs"/>
+   <MiningField name="var1" usageType="active" invalidValueTreatment="asIs"/>
+   <MiningField name="var2" usageType="active" invalidValueTreatment="asIs"/>
+  </MiningSchema>
+  <Output>
+   <OutputField name="Predicted_label" feature="predictedValue"/>
+   <OutputField name="Probability_0" optype="continuous" dataType="double" feature="probability" value="0"/>
+   <OutputField name="Probability_1" optype="continuous" dataType="double" feature="probability" value="1"/>
+  </Output>
+  <Segmentation multipleModelMethod="majorityVote">
+   <Segment id="1">
+    <True/>
+    <TreeModel modelName="randomForest_Model" functionName="classification" algorithmName="randomForest" splitCharacteristic="binarySplit">
+     <MiningSchema>
+      <MiningField name="label" usageType="predicted" invalidValueTreatment="asIs"/>
+      <MiningField name="var0" usageType="active" invalidValueTreatment="asIs"/>
+      <MiningField name="var1" usageType="active" invalidValueTreatment="asIs"/>
+      <MiningField name="var2" usageType="active" invalidValueTreatment="asIs"/>
+     </MiningSchema>
+     <Node id="1">
+      <True/>
+      <Node id="2">
+       <SimplePredicate field="var0" operator="lessOrEqual" value="0.5"/>
+       <Node id="4" score="1">
+        <SimplePredicate field="var2" operator="lessOrEqual" value="0.5"/>
+       </Node>
+       <Node id="5" score="0">
+        <SimplePredicate field="var2" operator="greaterThan" value="0.5"/>
+       </Node>
+      </Node>
+      <Node id="3">
+       <SimplePredicate field="var0" operator="greaterThan" value="0.5"/>
+       <Node id="6" score="0">
+        <SimplePredicate field="var1" operator="lessOrEqual" value="0.5"/>
+       </Node>
+       <Node id="7" score="1">
+        <SimplePredicate field="var1" operator="greaterThan" value="0.5"/>
+       </Node>
+      </Node>
+     </Node>
+    </TreeModel>
+   </Segment>
+   <Segment id="2">
+    <True/>
+    <TreeModel modelName="randomForest_Model" functionName="classification" algorithmName="randomForest" splitCharacteristic="binarySplit">
+     <MiningSchema>
+      <MiningField name="label" usageType="predicted" invalidValueTreatment="asIs"/>
+      <MiningField name="var0" usageType="active" invalidValueTreatment="asIs"/>
+      <MiningField name="var1" usageType="active" invalidValueTreatment="asIs"/>
+      <MiningField name="var2" usageType="active" invalidValueTreatment="asIs"/>
+     </MiningSchema>
+     <Node id="1">
+      <True/>
+      <Node id="2" score="0">
+       <SimplePredicate field="var1" operator="lessOrEqual" value="0.5"/>
+      </Node>
+      <Node id="3" score="1">
+       <SimplePredicate field="var1" operator="greaterThan" value="0.5"/>
+      </Node>
+     </Node>
+    </TreeModel>
+   </Segment>
+  </Segmentation>
+ </MiningModel>
+</PMML>

@@ -1,0 +1,120 @@
+-------------------------------------------------------------------------------
+ ____      _       _                    _____     _____ _____ __       _____       _             
+|    \ ___| |_ ___| |___ _ _ ___ ___   |   | |___|   __|     |  |     |  |  |___ _| |___ ___ ___ 
+|  |  | .'|  _| .'| | .'| | | -_|  _|  | | | | . |__   |  |  |  |__   |     | .'| . | . | . | . |
+|____/|__,|_| |__,|_|__,|_  |___|_|    |_|___|___|_____|__  _|_____|  |__|__|__,|___|___|___|  _|
+                        |___|                             |__|                              |_|  
+                        
+ #datalayer-hadoop
+-------------------------------------------------------------------------------
+BUILD+DEPLOY HADOOP-3
+-------------------------------------------------------------------------------
+dly-hadoop-build-deploy
+-------------------------------------------------------------------------------
+BUILD HADOOP 1.x
+-------------------------------------------------------------------------------
+ant clean package -Dforrest.home=$FORREST_HOME
+-------------------------------------------------------------------------------
+BUILD HADOOP 2.x
+-------------------------------------------------------------------------------
+svn checkout https://svn.apache.org/repos/asf/hadoop/common/trunk hadoop.svn
+git clone https://github.com/apache/hadoop-common.git hadoop.git
+-------------------------------------------------------------------------------
+INSTALL HADOOP 1
+-------------------------------------------------------------------------------
+cd /opt/hadoop-1.2.1/bin
+cp /t/data/nosql/hadoop/common/src/main/resources/io/aos/hadoop/h1/distributed/* ../conf
+cp /t/data/nosql/hadoop/common/src/main/resources/io/aos/hadoop/h1/local/* ../conf
+start-all.sh
+-------------------------------------------------------------------------------
+FORMAT NAMENODE
+-------------------------------------------------------------------------------
+rm -fr /var/data/hadoop-3.0.0-*
+hadoop namenode -format AosCluster
+-------------------------------------------------------------------------------
+START HADOOP
+-------------------------------------------------------------------------------
+start-dfs.sh
+start-yarn.sh
+-------------------------------------------------------------------------------
+STOP HADOOP
+-------------------------------------------------------------------------------
+stop-yarn.sh
+stop-dfs.sh
+-------------------------------------------------------------------------------
+JPS
+-------------------------------------------------------------------------------
++ NameNode
++ SecondaryNameNode
++ JobTracker
++ TaskTracker
++ DataNode
+-------------------------------------------------------------------------------
++ HdfsDataNode
++ HdfsNameNode
++ YarnResourceManager
++ YarnNodeManager
++ MapReduceJobHistory
++ HdfsNameNodeSecondary
+-------------------------------------------------------------------------------
+WEB UI
+-------------------------------------------------------------------------------
++ hdfs namenode               http://localhost:50070
++ hdfs namenode explorer      http://localhost:50070/explorer.html
++ namenode-browser            http://localhost:50075
++ secondary-namenode          http://localhost:50090
++ resource-manager            http://localhost:8088
++ application-status          http://localhost:8089/proxy/<app-id>
++ resource-node-manager       http://localhost:8042
++ resource-manager-tracker    http://localhost:9999 ???
++ mapreduce-jobhistory-server http://localhost:19888
+---
+(+ mapreduce jobtracker       http://localhost:50030 (only for pre-hadoop2))
+(+ mapreduce tasktracker(s)   http://localhost:50060)
+-------------------------------------------------------------------------------
+STARTUP
+-------------------------------------------------------------------------------
+# Start the HDFS with the following command, run on the designated NameNode:
+$HADOOP_HOME/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs start namenode
+# Start the secondary namenode:
+$HADOOP_HOME/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs start secondarynamenode
+# Run a script to start DataNodes on all slaves:
+$HADOOP_HOME/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs start datanode
+# Start the YARN with the following command, run on the designated ResourceManager:
+$HADOOP_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR start resourcemanager
+# Run a script to start NodeManagers on all slaves:
+$HADOOP_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR start nodemanager
+# Start a standalone WebAppProxy server. If multiple servers are used with load balancing it should be run on each of them:
+$HADOOP_HOME/sbin/yarn-daemon.sh start proxyserver --config $HADOOP_CONF_DIR
+# Start the MapReduce JobHistory Server with the following command, run on the designated server:
+$HADOOP_HOME/sbin/mr-jobhistory-daemon.sh start historyserver --config $HADOOP_CONF_DIR
+-------------------------------------------------------------------------------
+SHUTDOWN
+-------------------------------------------------------------------------------
+# Stop the MapReduce JobHistory Server with the following command, run on the designated server:
+$HADOOP_HOME/sbin/mr-jobhistory-daemon.sh stop historyserver --config $HADOOP_CONF_DIR
+# Stop the WebAppProxy server. If multiple servers are used with load balancing it should be run on each of them:
+$HADOOP_HOME/sbin/yarn-daemon.sh stop proxyserver --config $HADOOP_CONF_DIR
+# Run a script to stop NodeManagers on all slaves:
+$HADOOP_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR stop nodemanager
+# Stop the ResourceManager with the following command, run on the designated ResourceManager:
+$HADOOP_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR stop resourcemanager
+# Run a script to stop DataNodes on all slaves:
+$HADOOP_HOME/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs stop datanode
+# Stop the secondary namenode:
+$HADOOP_HOME/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs stop secondarynamenode
+#Stop the NameNode with the following command, run on the designated NameNode:
+$HADOOP_HOME/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs stop namenode
+-------------------------------------------------------------------------------
+BUILD HADOOP WEB SITE
+-------------------------------------------------------------------------------
+mvn site; mvn site:stage -DstagingDirectory=/tmp/hadoop-site
+-------------------------------------------------------------------------------
+TEST MAPREDUCE JOB
+-------------------------------------------------------------------------------
+hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.0-SNAPSHOT.jar wordcount /gutenberg /gutenberg-out-1
+-------------------------------------------------------------------------------
+REMOTE DEBUGGING
+-------------------------------------------------------------------------------
+export HADOOP_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000"
+-------------------------------------------------------------------------------

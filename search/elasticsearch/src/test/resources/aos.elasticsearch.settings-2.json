@@ -1,0 +1,35 @@
+{
+    "number_of_shards": {{num_shards}},
+    "number_of_replicas": {{num_replicas}},    
+    "analysis": {
+	       "analyzer": {
+	           "base": {
+	               "type": "custom",
+	               "tokenizer": "keyword",
+	               "filter": ["lowercase", {"length" : {"max": 256}}]
+	               },
+	           "url": {
+	               "type": "custom",
+	               "tokenizer": "keyword",
+	               "filter": ["lowercase", {"length" : {"max": 512}}]
+	               },
+	           "aos_url": {
+	                  "type": "custom",
+	                  "tokenizer" : "keyword",
+	                  "filter" : ["aos_protocol_stripper", "aos_querystring_stripper"]
+	               }
+	           },
+	       "filter": {
+	            "aos_querystring_stripper": {
+	                  "type" : "pattern_replace",
+	                  "pattern" : "\\/$|\\/?\\?.*$",
+	                  "replacement" : ""
+	            },
+	            "aos_protocol_stripper": {
+	                  "type" : "pattern_replace",
+	                  "pattern" : "^((http|https)\\:\\/\\/)?(www\\.)?",
+	                  "replacement" : ""
+	            }
+	       }
+	    }
+}

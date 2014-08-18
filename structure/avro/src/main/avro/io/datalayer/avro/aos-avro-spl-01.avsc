@@ -1,0 +1,26 @@
+[
+  {
+    "type": "record",
+    "namespace": "io.datalayer.avro",
+    "name": "AvroSimple01",
+    "doc": "A pair of strings",
+    "fields": [
+        {"name": "left", "type": "string", "default" : "null"},
+        {"name": "right", "type": "string", "default" : "null"}
+    ]
+  },
+  {
+    "type": "record",
+    "namespace": "io.datalayer.avro",
+    "name": "AvroComplex01",
+    "doc": "Reuse a defined type",
+    "fields": [
+        {"name": "simple", "type": "AvroSimple01"},
+        {"name": "strings", "type": 
+          {"type": "array", 
+           "items": "string"
+          }
+        }
+     ]
+  }
+]

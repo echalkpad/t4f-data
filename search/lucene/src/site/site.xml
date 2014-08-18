@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/DECORATION/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.1.0 http://maven.apache.org/xsd/decoration-1.1.0.xsd"
+  name="${project.name}">
+
+  <version position="none" />
+
+  <bannerLeft>
+    <name>${project.name}</name>
+    <src>https://secure.gravatar.com/avatar/aa39ba1c8bc579bea1099773150f570c</src>
+<!--     <src>/images/aos.png</src> -->
+    <height>40px</height>
+    <href>${project.url}</href>
+    <alt>AOS Logo</alt>
+  </bannerLeft>
+
+  <custom>
+    <fluidoSkin>
+      <topBarEnabled>false</topBarEnabled>
+      <navBarStyle>navbar-inverse</navBarStyle>
+      <topBarContainerStyle>width: 90%;</topBarContainerStyle>
+      <sideBarEnabled>true</sideBarEnabled>
+      <googlePlusOne />
+      <facebookLike />
+      <googleSearch>
+        <sitesearch>${project.url}</sitesearch>
+      </googleSearch>
+      <gitHub>
+        <projectId>echarles/t4f-essentials</projectId>
+        <ribbonOrientation>right</ribbonOrientation>
+        <ribbonColor>red</ribbonColor>
+      </gitHub>
+<!--       <ohloh> -->
+<!--         <projectId>???</projectId> -->
+<!--         <widget>factoids</widget> -->
+<!--       </ohloh> -->
+    </fluidoSkin>
+  </custom>
+
+  <body>
+
+    <menu name="${project.name}">
+      <item name="Migrate"           href="./migrate-4.1.html" />
+    </menu>
+
+    <menu ref="reports" />
+
+    <footer>
+      <div class="row span12">
+       AOS, the AOS logo are trademarks of The AOS Community.
+       All other marks mentioned may be trademarks or registered trademarks of their respective owners.</div>
+    </footer>
+    
+  </body>
+
+</project>

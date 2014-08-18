@@ -1,0 +1,22 @@
+-------------------------------------------------------------------------------
++ use mahout
+-------------------------------------------------------------------------------
++ increase accuracy or precision (minimizing false positives)
++ increase coverage or recall    (minimizing false negatives)
++ clustering
+++ k-means
+++ knn
++ non-linear / unbalanced data >> MR or DB-Scan clustering
+-------------------------------------------------------------------------------
+books on complex systems
++ Melanie Mitchell: Complexity a Guided Tour
++ Miller, John, and Scott E Page Complex Adaptive Social Systems
++ Mitchell Waldrop Complexity: the emerging science at the edge of order and chaos
++ Newman, Mark ``Complex Systems: A Survey' Am. J. Phys. 79, 800-810 (2011)
+-------------------------------------------------------------------------------
+videos on complex systems
++ Scott E Page Understanding Complexity – The Great Courses
++ [http://www.thegreatcourses.com/tgc/courses/course_detail.aspx?cid=5181]
++ Geoff West: Scaling Laws [http://www.youtube.com/watch?v=uEB4p9qbliE]
++ Deborah Gordon: Ants [http://www.youtube.com/watch?v=uEB4p9qbliE]
+-------------------------------------------------------------------------------

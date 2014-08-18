@@ -1,0 +1,79 @@
+{
+    "sdp_v" : {
+    	"_source" : {
+    		"compression" : true
+    	},
+        "dynamic_templates" : [
+        	{
+        		"url_list_template" : {
+        			"match" : "urls",
+        			"mapping" : {
+        				"type" : "object"
+        			}
+        		}
+        	},
+        	{
+        		"conversion_location_template" : {
+        			"match" : "conversionlocations",
+        			"mapping" : {
+        				"type" : "object"
+        			}
+        		}
+        	},
+            {
+                "url_template" : {
+                    "match" : "*url",
+                    "mapping" : {
+                        "type" : "multi_field",
+                        "fields" : {
+                            "url" : {
+                                "type" : "string", 
+                                "analyzer" : "aos_url"
+                             },
+                            "domain" : {
+                                "type" : "string", 
+                                "analyzer" : "aos_url_domain"
+                            }
+                         }
+                    }
+                }
+             },
+             {
+                "referrerurl_template" : {
+                    "match" : ".*referrer$",
+                    "match_pattern" : "regex",
+                    "mapping" : {
+                        "type" : "string",
+                        "analyzer" : "aos_url"
+                    }
+                }
+             },
+             {
+                "ef_url_template" : {
+                	"match" : "locationlasturl",
+                	"mapping" : {
+                	    "type" : "string",
+                		"analyzer" : "aos_url"
+                	}
+                }
+             },
+             {
+                "ef_text_template" : {
+                	"match" : "locationlast",
+                	"mapping" : {
+                	    "type" : "string",
+                		"analyzer" : "standard"
+                	}
+                }
+             },
+             {
+                "other_template" : {
+                	"match" : "*",
+                	"mapping" : {
+                		"analyzer" : "base"
+                	}
+                }
+            }
+        ]
+    }
+}

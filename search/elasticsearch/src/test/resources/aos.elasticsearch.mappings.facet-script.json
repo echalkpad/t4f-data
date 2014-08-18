@@ -1,0 +1,8 @@
+ {
+    "rec" : {
+        "_source" : { "enabled" : false },
+        "properties" : {
+            "message": { "type": "string", "store": "yes"}
+        }
+    }
+}

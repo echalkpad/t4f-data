@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the AOS Community (AOS) under one or more
+  contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The AOS licenses this file
+  to you under the Apache License, Version 2.0 (the 
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<definitions targetNamespace="urn:io:aos:xsd:consultation:protocol:${t4f-ws-spl-1-wsdl.version}" 
+             xmlns="http://schemas.xmlsoap.org/wsdl/" 
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+             xmlns:ehboxp="urn:io:aos:xsd:consultation:protocol:${t4f-ws-spl-1-wsdl.version}" 
+             xmlns:err="urn:io:aos:xsd:common:errors:${t4f-ws-spl-1-wsdl.version}">
+
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="urn:io:aos:xsd:consultation:protocol:${t4f-ws-spl-1-wsdl.version}" 
+                  schemaLocation="../XSD/consultation-protocol-${t4f-ws-spl-1-wsdl.version}.xsd" />
+      <xsd:import namespace="urn:io:aos:xsd:common:errors:${t4f-ws-spl-1-wsdl.version}" 
+                  schemaLocation="../XSD/common-errors-${t4f-ws-spl-1-wsdl.version}.xsd" />
+    </xsd:schema>
+  </types>
+
+  <message name="GetBoxInfoRequestMessage" />
+  <message name="GetBoxInfoResponseMessage">
+    <part name="body" element="ehboxp:GetBoxInfoResponse" />
+  </message>
+  <message name="GetMessagesListRequestMessage">
+    <part name="body" element="ehboxp:GetMessagesListRequest" />
+  </message>
+  <message name="GetMessagesListResponseMessage">
+    <part name="body" element="ehboxp:GetMessagesListResponse" />
+  </message>
+  <message name="GetFullMessageRequestMessage">
+    <part name="body" element="ehboxp:GetFullMessageRequest" />
+  </message>
+  <message name="GetFullMessageResponseMessage">
+    <part name="body" element="ehboxp:GetFullMessageResponse" />
+  </message>
+  <message name="MoveToInboxRequestMessage">
+    <part name="body" element="ehboxp:MoveToInboxRequest" />
+  </message>
+  <message name="MoveToInboxResponseMessage">
+    <part name="body" element="ehboxp:MoveToInboxResponse" />
+  </message>
+  <message name="GetMessageHistoryRequestMessage">
+    <part name="body" element="ehboxp:GetHistoryRequest" />
+  </message>
+  <message name="GetMessageHistoryResponseMessage">
+    <part name="body" element="ehboxp:GetHistoryResponse" />
+  </message>
+  <message name="SystemError">
+    <part name="fault" element="err:SystemError" />
+  </message>
+  
+  <portType name="consultationPortType">
+    <operation name="getBoxInfo">
+      <input message="ehboxp:GetBoxInfoRequestMessage" />
+      <output message="ehboxp:GetBoxInfoResponseMessage" />
+      <fault message="ehboxp:SystemError" name="SystemError" />
+    </operation>
+    <operation name="getMessagesList">
+      <input message="ehboxp:GetMessagesListRequestMessage" />
+      <output message="ehboxp:GetMessagesListResponseMessage" />
+      <fault message="ehboxp:SystemError" name="SystemError" />
+    </operation>
+    <operation name="getFullMessage">
+      <input message="ehboxp:GetFullMessageRequestMessage" />
+      <output message="ehboxp:GetFullMessageResponseMessage" />
+      <fault message="ehboxp:SystemError" name="SystemError" />
+    </operation>
+    <operation name="moveToInbox">
+      <input message="ehboxp:MoveToInboxRequestMessage" />
+      <output message="ehboxp:MoveToInboxResponseMessage" />
+      <fault message="ehboxp:SystemError" name="SystemError" />
+    </operation>
+    <operation name="getMessageHistory">
+      <input message="ehboxp:GetMessageHistoryRequestMessage" />
+      <output message="ehboxp:GetMessageHistoryResponseMessage" />
+      <fault message="ehboxp:SystemError" name="SystemError" />
+    </operation>
+  </portType>
+  
+  <binding name="consultationBinding" type="ehboxp:consultationPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="getBoxInfo">
+      <soap:operation soapAction="urn:io:aos:xsd:consultation:protocol:${t4f-ws-spl-1-wsdl.version}:getBoxInfo" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="SystemError">
+        <soap:fault name="SystemError" use="literal" />
+      </fault>
+    </operation>
+    <operation name="getMessagesList">
+      <soap:operation soapAction="urn:io:aos:xsd:consultation:protocol:${t4f-ws-spl-1-wsdl.version}:getMessagesList" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="SystemError">
+        <soap:fault name="SystemError" use="literal" />
+      </fault>
+    </operation>
+    <operation name="getFullMessage">
+      <soap:operation soapAction="urn:io:aos:xsd:consultation:protocol:${t4f-ws-spl-1-wsdl.version}:getFullMessage" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="SystemError">
+        <soap:fault name="SystemError" use="literal" />
+      </fault>
+    </operation>
+    <operation name="moveToInbox">
+      <soap:operation soapAction="urn:io:aos:xsd:consultation:protocol:${t4f-ws-spl-1-wsdl.version}:moveToInbox" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="SystemError">
+        <soap:fault name="SystemError" use="literal" />
+      </fault>
+    </operation>
+    <operation name="getMessageHistory">
+      <soap:operation soapAction="urn:io:aos:xsd:consultation:protocol:${t4f-ws-spl-1-wsdl.version}:getMessageHistory" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="SystemError">
+        <soap:fault name="SystemError" use="literal" />
+      </fault>
+    </operation>
+  </binding>
+  
+  <service name="consultationService">
+    <port name="consultationPort" binding="ehboxp:consultationBinding">
+      <soap:address location="http://localhost:8080/t4f-ws-spl-1-ws/consult/test" />
+    </port>
+  </service>
+
+</definitions>

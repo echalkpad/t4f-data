@@ -1,0 +1,74 @@
+Delivered-To: thompson.jx@gmail.com
+Received: by 10.204.66.72 with SMTP id m8csp423919bki;
+        Tue, 15 May 2012 20:03:03 -0700 (PDT)
+Received: by 10.68.234.69 with SMTP id uc5mr11898359pbc.50.1337137383110;
+        Tue, 15 May 2012 20:03:03 -0700 (PDT)
+Return-Path: <bounces+12765-e998-pongr=me.com@mail.pongr.com>
+Received: from asmtpout030.mac.com (asmtpout030.mac.com. [17.148.16.105])
+        by mx.google.com with ESMTP id pb10si4855143pbc.46.2012.05.15.20.03.02;
+        Tue, 15 May 2012 20:03:02 -0700 (PDT)
+Received-SPF: softfail (google.com: domain of transitioning bounces+12765-e998-pongr=me.com@mail.pongr.com does not designate 17.148.16.105 as permitted sender) client-ip=17.148.16.105;
+Authentication-Results: mx.google.com; spf=softfail (google.com: domain of transitioning bounces+12765-e998-pongr=me.com@mail.pongr.com does not designate 17.148.16.105 as permitted sender) smtp.mail=bounces+12765-e998-pongr=me.com@mail.pongr.com; dkim=hardfail header.i=@pongr.com
+MIME-version: 1.0
+Content-transfer-encoding: 7BIT
+Content-type: text/plain; CHARSET=US-ASCII
+Received: from nk11r10mm-smtpout002.mac.com ([10.150.69.2])
+ by asmtp030.mac.com (Oracle Communications Messaging Server 7u4-23.01
+ (7.0.4.23.0) 64bit (built Aug 10 2011))
+ with ESMTP id <0M4300JQ4HSUQ690@asmtp030.mac.com> for thompson.jx@gmail.com
+ (ORCPT pongr@me.com); Tue, 15 May 2012 20:03:02 -0700 (PDT)
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.6.7580,1.0.260,0.0.0000
+ definitions=2012-05-16_02:2012-05-15,2012-05-16,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ ipscore=0 suspectscore=19 phishscore=0 bulkscore=0 adultscore=5
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=6.0.2-1012030000
+ definitions=main-1205150365
+Received: from nk11r10mm-mail01023a.mac.com ([10.150.91.212])
+ by smtpout002.mac.com
+ (Sun Java(tm) System Messaging Server 6.3-7.04 (built Sep 26 2008; 64bit))
+ with ESMTP id <0M43002SSHSYNOH0@smtpout002.mac.com> for thompson.jx@gmail.com
+ (ORCPT pongr@me.com); Wed, 16 May 2012 03:02:58 +0000 (GMT)
+Received: from st11b01mm-smtpin201.mac.com ([17.172.48.32])
+ by ms01024.mac.com (Oracle Communications Messaging Server 7u4-24.01
+ (7.0.4.24.0) 64bit (built Jan  3 2012))
+ with ESMTP id <0M43005TZHSY9WD1@ms01024.mac.com> for thompson.jx@gmail.com
+ (ORCPT pongr@me.com); Wed, 16 May 2012 03:02:58 +0000 (GMT)
+Received: from o1.mail.pongr.com ([75.126.253.184])
+ by st11b01mm-smtpin201.mac.com
+ (Oracle Communications Messaging Server 7u4-23.01(7.0.4.23.0) 64bit (built Aug
+ 10 2011)) with SMTP id <0M4300LWTHSWQC40@st11b01mm-smtpin201.mac.com> for
+ pongr@me.com (ORCPT pongr@me.com); Wed, 16 May 2012 03:02:58 +0000 (GMT)
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.6.7580,1.0.260,0.0.0000
+ definitions=2012-05-16_02:2012-05-15,2012-05-16,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ ipscore=0 suspectscore=19 phishscore=0 bulkscore=0 adultscore=9
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=6.0.2-1203120001
+ definitions=main-1205150366
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pongr.com; h=from:to
+	:message-id:subject:mime-version:content-type	:content-transfer-encoding:date;
+ s=smtpapi; bh=5XAjY6/5t1i9Yv0kY	pBYc9DOG4Y=;
+ b=a3obd58i272957zLbTCAPNOk53x64bsHr7f9ma1T6l97aLgdA
+	kQR4KpgqG+yQJWgs9E/OxEfcVckR2hoTrDTBP43j3qXCt1QOLUY7zw87TZ6xIBYp
+	ScXHR8SY+Alhc+0zA1kaNtR/j/F9BCtzLutaYyXPuOBQyBFdu2uYdRwOck=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pongr.com; h=from:to
+	:message-id:subject:mime-version:content-type	:content-transfer-encoding:date;
+ q=dns; s=smtpapi; b=XjEAwHHfsyL
+	dFtpiLpobiTP6rZNGWFmYuAFou93GnkOnbOyxTAepKCWi1zXrSY+lhpyrhuluxHm
+	zPlE/6BV/s8Kw8EFJE8VLvGjXtlARYEz2fZs41zSahhyYNPxBPTrll/853b9TpZX
+	jaEKG51blFDnEmRlPS0PAnSyuP5aZm9E=
+Received: by 10.41.149.111 with SMTP id f04-08.13627.4FB318DF7 Wed,
+ 16 May 2012 03:02:56 +0000 (UTC)
+Received: from ip-10-244-195-100.ec2.internal (unknown [10.8.49.124])
+	by mi3 (SG) with ESMTP id 4fb318df.132c.2b6e1ea	for <pongr@me.com>; Tue,
+ 15 May 2012 22:02:55 -0500 (CST)
+From: bluemoon@pongr.com
+To: pongr@me.com
+Message-id: <7843578.3719.1337137366915.JavaMail.tomcat6@ip-10-244-195-100>
+Subject: Nice Blue Moon photo
+Date: Wed, 16 May 2012 03:02:56 +0000 (UTC)
+X-Sendgrid-EID:
+ DGqfb2W0aXg1fpAlYCvF9QbVz5YakXLUNhFrg39ONcFTgCt3Wyerdr/5GzCkulOmDMB8zQrmMSMY/IqjmePBulUaBkWFVDJ6cHfZ/QosXK20siaQbPU2itxLk2Lk19upY3fD27oiUmFPP4sDtgp3Eg==
+
+Sweet Blue Moon photo! Feel like showing it off for extra points? http://pngr.it/Z9byss

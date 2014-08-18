@@ -1,0 +1,49 @@
+<message>
+<!--
+  Licensed to the AOS Community (AOS) under one or more
+  contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The AOS licenses this file
+  to you under the Apache License, Version 2.0 (the 
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<header>
+<field>
+Content-Type: multipart/mixed; boundary="boundary"</field>
+</header>
+<multipart>
+<body-part>
+<header>
+<field>
+Content-Type: text/plain</field>
+</header>
+<body>
+first part
+</body>
+</body-part>
+<epilogue>
+
+From the RFC about ending boundary:
+
+===================================================================
+NOTE TO IMPLEMENTORS:  Boundary string comparisons must compare the
+boundary value with the beginning of each candidate line.  An exact
+match of the entire candidate line is not required; it is sufficient
+that the boundary appear in its entirety following the CRLF.
+===================================================================
+
+--boundary--
+
+The above boundary should be part of the epilogue, too.</epilogue>
+</multipart>
+</message>

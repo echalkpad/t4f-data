@@ -1,0 +1,5 @@
+import aos.mvel.model.Person;
+
+Person p = new Person();
+p.name = "my name";
+System.out.println("Person name=" + p.name);

@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Licensed to the AOS Community (AOS) under one or more
+# contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The AOS licenses this file
+# to you under the Apache License, Version 2.0 (the 
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+echo Check namenode                    http://localhost:50070
+echo Check namenode-browser            http://localhost:50070/explorer.html
+echo Check datanode                    http://localhost:50075
+echo Check datanode logs               http://localhost:50075/logs
+echo Check secondary-namenode          http://localhost:50090
+echo Check resource-manager            http://localhost:8088/cluster
+echo Check "application-status          http://localhost:8089/proxy/<app-id>"
+echo Check resource-node-manager       http://localhost:8042/node
+echo Check mapreduce-jobhistory-server http://localhost:19888
+
+echo
+
+echo Namenode RPC port = 8020 or 9000
+
+echo

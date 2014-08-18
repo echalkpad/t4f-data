@@ -1,0 +1,7 @@
+http://localhost:8080/t4f-ws-spl-1-ws/publish/test?wsdl
+           A             B        C         D  
+
+    A is the host and port of the servlet container.
+    B is the name of the war file.
+    C comes from the url-pattern element in the web.xml file.
+    D comes from the address attribute in the cxf-servlet.xml file (for CXF).

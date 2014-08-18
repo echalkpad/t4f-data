@@ -1,0 +1,1 @@
+This logs folder is needed for jetty to avoid 404 when user asks for /logs via the WEB UI.

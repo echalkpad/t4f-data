@@ -1,0 +1,168 @@
+DATALAYER Data NoSql Cassandra
+========================
+
+Build Cassandra
+---------------
+git clone http://git-wip-us.apache.org/repos/asf/cassandra.git cassandra.git
+cd cassandra.git
+ant clean artifacts
+rm -fr /opt/apache-cassandra-*
+cp build/apache-cassandra-*-SNAPSHOT-bin.tar.gz /opt
+
+Configure Cassandra
+-------------------
+Tune in conf/cassandra.yaml:
++ folders
+++ data_file_directories
+++ commitlog_directory
+++ saved_caches_directory
++ name
+++ cluster_name
++ partitioner
+++ partitioner : Murmur3Partitioner(default)/RandomPartitioner ByteOrderedPartitioner OrderPreservingPartitioner CollatingOPP
++ ports
+++ storage_port
+++ rpc_portexti
+
+Start Cassandra
+---------------
+bin/cassandra -f
+
+Use cassandra-cli
+-----------------
+bin/cassandra-cli -h 127.0.0.1 -p 9160
+help;
+create keyspace DEMO;  
+use DEMO;
+create column family Users;
+set Users[utf8('1234')][utf8('name')] = utf8('scott');
+set Users[utf8('1234')][utf8('password')] = utf8('tiger');
+get Users[utf8('1234')];
+assume Users keys as utf8;
+assume Users comparator as utf8;
+assume Users validator as utf8;      
+get Users['1234'];
+
+[default@unknown] help
+... ;
+Getting around:
+?                       Display this help.
+help;                   Display this help.
+help <command>;         Display command-specific help.
+exit;                   Exit this utility.
+quit;                   Exit this utility.
+
+Commands:
+assume                  Apply client side validation.
+connect                 Connect to a Cassandra node.
+consistencylevel        Sets consisteny level for the client to use.
+count                   Count columns or super columns.
+create column family    Add a column family to an existing keyspace.
+create keyspace         Add a keyspace to the cluster.
+del                     Delete a column, super column or row.
+decr                    Decrements a counter column.
+describe cluster        Describe the cluster configuration.
+describe                Describe a keyspace and its column families or column family in current keyspace.
+drop column family      Remove a column family and its data.
+drop keyspace           Remove a keyspace and its data.
+drop index              Remove an existing index from specific column.
+get                     Get rows and columns.
+incr                    Increments a counter column.
+list                    List rows in a column family.
+set                     Set columns.
+show api version        Show the server API version.
+show cluster name       Show the cluster name.
+show keyspaces          Show all keyspaces and their column families.
+show schema             Show a cli script to create keyspaces and column families.
+truncate                Drop the data in a column family.
+update column family    Update the settings for a column family.
+update keyspace         Update the settings for a keyspace.
+use                     Switch to a keyspace.
+
+Configure for Clustering
+------------------------
+Must not use localhost
++ listen_address
++ rpc_address
++ seeds
+
+Use cassandra-note-token-lister.py to get a list of tokens such as
+0: 0
+1: 42535295865117307932921825928971026432
+2: 85070591730234615865843651857942052864
+3: 127605887595351923798765477786913079296
+
+Set in cassandra.yaml  (only for startup)
++ initial_token key
+Check with
++ bin/nodetool ring 
+Once you boot a node, use 'nodetool move' command to change the assigned token.
+You need to specify appropriate initial_token for each node to balance data load across the nodes
+As from second node
++ auto_bootstrap: true
+
+Nodetool
+--------
+bin/nodetool
+Starting NodeTool
+Missing required option: h
+usage: java org.apache.cassandra.tools.NodeCmd --host <arg> <command>
+
+ -h,--host <arg>        node hostname or ip address
+ -p,--port <arg>        remote jmx agent port number
+ -pw,--password <arg>   remote jmx agent password
+ -u,--username <arg>    remote jmx agent username
+
+Available commands:
+  ring                   - Print informations on the token ring
+  join                   - Join the ring
+  info                   - Print node informations (uptime, load, ...)
+  cfstats                - Print statistics on column families
+  clearsnapshot          - Remove all existing snapshots
+  version                - Print cassandra version
+  tpstats                - Print usage statistics of thread pools
+  drain                  - Drain the node (stop accepting writes and flush all column families)
+  decommission           - Decommission the node
+  loadbalance            - Loadbalance the node
+  compactionstats        - Print statistics on compactions
+  disablegossip          - Disable gossip (effectively marking the node dead)
+  enablegossip           - Reenable gossip
+  disablethrift          - Disable thrift server
+  enablethrift           - Reenable thrift server
+  snapshot [snapshotname] - Take a snapshot using optional name snapshotname
+  netstats [host]        - Print network information on provided host (connecting node by default)
+  move <new token>       - Move node on the token ring to a new token
+  removetoken status|force|<token> - Show status of current token removal, force completion of pending removal or remove providen token
+  flush [keyspace] [cfnames] - Flush one or more column family
+  repair [keyspace] [cfnames] - Repair one or more column family
+  cleanup [keyspace] [cfnames] - Run cleanup on one or more column family
+  compact [keyspace] [cfnames] - Force a (major) compaction on one or more column family
+  scrub [keyspace] [cfnames] - Scrub (rebuild sstables for) one or more column family
+  invalidatekeycache [keyspace] [cfnames] - Invalidate the key cache of one or more column family
+  invalidaterowcache [keyspace] [cfnames] - Invalidate the key cache of one or more column family
+  getcompactionthreshold <keyspace> <cfname> - Print min and max compaction thresholds for a given column family
+  cfhistograms <keyspace> <cfname> - Print statistic histograms for a given column family
+  setcachecapacity <keyspace> <cfname> <keycachecapacity> <rowcachecapacity> - Set the key and row cache capacities of a given column family
+  setcompactionthreshold <keyspace> <cfname> <minthreshold> <maxthreshold> - Set the min and max compaction thresholds for a given column family
+
+Cassandra Mailbox Data Model
+----------------------------
+HFactory.createKeyspace(CassandraConstants.KEYSPACE, cassandraCluster);
+keyspaces:
+- name: mailbox
+  replica_placement_strategy: org.apache.cassandra.locator.RackUnawareStrategy
+  replication_factor: 1
+  column_families:
+    - name: subscriptions
+      compare_with: UTF8Type
+    - name: mailboxes
+      column_type: Super
+      compare_with: UTF8Type
+      compare_subcolumns_with: UTF8Type
+    - name: messagesContent
+      compare_with: LongType
+    - name: messagesMetaData
+      column_metadata:
+        - name: mailboxId
+          validator_class: UTF8Type
+          index_type: KEYS

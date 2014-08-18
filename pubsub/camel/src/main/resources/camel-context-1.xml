@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the AOS Community (AOS) under one or more
+  contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The AOS licenses this file
+  to you under the Apache License, Version 2.0 (the 
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+  <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+    <property name="configuration" ref="jmsConfig" />
+    <property name="transacted" value="true"/>
+    <property name="transactionManager" ref="txManager"/>
+  </bean>
+
+  <bean id="jmsConfig" class="org.apache.camel.component.jms.JmsConfiguration">
+    <property name="connectionFactory" ref="pooledConnectionFactory" />
+    <property name="concurrentConsumers" value="10" />
+  </bean>
+
+  <bean id="txManager" class="org.springframework.jms.connection.JmsTransactionManager">
+    <property name="connectionFactory" ref="jmsConnectionFactory"/>
+  </bean>
+
+  <bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+    <property name="maxConnections" value="8" />
+    <property name="maximumActive" value="500" />
+    <property name="connectionFactory" ref="jmsConnectionFactory" />
+  </bean>
+
+  <bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+    <property name="brokerURL" value="tcp://localhost:6211" />
+  </bean>
+
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+
+    <route>
+      <description>Test</description>
+      <from uri="activemq:queue:B2BOOST.BusinessEvent?mapJmsMessage=false" />
+      <transacted/>
+      <convertBodyTo type="java.lang.String" />
+      <transform>
+        <simple>${in.body}&#13;</simple>
+      </transform>
+      <choice>
+        <when>
+          <simple>${in.header.B2BoostQueue} == '1'</simple>
+          <to uri="file://b2boost-event-consumed/business-event1" />
+        </when>
+        <when>
+          <simple>${in.header.B2BoostQueue} == '2'</simple>
+          <to uri="file://b2boost-event-consumed/business-event2" />
+        </when>
+        <otherwise>
+          <to uri="file://b2boost-event-consumed/business-event3" />
+          <stop/>
+        </otherwise>
+      </choice>
+    </route>
+
+    <route>
+      <description>B2Boost Traffic Incident</description>
+      <from uri="activemq:queue:B2BOOST.TrafficIncident?mapJmsMessage=false" />
+      <transacted/>
+      <convertBodyTo type="java.lang.String" />
+      <process ref="correlator"/>
+<!--      <to uri="file://b2boost-event-consumed/traffic-incident/all.txt?fileExist=Append&amp;fileName=advisoryConnection-${date:now:yyyyMMdd}.txt" />-->
+      <to uri="file://b2boost-event-consumed/traffic-incident" />
+    </route>
+
+    <route>
+      <description>B2Boost System Incident</description>
+      <from uri="activemq:queue:B2BOOST.SystemIncident?mapJmsMessage=false" />
+      <transacted/>
+      <convertBodyTo type="java.lang.String" />
+      <process ref="correlator"/>
+      <to uri="file://b2boost-event-consumed/system-incident" />
+    </route>
+
+  </camelContext>
+
+</beans>

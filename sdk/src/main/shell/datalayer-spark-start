@@ -1,0 +1,29 @@
+# Licensed to the AOS Community (AOS) under one or more
+# contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The AOS licenses this file
+# to you under the Apache License, Version 2.0 (the 
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+echo Starting AOS Spark...
+
+# -i IP, --ip IP  IP address or DNS name to listen on
+# -p PORT, --port PORT    Port for service to listen on (default: 7077 for master, random for worker)
+# --webui-port PORT   Port for web UI (default: 8080 for master, 8081 for worker)
+# -c CORES, --cores CORES     Total CPU cores to allow Spark applications to use on the machine (default: all available); only on worker
+# -m MEM, --memory MEM    Total amount of memory to allow Spark applications to use on the machine, in a format like 1000M or 2G (default: your machine's total RAM minus 1 GB); only on worker
+# -d DIR, --work-dir DIR  Directory to use for scratch space and job output logs (default: SPARK_HOME/work); only on worker
+
+$SPARK_HOME/bin/spark-class org.apache.spark.deploy.worker.Worker spark://localhost:9090
+
+datalayer-spark-url

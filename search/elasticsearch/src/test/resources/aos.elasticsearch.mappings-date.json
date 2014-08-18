@@ -1,0 +1,16 @@
+{
+    "date-type" : {
+        "dynamic_templates" : [
+            {
+                "date_template" : {
+                    "match" : "*date",
+                    "mapping" : {
+                        "type" : "date",
+                        "index" : "not_analyzed", 
+                        "format" : "date_time"
+                    }
+                }
+            }
+        ]
+    }
+}

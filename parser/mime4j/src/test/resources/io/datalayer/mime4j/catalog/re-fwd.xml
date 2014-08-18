@@ -1,0 +1,90 @@
+<message>
+<!--
+  Licensed to the AOS Community (AOS) under one or more
+  contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The AOS licenses this file
+  to you under the Apache License, Version 2.0 (the 
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<header>
+<field>
+Content-Disposition: inline</field>
+<field>
+Content-Transfer-Encoding: binary</field>
+<field>
+Content-Type: message/rfc822</field>
+<field>
+MIME-Version: 1.0</field>
+<field>
+X-Mailer: MIME::Lite 1.147  (B2.09; Q2.03)</field>
+<field>
+Date: Tue, 6 Jun 2000 03:20:11 UT</field>
+<field>
+From: user2</field>
+<field>
+To: user0</field>
+<field>
+Subject: Re: Fwd: hello world</field>
+</header>
+<message>
+<header>
+<field>
+Content-Disposition: inline</field>
+<field>
+Content-Transfer-Encoding: binary</field>
+<field>
+Content-Type: message/rfc822</field>
+<field>
+MIME-Version: 1.0</field>
+<field>
+X-Mailer: MIME::Lite 1.147  (B2.09; Q2.03)</field>
+<field>
+Date: Tue, 6 Jun 2000 03:20:11 UT</field>
+<field>
+From: user1</field>
+<field>
+To: user2</field>
+<field>
+Subject: Fwd: hello world</field>
+</header>
+<message>
+<header>
+<field>
+Content-Disposition: inline</field>
+<field>
+Content-Length: 60</field>
+<field>
+Content-Transfer-Encoding: binary</field>
+<field>
+Content-Type: text/plain</field>
+<field>
+MIME-Version: 1.0</field>
+<field>
+X-Mailer: MIME::Lite 1.147  (B2.09; Q2.03)</field>
+<field>
+Date: Tue, 6 Jun 2000 03:20:11 UT</field>
+<field>
+From: user0</field>
+<field>
+To: user1</field>
+<field>
+Subject: hello world</field>
+</header>
+<body>
+This is the original message.
+Let's see if we can embed it!
+</body>
+</message>
+</message>
+</message>

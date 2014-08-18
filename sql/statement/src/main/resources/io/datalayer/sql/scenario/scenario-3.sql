@@ -1,0 +1,70 @@
+DROP TABLE IF EXISTS EX_FB;
+CREATE TABLE EX_FB (
+  FBCK CHAR(50),
+  PID CHAR(50),
+);
+INSERT INTO EX_FB (FBCK, PID)
+  VALUES ('fbck1','p1');
+INSERT INTO EX_FB (FBCK, PID)
+  VALUES ('fbck1bis','p1');
+INSERT INTO EX_FB (FBCK, PID)
+  VALUES ('fbck3','p3');
+INSERT INTO EX_FB (FBCK, PID)
+  VALUES ('fbck4','p4');
+
+DROP TABLE IF EXISTS TID;
+CREATE TABLE TID (
+  TID CHAR(50),
+  PID CHAR(50)
+);
+INSERT INTO TID (TID, PID)
+  VALUES ('jlw','p0');
+INSERT INTO TID (TID, PID)
+  VALUES ('jlw1','p1');
+INSERT INTO TID (TID, PID)
+  VALUES ('jlw2','p2');
+INSERT INTO TID (TID, PID)
+  VALUES ('jlw3','p3');
+INSERT INTO TID (TID, PID)
+  VALUES ('harv','p4');
+
+DROP TABLE IF EXISTS SUPER_TID;
+CREATE TABLE SUPER_TID (
+  STID CHAR(50),
+  TID CHAR(50),
+);
+INSERT INTO SUPER_TID (STID, TID)
+  VALUES ('jlw','jlw');
+INSERT INTO SUPER_TID (STID, TID)
+  VALUES ('jlw','jlw1');
+INSERT INTO SUPER_TID (STID, TID)
+  VALUES ('jlw','jlw2');
+INSERT INTO SUPER_TID (STID, TID)
+  VALUES ('jlw','jlw3');
+
+SELECT COALESCE(tid.TID, stid.TID), tid.PID
+  FROM SUPER_TID stid
+  FULL OUTER JOIN TID tid
+  ON stid.TID = tid.TID;
+
+SELECT COALESCE(tid.TID, stid.TID), tid.PID
+  FROM TID tid
+  LEFT OUTER JOIN SUPER_TID stid
+    ON stid.TID = tid.TID;
+
+SELECT COALESCE(tid.TID, stid.TID), tid.PID
+  FROM TID tid
+  LEFT OUTER JOIN SUPER_TID stid
+    ON stid.TID = tid.TID AND stid.STID = jlw'';
+
+SELECT COALESCE(tid.TID, stid.TID), tid.PID
+  FROM TID tid
+  LEFT OUTER JOIN SUPER_TID stid
+    ON stid.TID = tid.TID AND stid.STID = 'jlw'
+  WHERE stid.TID = 'jlw';
+
+SELECT COALESCE(tid.TID, stid.TID), tid.PID
+  FROM TID tid
+  LEFT OUTER JOIN SUPER_TID stid
+    ON stid.TID = tid.TID AND stid.STID = 'jlw'
+  WHERE tid.TID = 'jlw';

@@ -1,0 +1,56 @@
+# Licensed to the AOS Community (AOS) under one or more
+# contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The AOS licenses this file
+# to you under the Apache License, Version 2.0 (the 
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# under the License.
+&id002
+bankAccountOwner: &id001
+  bankAccountOwner: *id001
+  birthPlace: Leningrad
+  birthday: 1970-01-12T13:46:40Z
+  children: &id003
+    *id002: son
+    ? bankAccountOwner: *id001
+      birthPlace: New York
+      birthday: 1983-04-24T02:40:00Z
+      children: {}
+      father: *id001
+      mother: &id004
+        bankAccountOwner: *id001
+        birthPlace: Saint-Petersburg
+        birthday: 1973-03-03T09:46:40Z
+        children: *id003
+        father: null
+        mother: null
+        name: Mother
+        partner: *id001
+      name: Daughter
+      partner: null
+    : daughter
+  father: null
+  mother: null
+  name: Father
+  partner: *id004
+birthPlace: Munich
+birthday: 1979-10-28T23:06:40Z
+children: {}
+father: *id001
+mother: *id004
+name: Son
+partner: null

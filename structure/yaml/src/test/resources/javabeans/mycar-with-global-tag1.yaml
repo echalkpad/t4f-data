@@ -1,0 +1,35 @@
+# Licensed to the AOS Community (AOS) under one or more
+# contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The AOS licenses this file
+# to you under the Apache License, Version 2.0 (the 
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# under the License.
+!!org.yaml.snakeyaml.constructor.MyCar
+plate: 00-FF-Q2
+wheels:
+  ? {brand: Pirelli1, id: 1}
+  : 2009-07-21T21:36:08.085Z
+  ? {brand: Pirelli2, id: 2}
+  : 2009-07-21T21:36:08.086Z
+  ? {brand: Pirelli3, id: 3}
+  : 2009-07-21T21:36:08.087Z
+  ? {brand: Pirelli4, id: 4}
+  : 2009-07-21T21:36:08.088Z
+  ? {brand: Pirelli5, id: 5}
+  : 2009-07-21T21:36:08.089Z
+windows: null

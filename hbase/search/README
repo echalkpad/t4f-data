@@ -1,0 +1,59 @@
+-------------------------------------------------------------------------------
+HBASE SEARCH
+-------------------------------------------------------------------------------
++ hbase-secondary-index
+-------------------------------------------------------------------------------
++ https://github.com/jasonrutherglen/HBASE-SEARCH
++ https://github.com/jasonrutherglen/LUCENE-FOR-HBASE
++ http://www.infoq.com/articles/LuceneHbase
++ http://www.infoq.com/articles/LuceneSpatialSupport 
++ https://github.com/akkumar/hbasene
++ https://github.com/thkoch2001/lucehbase
++ https://github.com/thainb/lucehbase.git
++ http://bizosyshsearch.sourceforge.net/
++ https://issues.apache.org/jira/browse/HBASE-3529 Add search to HBase + HBASE-3954
++ https://issues.apache.org/jira/browse/HBASE-2233 Support both Hadoop 0.20, 0.21, and 0.22
++ https://issues.apache.org/jira/browse/HBASE-4002
++ https://issues.apache.org/jira/browse/HBASE-2000
+-------------------------------------------------------------------------------
++ http://anismiles.wordpress.com/2010/05/19/apache-lucene-and-cassandra
++ http://anismiles.wordpress.com/2010/05/27/lucandra-an-inside-story
++ http://www.infoq.com/articles/LuceneHbase
++ http://www.infoq.com/articles/LuceneSpatialSupport
+-------------------------------------------------------------------------------
++ Huawei-Hadoop / hindex
+-------------------------------------------------------------------------------
++ http://markmail.org/message/cn5otxd366rrgcf4 
++ https://svn.apache.org/repos/asf/hadoop/common/branches/branch-0.20-append/ 
++ https://github.com/facebook/hadoop-20-append 
++ https://github.com/trendmicro/hbase/tree/security  + https://github.com/trendmicro/hadoop-common  
++ http://voldemortlucene.svn.sourceforge.net/viewvc/voldemortlucene/trunk/
++ http://www.mongodb.org/display/DOCS/Geospatial+Indexing  Geospatial Index
++ http://code.google.com/p/hop/ Hadoop online
++ http://labs.yahoo.com/node/476 S4
++ http://sna-projects.com/sna/  SNA LinkedIn
++ https://issues.apache.org/jira/browse/HBASE-3529 Add search to HBase + HBASE-3954
++ https://issues.apache.org/jira/browse/HDFS-347 DFS read performance suboptimal when client co-located on nodes with data + HDFS-265
++ https://issues.apache.org/jira/browse/HBASE-2233 Support both Hadoop 0.20, 0.21, and 0.22
++ https://issues.apache.org/jira/browse/LUCENE-2756 MultiSearcher.rewrite() incorrectly rewrites queries  + LUCENE-3191
+Architecture Document with RoadMap (e.g. aim of HBASE-4002?)
+Marriage != integration
+What are the options?
+Solr/ElasticSearch as “helper” or more?
+Extend Lucene by implementing own Directory class, or implement new IndexReader Òand IndexWriter (a-la-Lucandra)? (probably the second option)
+Try to let Lucene evolve? (Extensions vs Interfaces)
+http://lucene.grantingersoll.com/2008/03/28/why-lucene-isnt-that-good-javalobby/   http://java.dzone.com/news/why-lucene-isnt-good?page=0%2C1  
+Still no interface https://svn.apache.org/repos/asf/lucene/dev/trunk/lucene/src/java/org/apache/lucene/index/IndexWriter.java 
+See also for classes vs interfaces http://www.symphonious.net/2011/06/18/the-single-implementation-fallacy/ 
+Do we rely on HBase Coprocessors? https://issues.apache.org/jira/browse/HBASE-2000
+Do we use distributed memory cache? (Hazelcast...)
+Are there JSON, Avro... requirements?
+Need for special queries? (Spatial with geohash...)
+ List of existing JIRA to implement + Definition of additional JIRA
+-------------------------------------------------------------------------------
+HBASE SECONDARY INDICES
+-------------------------------------------------------------------------------
++ https://github.com/hbase-trx/hbase-transactional-tableindexed/Transaction and indexing extensions for hbase
++ http://www.lilyproject.org/lily/about/playground/hbaseindexes.html Lily indexes
++ https://github.com/ykulbak/ihbase support faster scans at the expense of larger RAM consumption
+-------------------------------------------------------------------------------

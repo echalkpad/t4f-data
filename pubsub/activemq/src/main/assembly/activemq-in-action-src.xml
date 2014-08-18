@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the AOS Community (AOS) under one or more
+  contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The AOS licenses this file
+  to you under the Apache License, Version 2.0 (the 
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<assembly>
+  <id>src</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+    <fileSet>
+      <directory>${project.basedir}</directory>
+      <outputDirectory>amq-in-action-example-src</outputDirectory>
+      <!--includes>
+        <include>**/*.c</include>
+        <include>**/*.cpp</include>
+        <include>**/*.cs</include>
+        <include>**/*.java</include>
+        <include>**/*.php</include>
+        <include>**/*.pl</include>
+        <include>**/*.py</include>
+        <include>**/*.xml</include>
+        <include>**/*</include>
+        <include>**/*</include>
+      </includes-->
+      <excludes>
+        <exclude>**/*.graffle</exclude>
+        <exclude>**/*.tiff</exclude>
+        <exclude>**/*.jpeg</exclude>
+        <exclude>**/*.jpg</exclude>
+        <exclude>**/*.gif</exclude>
+        <exclude>**/*.png</exclude>
+        <exclude>**/*.jar</exclude>
+        <exclude>**/target/**</exclude>
+        <exclude>**/target*/**</exclude>
+        <exclude>**/build/**</exclude>
+        <exclude>**/eclipse-classes/**</exclude>
+        <exclude>**/.*</exclude>
+        <exclude>**/.*/**</exclude>
+        <exclude>**/surefire*</exclude>
+      </excludes>
+      <lineEnding>unix</lineEnding>
+    </fileSet>
+  </fileSets>
+</assembly>

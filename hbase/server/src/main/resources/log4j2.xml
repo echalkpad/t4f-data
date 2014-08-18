@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+  <loggers>
+    <root level="INFO">
+      <appender-ref ref="Console"/>
+    </root>
+    <logger name="aos" level="INFO" additivity="false">
+      <appender-ref ref="Console"/>
+    </logger>
+<!--     <logger name="org" level="WARN"> -->
+<!--       <appender-ref ref="Null"/> -->
+<!--     </logger> -->
+  </loggers>
+  <appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%highlight{[%d{yyyy-MM-dd z HH:mm:ss.SSS}] [%level] (%C.java:%L):%M - %msg%n}"/>
+    </Console>
+<!--     <Console name="Null" target="SYSTEM_OUT"> -->
+<!--       <PatternLayout pattern=""/> -->
+<!--     </Console> -->
+  </appenders>
+</configuration>

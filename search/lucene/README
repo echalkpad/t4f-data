@@ -1,0 +1,74 @@
+-------------------------------------------------------------------------------
+DATALAYER SEARCH LUCENE
+-------------------------------------------------------------------------------
+BUILD
+-------------------------------------------------------------------------------
+$ ant compile
+ check-svn-working-copy       Checks the status of the SVN working copy
+ clean                        Clean Lucene and Solr build dirs
+ clean-eclipse                Removes all Eclipse configuration files
+ clean-idea                   Removes all IntelliJ IDEA configuration files
+ clean-maven-build            Clean up Maven POMs in working copy
+ clean-netbeans               Removes all Netbeans configuration files
+ compile                      Compile Lucene and Solr
+ compile-test                 Compile Lucene and Solr tests and test-frameworks
+ documentation                Generate Lucene and Solr Documentation
+ documentation-lint           Validates the generated documentation (HTML errors, broken links,...)
+ eclipse                      Setup Eclipse configuration
+ generate-maven-artifacts     Generate Maven Artifacts for Lucene and Solr
+ get-maven-poms               Copy Maven POMs from dev-tools/maven/ to maven-build/
+ idea                         Setup IntelliJ IDEA configuration
+ ivy-bootstrap                Download and install Ivy in the users ant lib dir
+ jar                          Build Lucene and Solr Jar files
+ jar-checksums                Recompute SHA1 checksums for all JAR files.
+ jar-src                      Build Lucene and Solr Source Jar files
+ netbeans                     Setup Netbeans configuration
+ nightly-smoke                Builds an unsigned release and smoke tests it
+ pitest                       Run PITest on both Lucene and Solr
+ precommit                    Run basic checks before committing
+ rat-sources                  Runs rat across all sources and tests
+ regenerate                   Runs all code regenerators
+ remove-maven-artifacts       Removes all Lucene/Solr Maven artifacts from the local repository
+ resolve                      Resolves all dependencies
+ run-clover                   Runs all tests to measure coverage and generates report (pass "ANT_OPTS=-Xmx1536M" as environment)
+ run-maven-build              Runs the Maven build using automatically generated POMs
+ test                         Test both Lucene and Solr
+ test-help                    Test runner help
+ test-with-heapdumps          Runs tests with heap dumps on OOM enabled (if VM supports this)
+ validate                     Validate dependencies, licenses, etc.
+ validate-maven-dependencies  Validates maven dependencies, licenses, etc.
+Default target: -projecthelp
+-------------------------------------------------------------------------------
+ECLIPSE
+-------------------------------------------------------------------------------
+$ ant eclipse
+-------------------------------------------------------------------------------
+GEO
+-------------------------------------------------------------------------------
++ http://wiki.apache.org/solr/SpatialSearch
++ http://spatial4j.github.com/spatial4j/
++ http://wiki.apache.org/lucene-java/SpatialSearch
+-------------------------------------------------------------------------------
+DISTRIBUTED
+-------------------------------------------------------------------------------
+Extend Lucene by implementing own Directory class,
+  OR 
+Implement new IndexReader and IndexWriter (a-la-Lucandra)?
+-------------------------------------------------------------------------------
+do we use distributed memory cache? (hazelcast...)
+are there json, avro... requirements?
+need for special queries? (spatial with geohash...)
+-------------------------------------------------------------------------------
++ solr
++ solrcloud
++ elasticsearch
++ senseidb [https://github.com/senseidb/sensei]
+-------------------------------------------------------------------------------
+OTHER
+-------------------------------------------------------------------------------
++ http://sna-projects.com/sna/  SNA LinkedIn
++ http://voldemortlucene.svn.sourceforge.net/viewvc/voldemortlucene/trunk/
++ http://www.mongodb.org/display/DOCS/Geospatial+Indexing  Geospatial Index
++ http://code.google.com/p/hop/ Hadoop online
++ http://labs.yahoo.com/node/476 S4
+-------------------------------------------------------------------------------

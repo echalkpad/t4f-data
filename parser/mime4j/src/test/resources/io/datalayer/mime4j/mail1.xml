@@ -1,0 +1,81 @@
+<message>
+<!--
+  Licensed to the AOS Community (AOS) under one or more
+  contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The AOS licenses this file
+  to you under the Apache License, Version 2.0 (the 
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<header>
+<field>
+Received: by 10.229.98.142 with SMTP id q14cs612284qcn;
+        Tue, 22 Dec 2009 10:13:30 -0800 (PST)</field>
+<field>
+Return-Path: &lt;g.giridharkannan@gmail.com&gt;</field>
+<field>
+Received-SPF: pass (google.com: domain of g.giridharkannan@gmail.com designates 10.150.248.42 as permitted sender) client-ip=10.150.248.42;</field>
+<field>
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of g.giridharkannan@gmail.com designates 10.150.248.42 as permitted sender) smtp.mail=g.giridharkannan@gmail.com</field>
+<field>
+Received: from mr.google.com ([10.150.248.42])
+        by 10.150.248.42 with SMTP id v42mr654705ybh.4.1261505609988 (num_hops = 1);
+        Tue, 22 Dec 2009 10:13:29 -0800 (PST)</field>
+<field>
+MIME-Version: 1.0</field>
+<field>
+Received: by 10.150.248.42 with SMTP id v42mr654705ybh.4.1261505609985; Tue, 
+	22 Dec 2009 10:13:29 -0800 (PST)</field>
+<field>
+Date: Tue, 22 Dec 2009 10:13:29 -0800 (PST)</field>
+<field>
+In-Reply-To: &lt;7b3b2550-0288-4303-8081-871ca0e5f66d@u25g2000prh.googlegroups.com&gt;</field>
+<field>
+X-IP: 115.184.110.220</field>
+<field>
+References: &lt;7b3b2550-0288-4303-8081-871ca0e5f66d@u25g2000prh.googlegroups.com&gt;</field>
+<field>
+User-Agent: G2/1.0</field>
+<field>
+X-HTTP-UserAgent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.3) 
+	Gecko/20091020 Ubuntu/9.10 (karmic) Firefox/3.5.3,gzip(gfe),gzip(gfe)</field>
+<field>
+Message-ID: &lt;15d8f1a8-5ed8-4feb-a44d-e538910e2f6d@u25g2000prh.googlegroups.com&gt;</field>
+<field>
+Subject: Fwd: integrating openid in website using java</field>
+<field>
+From: giridhar kannan &lt;g.giridharkannan@gmail.com&gt;</field>
+<field>
+To: "g.giridharkannan" &lt;g.giridharkannan@gmail.com&gt;</field>
+<field>
+Content-Type: text/plain; charset=ISO-8859-1</field>
+<field>
+Content-Transfer-Encoding: quoted-printable</field>
+</header>
+<body>
+
+
+
+---------- Forwarded message ----------
+From: giridhar kannan &lt;g.giridharkan...@gmail.com&gt;
+Date: Dec 22, 7:55=A0pm
+Subject: integrating openid in website using java
+To: Google App Engine
+
+
+hello,
+=A0 =A0 =A0 =A0I am giridhar kannan working on app engine. I would like to
+know how to integrate a website with openid authentication using java.
+Please do help me in this regard.
+Thank you.</body>
+</message>

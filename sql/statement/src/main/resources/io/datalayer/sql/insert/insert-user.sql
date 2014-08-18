@@ -1,0 +1,1 @@
+INSERT INTO "JAMES"."VIRTUALUSERTABLE" ("user", domain, target_address) VALUES ('eric', 'localhost.com', 'eric..localhost.com');

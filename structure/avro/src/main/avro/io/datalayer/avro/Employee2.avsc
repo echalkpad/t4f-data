@@ -1,0 +1,11 @@
+{
+  "type": "record", 
+  "name": "Employee", 
+  "namespace": "io.datalayer.avro",
+  "fields": [
+      {"name": "name", "type": "string"},
+      {"name": "yrs", "type": "int", "aliases": ["age"]},
+      {"name": "gender", "type": "string", "default":"unknown"},
+      {"name": "emails", "type": {"type": "array", "items": "string"}}
+  ]
+}

@@ -1,0 +1,77 @@
+-------------------------------------------------------------------------------
+ ____      _       _                    _____ _         
+|    \ ___| |_ ___| |___ _ _ ___ ___   |  |  |_|_ _ ___ 
+|  |  | .'|  _| .'| | .'| | | -_|  _|  |     | | | | -_|
+|____/|__,|_| |__,|_|__,|_  |___|_|    |__|__|_|\_/|___|
+                        |___|                           
+ #datalayer-hive
+-------------------------------------------------------------------------------
+| BUILD                                                                       |
+-------------------------------------------------------------------------------
+mvn clean install -DskipTests -Phadoop-2
+mvn clean install -DskipTests -Phadoop-1
+-------------------------------------------------------------------------------
+| CONFIGURE                                                                   |
+-------------------------------------------------------------------------------
+$ cp ./src/main/resources/io/datalayer/hive/config/hive-site.xml $HIVE_HOME/conf
+-------------------------------------------------------------------------------
+| MAP STAGE SYNTAX                                                            |
+-------------------------------------------------------------------------------
+SELECT 
+  TRANSFORM (...)
+  USING "mapper.sh" 
+  AS (...)
+  FROM
+    (...)
+-------------------------------------------------------------------------------
+| REDUCE STAGE SYNTAX                                                         |
+-------------------------------------------------------------------------------
+SELECT 
+  FROM
+    (...)
+    SELECT 
+      TRANSFORM (...)
+      USING "reducer.sh" 
+      AS (...)
+-------------------------------------------------------------------------------
+  FROM (
+    FROM pv_users
+    MAP pv_users.userid, pv_users.date
+    USING 'map_script'
+    AS dt, uid
+    CLUSTER BY dt) map_output
+  INSERT OVERWRITE TABLE pv_users_reduced
+    REDUCE map_output.dt, map_output.uid
+    USING 'reduce_script'
+    AS date, count;
+-------------------------------------------------------------------------------
+  FROM (
+    FROM pv_users
+    SELECT TRANSFORM(pv_users.userid, pv_users.date)
+    USING 'map_script'
+    AS dt, uid
+    CLUSTER BY dt) map_output
+  INSERT OVERWRITE TABLE pv_users_reduced
+    SELECT TRANSFORM(map_output.dt, map_output.uid)
+    USING 'reduce_script'
+    AS date, count;
+-------------------------------------------------------------------------------
+  FROM (
+    FROM src
+    SELECT TRANSFORM(src.key, src.value) ROW FORMAT SERDE 'org.apache.hadoop.hive.contrib.serde2.TypedBytesSerDe'
+    USING '/bin/cat'
+    AS (tkey, tvalue) ROW FORMAT SERDE 'org.apache.hadoop.hive.contrib.serde2.TypedBytesSerDe'
+    RECORDREADER 'org.apache.hadoop.hive.ql.exec.TypedBytesRecordReader'
+  ) tmap
+  INSERT OVERWRITE TABLE dest1 SELECT tkey, tvalue
+-------------------------------------------------------------------------------
+| CASE SYNTAX                                                                 |
+-------------------------------------------------------------------------------
+CASE
+  WHEN (...) THEN value
+  WHEN (...) THEN value
+  ELSE value 
+  END
+-------------------------------------------------------------------------------
+-- SELECT isTrueSelfReferrer, count(*) FROM (...) GROUP BY isTrueSelfReferrer;
+-------------------------------------------------------------------------------

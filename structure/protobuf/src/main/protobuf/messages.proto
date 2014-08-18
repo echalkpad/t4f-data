@@ -1,0 +1,162 @@
+package io.aos.protobuf.model;
+
+option java_outer_classname = "MutableProtobufs";
+
+message PageView {
+  optional string id = 1;
+  optional int64 timestamp = 2;
+  optional RawPageView rawPageView = 3;
+  optional PII_data pii = 4;
+  optional PageTime pageTime = 5;
+  optional UrlCategorisation urlCategorisation = 6;
+  optional ReferrerCategorisation referrerCategorisation = 7;
+  optional PlatformCategorisation platformCategorisation = 8;
+  optional SearchQuery searchQuery = 9;
+  optional CanonicalisedUrls canonicalisedUrls = 10;
+  optional Entrance entrance = 11;
+  optional Session session = 12;
+  optional Conversion conversion = 13;
+  optional PageViewMetaData metadata = 14;
+  optional UniversalVariables universalVariables = 15;
+  optional string nextPageUrlCategory = 16;
+  optional string nextPageUrlSubcategory = 17;
+  optional string prevPageUrlCategory = 18;
+  optional string prevPageUrlSubcategory = 19;
+  repeated ExitFeedbackTopicSentiment exitFeedback = 20;
+  optional string conversionId = 21;
+  optional int32 conversionNumber = 22;
+  optional string conversionDetails = 23;
+}
+
+
+message RawPageView {
+  optional string pageViewId = 1;
+  optional string url = 2;
+  optional string referrerUrl = 3;
+  optional int32 browserSidePageNum = 4;
+  optional int64 timeOnPage = 5;
+  optional int64 serverTimestamp = 6;
+  optional int64 clientTimestamp = 7;
+}
+
+message PageViewMetaData {
+  optional string qTrackerVersion = 1;
+  optional string sessionCounters = 2;
+  optional string firstPartyVisitorId = 3;
+  optional string thirdPartyVisitorId = 4;
+}
+
+message UniversalVariables {
+  required string customValues = 1;
+}
+
+message PII_data {
+  optional string ipAddress = 1;
+  optional string webAgent = 2;
+  optional string webAgentSettings = 3;
+}
+
+message PageTime {
+  optional int64 pageTime = 1;
+}
+
+message UrlCategorisation {
+  optional string urlCategory = 1;
+  optional string urlSubCategory = 2;
+}
+
+message ReferrerCategorisation {
+  optional string referrerType = 1;
+  optional string referrerLabel = 2;
+  optional string referrerDetails = 3;
+}
+
+message PlatformCategorisation {
+  optional string userAgentCategorisation = 1;
+  optional string geoLocation = 2;
+}
+
+message SearchQuery {
+  optional string cleanSearchQuery = 1;
+  optional string searchQueryCategorisation = 2;
+}
+
+message CanonicalisedUrls {
+  optional string canonical_url = 1;
+  optional string canonical_referrer_url = 2;
+}
+
+message Label {
+  optional string id = 1;
+  optional int64 timestamp = 2;
+  optional string value = 3;
+}
+
+message Conversion {
+  optional string id = 1;
+  optional int64 timestamp = 2;
+  optional string conversionDetails = 3;
+  optional string pageViewId = 4;
+}
+
+message Session {
+  optional string id = 1;
+  optional int32 sessionNumber = 3;
+  optional int64 timestamp = 2;
+}
+
+message Entrance {
+  optional string id = 1;
+  optional int64 timestamp = 2;
+  optional string referrerType = 3;
+  optional string referrerLabel = 4;
+  optional string referrerDetails = 5;
+  optional string searchQuery = 6;
+  repeated string searchCategorisation = 7;
+  optional int64 clientTimestamp = 8;
+  optional string referrerUrl = 9;
+  optional int32 entranceNumber = 10;
+}
+
+message ExitFeedbackTopicSentiment {
+
+  optional string topic = 2;
+  optional string sentiment = 1;
+  
+}
+
+message ExitFeedback {
+  optional string id = 1;
+  optional int64 timestamp = 2;
+  optional string pageviewId = 3;
+  repeated ExitFeedbackTopicSentiment topicSentimentPairs = 4;
+}
+
+message VisitorInfo {
+  optional string id = 1;
+  optional int64 timestamp = 2;
+  optional int64 totalTimeOnSite = 3;
+  optional string firstSearch = 4;
+  optional string lastSearch = 5;
+  optional string firstPageViewDate = 6;
+  optional string lastPageViewDate = 7;
+  optional string lastRecordDate = 8;
+  optional string lastExitFeedback = 9;
+  optional string lastExitFeedbackDate = 10;
+  optional string lastExitFeedbackUrl = 11;
+  optional bool conversionFlag = 12;
+  optional int32 numConversions = 13;
+  optional string totalLifeTimeConversionValue = 14;
+  optional string firstConversionDate = 15;
+  optional string lastConversionDate = 16;
+  optional string lastUserWebAgent = 18;
+  optional int32 totalPageNum = 19;
+  optional string lastGeoLocation = 20;
+  optional int32 numEntrances = 21;
+  optional string lastEntranceId = 23;
+  optional double avgPageViewsPerSession = 24;
+  optional string firstPageView = 25;
+  optional string lastPageView = 26;
+  optional int32 numSessions = 27;
+  optional string trackingId = 28;
+}

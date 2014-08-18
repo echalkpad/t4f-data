@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the AOS Community (AOS) under one or more
+  contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The AOS licenses this file
+  to you under the Apache License, Version 2.0 (the 
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:core="urn:io:aos:xsd:commons:core:${t4f-essentials-xsd-model-2.version}" 
+           xmlns:consultp="urn:io:aos:xsd:consultation:protocol:${t4f-essentials-xsd-model-2.version}" 
+           xmlns:protocol="urn:io:aos:xsd:protocol:core:${t4f-essentials-xsd-model-2.version}" 
+           xmlns:ehboxc="urn:io:aos:xsd:common:service:${t4f-essentials-xsd-model-2.version}"
+           elementFormDefault="unqualified" 
+           attributeFormDefault="unqualified" 
+           targetNamespace="urn:io:aos:xsd:consultation:protocol:${t4f-essentials-xsd-model-2.version}" 
+           version="${t4f-essentials-xsd-model-2.version}">
+
+  <xs:import namespace="urn:io:aos:xsd:protocol:core:${t4f-essentials-xsd-model-2.version}" 
+             schemaLocation="../XSD/protocol-core-${t4f-essentials-xsd-model-2.version}.xsd" />
+  <xs:import namespace="urn:io:aos:xsd:common:service:${t4f-essentials-xsd-model-2.version}" 
+             schemaLocation="../XSD/common-service-${t4f-essentials-xsd-model-2.version}.xsd" />
+  <xs:import namespace="urn:io:aos:xsd:protocol:core:${t4f-essentials-xsd-model-2.version}" 
+             schemaLocation="../XSD/protocol-core-${t4f-essentials-xsd-model-2.version}.xsd" />
+
+     <!-- 
+     | Request Elements.
+     -->
+	<xs:element name="GetBoxInfoRequest"/>
+	<xs:element name="GetMessagesListRequest" type="consultp:GetMessagesListRequestType"/>
+	<xs:element name="GetFullMessageRequest" type="consultp:MessageRequestType"/>
+	<xs:element name="MoveToInboxRequest" type="consultp:MessageRequestType"/>
+	<xs:element name="GetHistoryRequest" type="consultp:MessageRequestType"/>
+	
+	<!-- 
+     | Response Elements.
+     -->
+	<xs:element name="GetBoxInfoResponse" type="consultp:GetBoxInfoResponseType"/>
+	<xs:element name="GetMessagesListResponse" type="consultp:GetMessageListResponseType"/>
+	<xs:element name="GetFullMessageResponse" type="consultp:GetFullMessageResponseType"/>
+	<xs:element name="MoveToInboxResponse" type="protocol:ResponseType"/>
+	<xs:element name="GetHistoryResponse" type="consultp:GetHistoryResponseType"/>
+	
+	<!-- 
+     | Request Types.
+     -->
+	<xs:complexType name="GetMessagesListRequestType">
+		<xs:sequence>
+			<xs:element name="Source">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="INBOX"/>
+						<xs:enumeration value="BIN"/>
+						<xs:enumeration value="SENT"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageRequestType">
+		<xs:sequence>
+			<xs:element name="MessageId" type="protocol:MessageIdType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- 
+     | Response Types.
+     -->
+	<xs:complexType name="GetBoxInfoResponseType">
+		<xs:complexContent>
+			<xs:extension base="protocol:ResponseType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="BoxId" type="protocol:BoxIdType"/>
+					<xs:element name="NbrMessagesInStandBy" type="xs:int"/>
+					<xs:element name="CurrentSize" type="xs:long"/>
+					<xs:element name="MaxSize" type="xs:long"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GetMessageListResponseType">
+		<xs:complexContent>
+			<xs:extension base="protocol:ResponseType">
+				<xs:sequence>
+					<xs:element name="Source" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="INBOX"/>
+								<xs:enumeration value="BIN"/>
+								<xs:enumeration value="SENT"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Message" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="MessageId" type="protocol:MessageIdType"/>
+								<xs:element name="Destination" type="protocol:EhboxIdentifierType"/>
+								<xs:element name="Sender" type="protocol:SenderType"/>
+								<xs:element name="MessageInfo">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="protocol:MessageInfoType"/>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="ContentInfo" type="protocol:ContentInfoType" minOccurs="0"/>
+								<xs:element name="ContentSpecification" type="protocol:ConsultContentSpecificationType"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GetFullMessageResponseType">
+		<xs:complexContent>
+			<xs:extension base="protocol:ResponseType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="Sender" type="protocol:SenderType"/>
+					<xs:element name="Message" type="protocol:MessageType"/>
+					<xs:element name="MessageInfo" type="protocol:MessageInfoType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GetHistoryResponseType">
+		<xs:complexContent>
+			<xs:extension base="protocol:ResponseType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="MessageId" type="protocol:MessageIdType" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

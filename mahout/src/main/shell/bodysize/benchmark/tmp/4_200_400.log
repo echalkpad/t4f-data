@@ -1,0 +1,36 @@
+MAHOUT_LOCAL is not set; adding HADOOP_CONF_DIR to classpath.
+Running on hadoop, using /opt/hadoop-2.4.0/bin/hadoop and HADOOP_CONF_DIR=/opt/hadoop-2.4.0/etc/hadoop
+MAHOUT-JOB: /opt/mahout-distribution-1.0-SNAPSHOT/mahout-examples-1.0-SNAPSHOT-job.jar
+4
+survive ~ 
+-43.958*Intercept Term + 1.573*bodysize
+      Intercept Term -43.95776
+            bodysize 1.57342
+    0.000000000   -43.957759736     0.000000000     1.573418682 
+MAHOUT_LOCAL is not set; adding HADOOP_CONF_DIR to classpath.
+Running on hadoop, using /opt/hadoop-2.4.0/bin/hadoop and HADOOP_CONF_DIR=/opt/hadoop-2.4.0/etc/hadoop
+MAHOUT-JOB: /opt/mahout-distribution-1.0-SNAPSHOT/mahout-examples-1.0-SNAPSHOT-job.jar
+"target","model-output","log-likelihood"
+0,0.089,-0.092923
+0,0.154,-0.167553
+0,0.295,-0.349017
+0,0.296,-0.350740
+0,0.331,-0.402097
+0,0.349,-0.429055
+0,0.500,-0.692268
+0,0.627,-0.985371
+0,0.902,-2.318780
+0,0.911,-2.418748
+0,0.949,-2.968514
+1,0.952,-0.049695
+0,0.960,-3.226130
+1,0.966,-0.034079
+1,0.976,-0.024157
+1,0.989,-0.010907
+0,0.992,-4.855271
+1,0.993,-0.006910
+1,1.000,-0.000351
+1,1.000,-0.000064
+AUC = 0.95
+confusion: [[7.0, 0.0], [6.0, 7.0]]
+entropy: [[-1.4, -1.9], [-0.8, -0.0]]

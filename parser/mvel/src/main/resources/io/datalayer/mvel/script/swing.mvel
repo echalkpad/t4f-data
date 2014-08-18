@@ -1,0 +1,11 @@
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+with (frame = new JFrame()) {
+    title = "My Swing Frame",
+    resizable = true
+}
+
+frame.contentPane.add(new JLabel("My Label"));
+frame.pack();
+frame.visible = true;

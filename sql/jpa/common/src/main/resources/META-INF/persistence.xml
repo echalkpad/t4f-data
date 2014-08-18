@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the AOS Community (AOS) under one or more
+  contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The AOS licenses this file
+  to you under the Apache License, Version 2.0 (the 
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
+
+	<persistence-unit name="hellojpa" transaction-type="RESOURCE_LOCAL">
+		<!--
+			<provider> org.apache.openjpa.persistence.PersistenceProviderImpl
+			</provider>
+		-->
+		<class>hellojpa.Message</class>
+		<properties>
+			<property name="openjpa.ConnectionProperties"
+				value="DriverClassName=org.apache.derby.jdbc.ClientDriver,
+                  Url=jdbc:derby:memory:OpenJpaInMemoryDerbyDatabase;create=true, 
+                  MaxActive=100, 
+                  MaxWait=10000, 
+                  TestOnBorrow=true, 
+                  Username=aos, 
+                  Password=aos" />
+			<property name="openjpa.ConnectionDriverName" value="org.apache.commons.dbcp.BasicDataSource" />
+			<property name="openjpa.Log" value="DefaultLevel=WARN, Tool=INFO" />
+			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema" />
+			<property name="openjpa.jdbc.SchemaFactory" value="native(ForeignKeys=true)" />
+			<property name="openjpa.jdbc.MappingDefaults" value="ForeignKeyDeleteAction=restrict, JoinForeignKeyDeleteAction=restrict" />
+		</properties>
+	</persistence-unit>
+
+	<persistence-unit name="relations" transaction-type="RESOURCE_LOCAL">
+		<class>relations.Deity</class>
+		<properties>
+			<property name="openjpa.ConnectionURL"
+				value="jdbc:derby://localhost:1527/sample;create=true" />
+			<property name="openjpa.ConnectionDriverName" value="rg.apache.derby.jdbc.ClientDriver" />
+			<property name="openjpa.ConnectionUserName" value="aos" />
+			<property name="openjpa.ConnectionPassword" value="aos" />
+			<property name="openjpa.Log" value="DefaultLevel=WARN, Tool=INFO" />
+			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema" />
+			<property name="openjpa.jdbc.SchemaFactory" value="native(ForeignKeys=true)" />
+			<property name="openjpa.jdbc.MappingDefaults"
+				value="ForeignKeyDeleteAction=restrict, JoinForeignKeyDeleteAction=restrict" />
+		</properties>
+
+	</persistence-unit>
+
+	<persistence-unit name="embeddables" transaction-type="RESOURCE_LOCAL">
+		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+		<class>embeddables.Address</class>
+		<class>embeddables.ContactInfo</class>
+		<class>embeddables.Coordinates</class>
+		<class>embeddables.Phone</class>
+		<class>embeddables.User</class>
+		<properties>
+
+			<property name="openjpa.ConnectionProperties"
+				value="DriverClassName=org.apache.derby.jdbc.ClientDriver,
+                  Url=jdbc:derby://localhost:1527/sample;create=true, 
+                  MaxActive=100, 
+                  MaxWait=10000, 
+                  TestOnBorrow=true, 
+                  Username=aos, 
+                  Password=aos" />
+			<property name="openjpa.ConnectionDriverName" value="org.apache.commons.dbcp.BasicDataSource" />
+			<property name="openjpa.Log" value="DefaultLevel=WARN, Tool=INFO" />
+			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema" />
+			<property name="openjpa.jdbc.SchemaFactory" value="native(ForeignKeys=true)" />
+			<property name="openjpa.jdbc.MappingDefaults"
+				value="ForeignKeyDeleteAction=restrict, JoinForeignKeyDeleteAction=restrict" />
+		</properties>
+	</persistence-unit>
+
+</persistence>

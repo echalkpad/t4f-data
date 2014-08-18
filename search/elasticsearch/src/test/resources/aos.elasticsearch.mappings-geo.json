@@ -1,0 +1,10 @@
+{
+    "index-geo-type" : {
+       "properties" : {
+            "location" : {
+                "type" : "geo_point",
+                "lat_lon": true
+            }
+        }
+    }
+}

@@ -1,0 +1,41 @@
+<message>
+<!--
+  Licensed to the AOS Community (AOS) under one or more
+  contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The AOS licenses this file
+  to you under the Apache License, Version 2.0 (the 
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<header>
+<field>
+Return-Path: something@example.com</field>
+<field>
+Date: Thu, 11 Apr 1996 01:10:30 -0500</field>
+<field>
+From: Me &lt;me@example.com&gt;</field>
+<field>
+MIME-Version: 1.0</field>
+<field>
+Content-Type: multipart/mixed; boundary="------------299A70B339B65A93542D2AE"</field>
+</header>
+<multipart>
+<preamble>
+This is a multi-part message in MIME format with no parts.
+</preamble>
+<epilogue>
+
+Epilogue
+</epilogue>
+</multipart>
+</message>

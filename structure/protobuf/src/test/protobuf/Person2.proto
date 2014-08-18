@@ -1,0 +1,8 @@
+package io.aos.protobuf.builder;
+
+message Person {
+    required string user_name        = 1;
+    optional int64  favourite_number = 2;
+    repeated string interests        = 3;
+    optional string first_name       = 4;
+}

@@ -1,0 +1,9 @@
+Sat Jan 12 08:25:43 GMT 2013 : Apache Derby Network Server - 10.7.1.1 - (1040133) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+Sat Jan 12 08:25:44 GMT 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.7.1.1 - (1040133): instance a816c00e-013c-2ddd-4e30-00000359d9d8 
+on database directory /Users/eric/wrk/t4f/t4f-data.git/sql/jpa/eclipselink/sample  with class loader sun.misc.Launcher$AppClassLoader@129a41d2 
+Loaded from file:/Users/eric/.m2/repository/org/apache/derby/derby/10.7.1.1/derby-10.7.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_08-ea-b04
+Database Class Loader started - derby.database.classpath=''

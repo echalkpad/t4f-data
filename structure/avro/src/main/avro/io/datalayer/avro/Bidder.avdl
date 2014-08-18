@@ -1,0 +1,74 @@
+/*
+ * Copyright 2011 James Baldassari
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/** A (very) simple real-time bidding protocol */
+@namespace("io.datalayer.avro.server")
+protocol Bidder {
+  /** The dimension of an ad slot */
+  record Dimension {
+    int height;
+    int width;
+  }
+
+  /** Bid request sent from an ad exchange to an auction participant */
+  record BidRequest {
+    string auctionId;
+    Dimension dimension;
+  }
+
+  /** Bid response sent from an auction participant back to an ad exchange */
+  record BidResponse {
+    long maxBidMicroCpm;
+    union {string, null} creativeSnippet;
+  }
+
+  /** Used by an ad exchange to store the result of an auction */
+  record AuctionResult {
+    string auctionId;
+    boolean isWon = false;
+    union {string, null} winningBidderId;
+    union {BidResponse, null} winningBid;
+  }
+
+  /** Types of notifications sent from an ad exchange to a bidder */
+  enum NotificationType {
+    WIN,
+    LOSS
+  }
+
+  /** Notification sent from an ad exchange to a bidder */
+  record Notification {
+    string auctionId;
+    NotificationType notificationType;
+    long winPriceMicroCpm = 0;
+  }
+
+  /** An error that may be thrown by a bidder while processing a bid request */
+  error BidderError {
+    int code;
+    union {string, null} description;
+  }
+  
+  /** Sends a bid request to a bidder and receives the response */
+  BidResponse bid(BidRequest bidRequest) throws BidderError;
+
+  /** Sends a notification to a bidder */
+  void notify(Notification notification) oneway;
+  
+  /** Pings a bidder, e.g. to measure latency */
+  boolean ping(); 
+  
+}

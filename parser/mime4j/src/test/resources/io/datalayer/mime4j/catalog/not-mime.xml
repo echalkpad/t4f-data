@@ -1,0 +1,45 @@
+<message>
+<!--
+  Licensed to the AOS Community (AOS) under one or more
+  contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The AOS licenses this file
+  to you under the Apache License, Version 2.0 (the 
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<header>
+<field>
+Return-Path: &lt;s.rahtz@elsevier.co.uk&gt;</field>
+<field>
+To: Eryq &lt;eryq@rhine.stx.com&gt;</field>
+<field>
+From: s.rahtz@elsevier.co.uk (Sebastian Rahtz)</field>
+<field>
+Subject: Re: HELP! Problems installing PSNFSS, and other querys</field>
+<field>
+Date: Wed, 15 Feb 1995 09:38:18</field>
+</header>
+<body>
+try reading the LaTeX Companion for more details
+
+ignore the checksum error in lucida.dtx. i'll fix it
+
+sebastian
+Sebastian Rahtz                              s.rahtz@elsevier.co.uk
+Production Methods Group                     +44 1865 843662
+Elsevier Science Ltd
+Kidlington
+Oxford, UK
+
+</body>
+</message>
