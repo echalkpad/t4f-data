@@ -21,13 +21,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-pubsub</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-pubsub</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <artifactId>datalayer-pubsub-kestrel</artifactId>
-  <name>Datalayer PubSub Kestrel</name>
+  <artifactId>t4f-data-pubsub-kestrel</artifactId>
+  <name>T4F Data PubSub Kestrel</name>
   <packaging>jar</packaging>
   <version>1.0.0-SNAPSHOT</version>
 </project>

@@ -18,21 +18,21 @@
   under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <groupId>io.datalayer</groupId>
-  <artifactId>datalayer-rpc-ws-wsdl</artifactId>
+  <groupId>io.aos</groupId>
+  <artifactId>t4f-data-rpc-ws-wsdl</artifactId>
   <version>${t4f-ws-spl-1-wsdl.version}</version>
-  <name>Datalayer RPC Web Service WSDL</name>
+  <name>T4F Data RPC Web Service WSDL</name>
   <description>Project containing XSD</description>
   <packaging>jar</packaging>
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-rpc-ws</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-rpc-ws</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
   <properties>
-    <t4f-xsd-model-2.name>datalayer-rpc-ws-model-2</t4f-xsd-model-2.name>
+    <t4f-xsd-model-2.name>t4f-rpc-ws-model-2</t4f-xsd-model-2.name>
     <t4f-xsd-model-2.version.major>1</t4f-xsd-model-2.version.major>
     <t4f-xsd-model-2.version.minor>0</t4f-xsd-model-2.version.minor>
     <t4f-xsd-model-2.version.patch>0</t4f-xsd-model-2.version.patch>
@@ -56,7 +56,7 @@
             <phase>process-resources</phase>
             <configuration>
               <tasks>
-                <unjar dest="target/classes" src="${settings.localRepository}/io/datalayer/${t4f-xsd-model-2.name}/${t4f-xsd-model-2.version}/${t4f-xsd-model-2.name}-${t4f-xsd-model-2.version}.jar">
+                <unjar dest="target/classes" src="${settings.localRepository}/io/t4f/${t4f-xsd-model-2.name}/${t4f-xsd-model-2.version}/${t4f-xsd-model-2.name}-${t4f-xsd-model-2.version}.jar">
                   <patternset>
                     <include name="**/*.xsd" />
                   </patternset>

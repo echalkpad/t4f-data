@@ -19,8 +19,8 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-hbase</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-hbase</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
@@ -28,8 +28,8 @@
     <hadoop.version>2.4.0</hadoop.version>
   </properties>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>datalayer-hbase-server</artifactId>
-  <name>Datalayer HBase Server</name>
+  <artifactId>t4f-data-hbase-server</artifactId>
+  <name>T4F Data HBase Server</name>
   <dependencies>
     <dependency>
       <groupId>org.apache.hbase</groupId>

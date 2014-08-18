@@ -21,12 +21,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-sql</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-sql</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <artifactId>datalayer-sql-jpa</artifactId>
+  <artifactId>t4f-data-sql-jpa</artifactId>
   <packaging>pom</packaging>
   <modules>
     <module>common</module>
@@ -35,5 +35,5 @@
     <module>hibernate</module>
     <module>openjpa</module>
   </modules>
-  <name>Datalayer SQL JPA</name>
+  <name>T4F Data SQL JPA</name>
 </project>

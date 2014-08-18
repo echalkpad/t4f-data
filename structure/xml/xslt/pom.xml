@@ -19,12 +19,12 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-structure-xml</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-structure-xml</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <artifactId>datalayer-structure-xml-xslt</artifactId>
+  <artifactId>t4f-data-structure-xml-xslt</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <modelVersion>4.0.0</modelVersion>
@@ -38,5 +38,5 @@
       <artifactId>junit</artifactId>
     </dependency>
   </dependencies>
-  <name>Datalayer Structure XML XSLT</name>
+  <name>T4F Data Structure XML XSLT</name>
 </project>

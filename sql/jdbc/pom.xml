@@ -20,12 +20,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>datalayer-sql-jdbc</artifactId>
+  <artifactId>t4f-data-sql-jdbc</artifactId>
   <packaging>jar</packaging>
-  <name>Datalayer SQL JDBC</name>
+  <name>T4F Data SQL JDBC</name>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-sql</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-sql</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>

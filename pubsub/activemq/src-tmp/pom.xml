@@ -21,13 +21,13 @@
   <modelVersion>4.0.0</modelVersion>
   <!--
   <parent> 
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-activemq-in-action-examples</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-activemq-in-action-examples</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   -->
-  <groupId>io.datalayer</groupId>
-  <artifactId>datalayer-activemq-in-action-web</artifactId>
+  <groupId>io.aos</groupId>
+  <artifactId>t4f-data-activemq-in-action-web</artifactId>
   <packaging>pom</packaging>
   <version>1.0.0-SNAPSHOT</version>
   <name>ActiveMQ In Action Examples Chapter 8</name>

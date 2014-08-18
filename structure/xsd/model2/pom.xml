@@ -19,18 +19,18 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-structure-xsd</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-structure-xsd</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <artifactId>datalayer-structure-xsd-model-2</artifactId>
+  <artifactId>t4f-data-structure-xsd-model-2</artifactId>
   <version>${t4f-essentials-xsd-model-2.version}</version>
-  <name>Datalayer Structure XSD Model2</name>
+  <name>T4F Data Structure XSD Model2</name>
   <packaging>jar</packaging>
   <modelVersion>4.0.0</modelVersion>
   <properties>
-    <t4f-essentials-xsd-model-1.name>datalayer-structure-xsd-model-1</t4f-essentials-xsd-model-1.name>
+    <t4f-essentials-xsd-model-1.name>t4f-structure-xsd-model-1</t4f-essentials-xsd-model-1.name>
     <t4f-essentials-xsd-model-1.version.major>1</t4f-essentials-xsd-model-1.version.major>
     <t4f-essentials-xsd-model-1.version.minor>0</t4f-essentials-xsd-model-1.version.minor>
     <t4f-essentials-xsd-model-1.version.patch>0</t4f-essentials-xsd-model-1.version.patch>
@@ -54,7 +54,7 @@
             <phase>generate-resources</phase>
             <configuration>
               <tasks>
-                <unjar dest="target/classes" src="${settings.localRepository}/io/datalayer/${t4f-essentials-xsd-model-1.name}/${t4f-essentials-xsd-model-1.version}/${t4f-essentials-xsd-model-1.name}-${t4f-essentials-xsd-model-1.version}.jar">
+                <unjar dest="target/classes" src="${settings.localRepository}/io/t4f/${t4f-essentials-xsd-model-1.name}/${t4f-essentials-xsd-model-1.version}/${t4f-essentials-xsd-model-1.name}-${t4f-essentials-xsd-model-1.version}.jar">
                   <patternset>
                     <include name="**/*.xsd" />
                   </patternset>

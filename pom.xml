@@ -17,9 +17,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.datalayer</groupId>
-  <artifactId>datalayer</artifactId>
-  <name>Datalayer</name>
+  <artifactId>t4f-data</artifactId>
+  <name>T4F Data</name>
   <packaging>pom</packaging>
   <parent>
     <groupId>io.aos</groupId>
@@ -28,20 +27,20 @@
     <relativePath></relativePath>
   </parent>
   <properties>
-    <datalayer.version>${project.version}</datalayer.version>
+    <t4f.version>${project.version}</t4f.version>
   </properties>
   <ciManagement>
-    <url>http://github.com/datalayer/io.datalayer/issues</url>
+    <url>http://github.com/t4f/io.aos/issues</url>
   </ciManagement>
   <scm>
-    <connection>scm:git:git@github.com:datalayer/io.datalayer.git</connection>
-    <developerConnection>scm:git:git@github.com:datalayer/io.datalayer.git</developerConnection>
+    <connection>scm:git:git@github.com:t4f/io.aos.git</connection>
+    <developerConnection>scm:git:git@github.com:t4f/io.aos.git</developerConnection>
     <url>git@github.com:aos-io/aos.git</url>
    </scm>
   <developers>
     <developer>
       <name>Eric Charles</name>
-      <email>eric@datalayer.io</email>
+      <email>eric@t4f.io</email>
     </developer>
   </developers>
   <licenses>
@@ -52,8 +51,8 @@
     </license>
   </licenses>
   <organization>
-    <name>Datalayer.io</name>
-    <url>http://datalayer.io</url>
+    <name>T4F Data.io</name>
+    <url>http://t4f.io</url>
   </organization>
   <mailingLists>
     <mailingList>
@@ -67,24 +66,24 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>io.datalayer</groupId>
-        <artifactId>datalayer-structure-core</artifactId>
-        <version>${datalayer.version}</version>
+        <groupId>io.aos</groupId>
+        <artifactId>t4f-data-structure-core</artifactId>
+        <version>${t4f.version}</version>
       </dependency>
       <dependency>
-        <groupId>io.datalayer</groupId>
-        <artifactId>datalayer-sql-jdbc</artifactId>
-        <version>${datalayer.version}</version>
+        <groupId>io.aos</groupId>
+        <artifactId>t4f-data-sql-jdbc</artifactId>
+        <version>${t4f.version}</version>
       </dependency>
       <dependency>
-        <groupId>io.datalayer</groupId>
-        <artifactId>datalayer-sql-server</artifactId>
-        <version>${datalayer.version}</version>
+        <groupId>io.aos</groupId>
+        <artifactId>t4f-data-sql-server</artifactId>
+        <version>${t4f.version}</version>
       </dependency>
       <dependency>
-        <groupId>io.datalayer</groupId>
-        <artifactId>datalayer-nosql-hadoop-common</artifactId>
-        <version>${datalayer.version}</version>
+        <groupId>io.aos</groupId>
+        <artifactId>t4f-data-nosql-hadoop-common</artifactId>
+        <version>${t4f.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -95,7 +94,6 @@
     <module>cascading</module>
     <module>coordination</module>
     <module>cassandra</module>
-    <module>dataset</module>
     <module>devops</module>
     <module>game</module>
     <module>graph</module>
@@ -118,7 +116,6 @@
     <module>structure</module>
     <module>sql</module>
     <module>text</module>
-    <module>ui</module>
   </modules>
   <build>
     <plugins>
@@ -142,7 +139,7 @@
   </build>
   <profiles>
     <profile>
-      <id>datalayer-public</id>
+      <id>t4f-public</id>
       <activation>
         <file>
           <exists>pom.xml</exists>

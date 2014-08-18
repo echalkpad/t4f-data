@@ -20,12 +20,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>datalayer-pubsub-activemq</artifactId>
-  <name>Datalayer PubSub ActiveMQ</name>
+  <artifactId>t4f-data-pubsub-activemq</artifactId>
+  <name>T4F Data PubSub ActiveMQ</name>
   <packaging>war</packaging>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-pubsub</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-pubsub</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>

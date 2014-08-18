@@ -20,19 +20,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>datalayer-sql-jpa-common</artifactId>
+  <artifactId>t4f-data-sql-jpa-common</artifactId>
   <packaging>jar</packaging>
-  <name>Datalayer SQL JPA OpenJPA</name>
+  <name>T4F Data SQL JPA OpenJPA</name>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-sql-jpa</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-sql-jpa</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
   <dependencies>
     <dependency>
-      <groupId>io.datalayer</groupId>
-      <artifactId>datalayer-sql-server</artifactId>
+      <groupId>io.aos</groupId>
+      <artifactId>t4f-data-sql-server</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.openjpa</groupId>

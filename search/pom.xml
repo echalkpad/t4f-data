@@ -21,13 +21,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <artifactId>datalayer-search</artifactId>
-  <name>Datalayer Search</name>
+  <artifactId>t4f-data-search</artifactId>
+  <name>T4F Data Search</name>
   <packaging>pom</packaging>
   <modules>
     <module>elasticsearch</module>

@@ -19,15 +19,15 @@
 -->
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.datalayer</groupId>
-  <artifactId>datalayer-activemq-in-action-web-geronimo</artifactId>
+  <groupId>io.aos</groupId>
+  <artifactId>t4f-data-activemq-in-action-web-geronimo</artifactId>
   <packaging>war</packaging>
   <version>1.0.0-SNAPSHOT</version>
   <name>activmeq-in-action-geronimo</name>
   <url>http://maven.apache.org</url>
     <parent>
-      <groupId>io.datalayer</groupId>
-      <artifactId>datalayer-activemq</artifactId>
+      <groupId>io.aos</groupId>
+      <artifactId>t4f-data-activemq</artifactId>
       <version>1.0.0-SNAPSHOT</version>
       <relativePath>..</relativePath>
     </parent>

@@ -20,14 +20,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.datalayer</groupId>
-  <artifactId>datalayer-sql-jpa-hibernate</artifactId>
+  <groupId>io.aos</groupId>
+  <artifactId>t4f-data-sql-jpa-hibernate</artifactId>
   <packaging>jar</packaging>
   <version>1.0.0-SNAPSHOT</version>
-  <name>Datalayer SQL JPA Hibernate</name>
+  <name>T4F Data SQL JPA Hibernate</name>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-sql-jpa</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-sql-jpa</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>

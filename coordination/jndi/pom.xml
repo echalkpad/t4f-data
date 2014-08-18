@@ -21,12 +21,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-coordination</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-coordination</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <artifactId>datalayer-coordination-jndi</artifactId>
-  <name>Datalayer Coordination JNDI</name>
+  <artifactId>t4f-data-coordination-jndi</artifactId>
+  <name>T4F Data Coordination JNDI</name>
   <packaging>jar</packaging>
 </project>

@@ -19,13 +19,13 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-structure-xsd</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-structure-xsd</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <artifactId>datalayer-structure-xsd-model-jaxb</artifactId>
-  <name>Datalayer Structure XSD JAXB</name>
+  <artifactId>t4f-data-structure-xsd-model-jaxb</artifactId>
+  <name>T4F Data Structure XSD JAXB</name>
   <description>Project containing XSD</description>
   <packaging>jar</packaging>
   <modelVersion>4.0.0</modelVersion>
@@ -72,7 +72,7 @@
         <configuration>
           <schemaDirectory>src/test/resources/XSD</schemaDirectory>
           <schemaFiles>model1.xsd</schemaFiles>
-          <packageName>io.datalayer.xsd.model.jaxb</packageName>
+          <packageName>io.aos.xsd.model.jaxb</packageName>
           <outputDirectory>target/java-jaxb-generated</outputDirectory>
           <staleFile>target/stale/jaxb</staleFile>
         </configuration>

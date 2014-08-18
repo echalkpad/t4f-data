@@ -21,11 +21,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-rpc-rmi</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-rpc-rmi</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>datalayer-rpc-rmi-cajo</artifactId>
-  <name>Datalayer RPC RMI Cajo</name>
+  <artifactId>t4f-data-rpc-rmi-cajo</artifactId>
+  <name>T4F Data RPC RMI Cajo</name>
   <packaging>jar</packaging>
 </project>

@@ -20,12 +20,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>datalayer-structure</artifactId>
-  <name>Datalayer Structure</name>
+  <artifactId>t4f-data-structure</artifactId>
+  <name>T4F Data Structure</name>
   <packaging>pom</packaging>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data</artifactId>
     <relativePath>..</relativePath>
     <version>1.0.0-SNAPSHOT</version>
   </parent>

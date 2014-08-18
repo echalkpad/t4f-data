@@ -20,12 +20,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>datalayer-spark-shark</artifactId>
-  <name>Datalayer Spark Shark</name>
+  <artifactId>t4f-data-spark-shark</artifactId>
+  <name>T4F Data Spark Shark</name>
   <packaging>jar</packaging>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-spark</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-spark</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>

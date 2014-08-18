@@ -20,13 +20,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-rpc-ws</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-rpc-ws</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <artifactId>datalayer-rpc-ws-ws</artifactId>
-  <name>Datalayer RPC Web Service Server</name>
+  <artifactId>t4f-data-rpc-ws-ws</artifactId>
+  <name>T4F Data RPC Web Service Server</name>
   <packaging>war</packaging>
   <build>
     <plugins>
@@ -53,8 +53,8 @@
 <!--        <artifactId>javaee-api</artifactId>-->
 <!--      </dependency>-->
     <dependency>
-      <groupId>io.datalayer</groupId>
-      <artifactId>datalayer-rpc-ws-sei</artifactId>
+      <groupId>io.aos</groupId>
+      <artifactId>t4f-data-rpc-ws-sei</artifactId>
       <version>1.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>

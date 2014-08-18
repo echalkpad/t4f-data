@@ -21,13 +21,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-parser</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-parser</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <artifactId>datalayer-parser-antlr</artifactId>
-  <name>Datalayer Parser Antlr</name>
+  <artifactId>t4f-data-parser-antlr</artifactId>
+  <name>T4F Data Parser Antlr</name>
   <packaging>jar</packaging>
   <build>
     <plugins>

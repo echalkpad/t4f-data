@@ -21,12 +21,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.datalayer</groupId>
-    <artifactId>datalayer-cache</artifactId>
+    <groupId>io.aos</groupId>
+    <artifactId>t4f-data-cache</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <artifactId>datalayer-cache-hazelcast</artifactId>
-  <name>Datalayer Cache Hazelcast</name>
+  <artifactId>t4f-data-cache-hazelcast</artifactId>
+  <name>T4F Data Cache Hazelcast</name>
   <packaging>jar</packaging>
 </project>
