@@ -6,4 +6,7 @@ branches:
     - master
 before_install: 'mvn -version'
 install: 'mvn clean install -DskipTests'
+cache:
+ directories:
+ - $HOME/.m2
 
