@@ -34,8 +34,8 @@
     <module>core</module>
     <module>json</module>
     <module>latex</module>
-    <module>protobuf</module>
-    <module>thrift</module>
+<!--     <module>protobuf</module> -->
+<!--     <module>thrift</module> -->
     <module>xml</module>
     <module>xsd</module>
     <module>yaml</module>

@@ -449,7 +449,7 @@ Copyright (C) 2010 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/i/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/gtest'
+ac_pwd='/t/t4f-data.git/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/gtest'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='/bin/mkdir -p'
@@ -959,12 +959,12 @@ S["mkdir_p"]="/bin/mkdir -p"
 S["MKDIR_P"]="/bin/mkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]="strip"
-S["install_sh"]="${SHELL} /i/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/gtest/build-aux/install-sh"
-S["MAKEINFO"]="${SHELL} /i/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/gtest/build-aux/missing --run makeinfo"
-S["AUTOHEADER"]="${SHELL} /i/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/gtest/build-aux/missing --run autoheader"
-S["AUTOMAKE"]="${SHELL} /i/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/gtest/build-aux/missing --run automake-1.11"
-S["AUTOCONF"]="${SHELL} /i/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/gtest/build-aux/missing --run autoconf"
-S["ACLOCAL"]="${SHELL} /i/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/gtest/build-aux/missing --run aclocal-1.11"
+S["install_sh"]="${SHELL} /t/t4f-data.git/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/gtest/build-aux/install-sh"
+S["MAKEINFO"]="${SHELL} /t/t4f-data.git/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/gtest/build-aux/missing --run makeinfo"
+S["AUTOHEADER"]="${SHELL} /t/t4f-data.git/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/gtest/build-aux/missing --run autoheader"
+S["AUTOMAKE"]="${SHELL} /t/t4f-data.git/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/gtest/build-aux/missing --run automake-1.11"
+S["AUTOCONF"]="${SHELL} /t/t4f-data.git/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/gtest/build-aux/missing --run autoconf"
+S["ACLOCAL"]="${SHELL} /t/t4f-data.git/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/gtest/build-aux/missing --run aclocal-1.11"
 S["VERSION"]="1.6.0"
 S["PACKAGE"]="gtest"
 S["CYGPATH_W"]="echo"

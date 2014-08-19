@@ -22,7 +22,7 @@
            elementFormDefault="unqualified" 
            attributeFormDefault="unqualified" 
            targetNamespace="urn:io:aos:xsd:common:service:${t4f-xsd-model-1.version}" 
-           version="${datalayer-t4f-rpc-xsd-model-1.version}">
+           version="${datalayer-t4f-data-rpc-xsd-model-1.version}">
            
 	<xs:complexType name="SenderType">
 		<xs:sequence>

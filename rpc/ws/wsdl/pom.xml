@@ -32,7 +32,7 @@
     <relativePath>..</relativePath>
   </parent>
   <properties>
-    <t4f-xsd-model-2.name>t4f-rpc-ws-model-2</t4f-xsd-model-2.name>
+    <t4f-xsd-model-2.name>t4f-data-rpc-ws-model-2</t4f-xsd-model-2.name>
     <t4f-xsd-model-2.version.major>1</t4f-xsd-model-2.version.major>
     <t4f-xsd-model-2.version.minor>0</t4f-xsd-model-2.version.minor>
     <t4f-xsd-model-2.version.patch>0</t4f-xsd-model-2.version.patch>
@@ -56,7 +56,7 @@
             <phase>process-resources</phase>
             <configuration>
               <tasks>
-                <unjar dest="target/classes" src="${settings.localRepository}/io/t4f/${t4f-xsd-model-2.name}/${t4f-xsd-model-2.version}/${t4f-xsd-model-2.name}-${t4f-xsd-model-2.version}.jar">
+                <unjar dest="target/classes" src="${settings.localRepository}/io/aos/${t4f-xsd-model-2.name}/${t4f-xsd-model-2.version}/${t4f-xsd-model-2.name}-${t4f-xsd-model-2.version}.jar">
                   <patternset>
                     <include name="**/*.xsd" />
                   </patternset>

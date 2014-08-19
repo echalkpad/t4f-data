@@ -17,7 +17,7 @@ old_library='libprotoc.a'
 inherited_linker_flags=' -pthread'
 
 # Libraries that this one depends upon.
-dependency_libs=' /i/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/src/libprotobuf.la -lpthread -lz'
+dependency_libs=' /t/t4f-data.git/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/src/libprotobuf.la -lpthread -lz'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -39,4 +39,4 @@ dlpreopen=''
 
 # Directory that this library needs to be installed in:
 libdir='/usr/local/lib'
-relink_command="(cd /i/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/src; /bin/bash /i/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/libtool  --tag CXX --mode=relink g++ -pthread -Wall -Wwrite-strings -Woverloaded-virtual -Wno-sign-compare -O2 -g -DNDEBUG -version-info 8:0:0 -export-dynamic -no-undefined -o libprotoc.la -rpath /usr/local/lib code_generator.lo command_line_interface.lo plugin.lo plugin.pb.lo subprocess.lo zip_writer.lo cpp_enum.lo cpp_enum_field.lo cpp_extension.lo cpp_field.lo cpp_file.lo cpp_generator.lo cpp_helpers.lo cpp_message.lo cpp_message_field.lo cpp_primitive_field.lo cpp_service.lo cpp_string_field.lo java_enum.lo java_enum_field.lo java_extension.lo java_field.lo java_file.lo java_generator.lo java_helpers.lo java_message.lo java_message_field.lo java_primitive_field.lo java_service.lo java_string_field.lo java_doc_comment.lo python_generator.lo -lpthread libprotobuf.la -lz @inst_prefix_dir@)"
+relink_command="(cd /t/t4f-data.git/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/src; /bin/bash /t/t4f-data.git/structure/protobuf/src/c/protoc-2.5.0/protobuf-2.5.0/libtool  --tag CXX --mode=relink g++ -pthread -Wall -Wwrite-strings -Woverloaded-virtual -Wno-sign-compare -O2 -g -DNDEBUG -version-info 8:0:0 -export-dynamic -no-undefined -o libprotoc.la -rpath /usr/local/lib code_generator.lo command_line_interface.lo plugin.lo plugin.pb.lo subprocess.lo zip_writer.lo cpp_enum.lo cpp_enum_field.lo cpp_extension.lo cpp_field.lo cpp_file.lo cpp_generator.lo cpp_helpers.lo cpp_message.lo cpp_message_field.lo cpp_primitive_field.lo cpp_service.lo cpp_string_field.lo java_enum.lo java_enum_field.lo java_extension.lo java_field.lo java_file.lo java_generator.lo java_helpers.lo java_message.lo java_message_field.lo java_primitive_field.lo java_service.lo java_string_field.lo java_doc_comment.lo python_generator.lo -lpthread libprotobuf.la -lz @inst_prefix_dir@)"

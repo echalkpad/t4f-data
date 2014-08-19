@@ -28,7 +28,7 @@
   </parent>
   <artifactId>t4f-data-rpc-ws-sei</artifactId>
   <name>T4F Data RPC Web Service SEI</name>
-  <description>t4f-rpc-ws-sei</description>
+  <description>t4f-data-rpc-ws-sei</description>
   <packaging>jar</packaging>
   <properties>
     <t4f-ws-spl-1-wsdl.version>1.0.0-SNAPSHOT</t4f-ws-spl-1-wsdl.version>
@@ -83,13 +83,13 @@
             <configuration>
               <tasks>
                 <unjar dest="target/webapp-generated/WEB-INF"
-                  src="${settings.localRepository}/io/t4f/t4f-rpc-ws-wsdl/1.0.0-SNAPSHOT/t4f-rpc-ws-wsdl-1.0.0-SNAPSHOT.jar">
+                  src="${settings.localRepository}/io/aos/t4f-data-rpc-ws-wsdl/1.0.0-SNAPSHOT/t4f-data-rpc-ws-wsdl-1.0.0-SNAPSHOT.jar">
                   <patternset>
                     <include name="**/publication*.wsdl" />
                     <include name="**/*.xsd" />
                   </patternset>
                 </unjar>
-                <!-- <unjar dest="target/webapp-generated/WEB-INF" src="${settings.localRepository}/io/t4f/t4f-rpc-ws-policy/1.0.0-SNAPSHOT/t4f-rpc-ws-policy-1.0.0-SNAPSHOT.jar"> -->
+                <!-- <unjar dest="target/webapp-generated/WEB-INF" src="${settings.localRepository}/io/aos/t4f-data-rpc-ws-policy/1.0.0-SNAPSHOT/t4f-data-rpc-ws-policy-1.0.0-SNAPSHOT.jar"> -->
                 <!-- <patternset> -->
                 <!-- <include name="**/*.xml" /> -->
                 <!-- <exclude name="META-INF/" /> -->

@@ -18,21 +18,21 @@
   under the License.
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-           xmlns:core="urn:io:aos:xsd:commons:core:${datalayer-t4f-rpc-ws-model-2.version}" 
-           xmlns:consultp="urn:io:aos:xsd:consultation:protocol:${datalayer-t4f-rpc-ws-model-2.version}" 
-           xmlns:protocol="urn:io:aos:xsd:protocol:core:${datalayer-t4f-rpc-ws-model-2.version}" 
-           xmlns:ehboxc="urn:io:aos:xsd:common:service:${datalayer-t4f-rpc-ws-model-2.version}"
+           xmlns:core="urn:io:aos:xsd:commons:core:${datalayer-t4f-data-rpc-ws-model-2.version}" 
+           xmlns:consultp="urn:io:aos:xsd:consultation:protocol:${datalayer-t4f-data-rpc-ws-model-2.version}" 
+           xmlns:protocol="urn:io:aos:xsd:protocol:core:${datalayer-t4f-data-rpc-ws-model-2.version}" 
+           xmlns:ehboxc="urn:io:aos:xsd:common:service:${datalayer-t4f-data-rpc-ws-model-2.version}"
            elementFormDefault="unqualified" 
            attributeFormDefault="unqualified" 
-           targetNamespace="urn:io:aos:xsd:consultation:protocol:${datalayer-t4f-rpc-ws-model-2.version}" 
-           version="${datalayer-t4f-rpc-ws-model-2.version}">
+           targetNamespace="urn:io:aos:xsd:consultation:protocol:${datalayer-t4f-data-rpc-ws-model-2.version}" 
+           version="${datalayer-t4f-data-rpc-ws-model-2.version}">
 
-  <xs:import namespace="urn:io:aos:xsd:protocol:core:${datalayer-t4f-rpc-ws-model-2.version}" 
-             schemaLocation="../XSD/protocol-core-${datalayer-t4f-rpc-ws-model-2.version}.xsd" />
-  <xs:import namespace="urn:io:aos:xsd:common:service:${datalayer-t4f-rpc-ws-model-2.version}" 
-             schemaLocation="../XSD/common-service-${datalayer-t4f-rpc-ws-model-2.version}.xsd" />
-  <xs:import namespace="urn:io:aos:xsd:protocol:core:${datalayer-t4f-rpc-ws-model-2.version}" 
-             schemaLocation="../XSD/protocol-core-${datalayer-t4f-rpc-ws-model-2.version}.xsd" />
+  <xs:import namespace="urn:io:aos:xsd:protocol:core:${datalayer-t4f-data-rpc-ws-model-2.version}" 
+             schemaLocation="../XSD/protocol-core-${datalayer-t4f-data-rpc-ws-model-2.version}.xsd" />
+  <xs:import namespace="urn:io:aos:xsd:common:service:${datalayer-t4f-data-rpc-ws-model-2.version}" 
+             schemaLocation="../XSD/common-service-${datalayer-t4f-data-rpc-ws-model-2.version}.xsd" />
+  <xs:import namespace="urn:io:aos:xsd:protocol:core:${datalayer-t4f-data-rpc-ws-model-2.version}" 
+             schemaLocation="../XSD/protocol-core-${datalayer-t4f-data-rpc-ws-model-2.version}.xsd" />
 
      <!-- 
      | Request Elements.

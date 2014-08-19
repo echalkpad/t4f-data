@@ -30,7 +30,7 @@
   <packaging>jar</packaging>
   <modelVersion>4.0.0</modelVersion>
   <properties>
-    <t4f-xsd-model-1.name>t4f-rpc-ws-model-1</t4f-xsd-model-1.name>
+    <t4f-xsd-model-1.name>t4f-data-rpc-ws-model-1</t4f-xsd-model-1.name>
     <t4f-xsd-model-1.version.major>1</t4f-xsd-model-1.version.major>
     <t4f-xsd-model-1.version.minor>0</t4f-xsd-model-1.version.minor>
     <t4f-xsd-model-1.version.patch>0</t4f-xsd-model-1.version.patch>
@@ -54,7 +54,7 @@
             <phase>generate-resources</phase>
             <configuration>
               <tasks>
-                <unjar dest="target/classes" src="${settings.localRepository}/io/t4f/${t4f-xsd-model-1.name}/${t4f-xsd-model-1.version}/${t4f-xsd-model-1.name}-${t4f-xsd-model-1.version}.jar">
+                <unjar dest="target/classes" src="${settings.localRepository}/io/aos/${t4f-xsd-model-1.name}/${t4f-xsd-model-1.version}/${t4f-xsd-model-1.name}-${t4f-xsd-model-1.version}.jar">
                   <patternset>
                     <include name="**/*.xsd" />
                   </patternset>

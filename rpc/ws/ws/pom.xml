@@ -35,7 +35,7 @@
         <artifactId>maven-eclipse-plugin</artifactId>
         <configuration>
           <wtpversion>2.0</wtpversion>
-          <wtpContextName>t4f-rpc-ws-ws</wtpContextName>
+          <wtpContextName>t4f-data-rpc-ws-ws</wtpContextName>
           <wtpdefaultserver>Apache Tomcat v6.0</wtpdefaultserver>
         </configuration>
       </plugin>

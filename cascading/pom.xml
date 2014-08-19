@@ -31,7 +31,7 @@
   <description></description>
   <packaging>pom</packaging>
   <modules>
-    <module>cascalog</module>
+<!--     <module>cascalog</module> -->
     <module>core</module>
     <module>lingual</module>
     <module>pattern</module>
