@@ -1,0 +1,9 @@
+language: java
+jdk:
+  - openjdk8
+branches:
+  only:
+    - master
+before_install: 'mvn -version'
+install: 'mvn clean install -DskipTests'
+
