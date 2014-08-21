@@ -16,22 +16,42 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.hdfs.t1;
-// cc RegexExcludePathFilter A PathFilter for excluding paths that match a regular expression
+package io.datalayer.hdfs;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.net.URI;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.fs.PathFilter;
+import org.apache.hadoop.io.IOUtils;
+import org.junit.Ignore;
+import org.junit.Test;
 
-// vv RegexExcludePathFilter
-public class RegexExcludePathFilter implements PathFilter {
-  
-  private final String regex;
+public class FileCatTest {
 
-  public RegexExcludePathFilter(String regex) {
-    this.regex = regex;
-  }
+    @Test
+    @Ignore
+    public static void test() throws Exception {
 
-  public boolean accept(Path path) {
-    return !path.toString().matches(regex);
-  }
+        String uri = "your hadoop file uri...";
+
+        Configuration conf = new Configuration();
+        FileSystem fs = FileSystem.get(URI.create(uri), conf);
+        InputStream in = null;
+
+        in = fs.open(new Path(uri));
+        IOUtils.copyBytes(in, System.out, 4096, false);
+
+        // for very small files, try to copy in a String
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        IOUtils.copyBytes(in, ps, 4096, false);
+        String content = baos.toString("UTF-8");
+        System.out.println(content);
+
+    }
+
 }
-// ^^ RegexExcludePathFilter

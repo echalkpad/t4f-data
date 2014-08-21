@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.hdfs.t2;
+package io.datalayer.hdfs;
 // cc TextIterator Iterating over the characters in a Text object
 import java.nio.ByteBuffer;
 

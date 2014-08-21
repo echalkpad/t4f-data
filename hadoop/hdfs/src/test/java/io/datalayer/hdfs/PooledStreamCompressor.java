@@ -16,37 +16,32 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.hdfs.t2;
-// cc MapFileFixer Re-creates the index for a MapFile
-import java.net.URI;
-
+package io.datalayer.hdfs;
+// cc PooledStreamCompressor A program to compress data read from standard input and write it to standard output using a pooled compressor
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.MapFile;
-import org.apache.hadoop.io.SequenceFile;
+import org.apache.hadoop.io.IOUtils;
+import org.apache.hadoop.io.compress.*;
+import org.apache.hadoop.util.ReflectionUtils;
 
-// vv MapFileFixer
-public class MapFileFixer {
+// vv PooledStreamCompressor
+public class PooledStreamCompressor {
 
   public static void main(String... args) throws Exception {
-    String mapUri = args[0];
-    
+    String codecClassname = args[0];
+    Class<?> codecClass = Class.forName(codecClassname);
     Configuration conf = new Configuration();
-    
-    FileSystem fs = FileSystem.get(URI.create(mapUri), conf);
-    Path map = new Path(mapUri);
-    Path mapData = new Path(map, MapFile.DATA_FILE_NAME);
-    
-    // Get key and value types from data sequence file
-    SequenceFile.Reader reader = new SequenceFile.Reader(fs, mapData, conf);
-    Class keyClass = reader.getKeyClass();
-    Class valueClass = reader.getValueClass();
-    reader.close();
-    
-    // Create the map file index file
-    long entries = MapFile.fix(fs, map, keyClass, valueClass, false, conf);
-    System.out.printf("Created MapFile %s with %d entries\n", map, entries);
+    CompressionCodec codec = (CompressionCodec)
+      ReflectionUtils.newInstance(codecClass, conf);
+    /*[*/Compressor compressor = null;
+    try {
+      compressor = CodecPool.getCompressor(codec);/*]*/
+      CompressionOutputStream out =
+        codec.createOutputStream(System.out, /*[*/compressor/*]*/);
+      IOUtils.copyBytes(System.in, out, 4096, false);
+      out.finish();
+    /*[*/} finally {
+      CodecPool.returnCompressor(compressor);
+    }/*]*/
   }
 }
-// ^^ MapFileFixer
+// ^^ PooledStreamCompressor

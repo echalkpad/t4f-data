@@ -16,30 +16,27 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.hdfs.t1;
-// cc FileSystemCat Displays files from a Hadoop filesystem on standard output by using the FileSystem directly
-import java.io.InputStream;
-import java.net.URI;
-
+package io.datalayer.hdfs;
+// cc StreamCompressor A program to compress data read from standard input and write it to standard output
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
+import org.apache.hadoop.io.compress.CompressionCodec;
+import org.apache.hadoop.io.compress.CompressionOutputStream;
+import org.apache.hadoop.util.ReflectionUtils;
 
-// vv FileSystemCat
-public class FileSystemCat {
+// vv StreamCompressor
+public class StreamCompressor {
 
   public static void main(String... args) throws Exception {
-    String uri = args[0];
+    String codecClassname = args[0];
+    Class<?> codecClass = Class.forName(codecClassname);
     Configuration conf = new Configuration();
-    FileSystem fs = FileSystem.get(URI.create(uri), conf);
-    InputStream in = null;
-    try {
-      in = fs.open(new Path(uri));
-      IOUtils.copyBytes(in, System.out, 4096, false);
-    } finally {
-      IOUtils.closeStream(in);
-    }
+    CompressionCodec codec = (CompressionCodec)
+      ReflectionUtils.newInstance(codecClass, conf);
+    
+    CompressionOutputStream out = codec.createOutputStream(System.out);
+    IOUtils.copyBytes(System.in, out, 4096, false);
+    out.finish();
   }
 }
-// ^^ FileSystemCat
+// ^^ StreamCompressor

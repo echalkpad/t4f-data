@@ -16,34 +16,44 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.hdfs.t1;
-// cc ListStatus Shows the file statuses for a collection of paths in a Hadoop filesystem 
+package io.datalayer.hdfs;
+// cc SequenceFileReadDemo Reading a SequenceFile
+import java.io.IOException;
 import java.net.URI;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.FileUtil;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IOUtils;
+import org.apache.hadoop.io.SequenceFile;
+import org.apache.hadoop.io.Writable;
+import org.apache.hadoop.util.ReflectionUtils;
 
-// vv ListStatus
-public class ListStatus {
-
-  public static void main(String... args) throws Exception {
+// vv SequenceFileReadDemo
+public class SequenceFileReadDemo {
+  
+  public static void main(String... args) throws IOException {
     String uri = args[0];
     Configuration conf = new Configuration();
     FileSystem fs = FileSystem.get(URI.create(uri), conf);
-    
-    Path[] paths = new Path[args.length];
-    for (int i = 0; i < paths.length; i++) {
-      paths[i] = new Path(args[i]);
-    }
-    
-    FileStatus[] status = fs.listStatus(paths);
-    Path[] listedPaths = FileUtil.stat2Paths(status);
-    for (Path p : listedPaths) {
-      System.out.println(p);
+    Path path = new Path(uri);
+
+    SequenceFile.Reader reader = null;
+    try {
+      reader = new SequenceFile.Reader(fs, path, conf);
+      Writable key = (Writable)
+        ReflectionUtils.newInstance(reader.getKeyClass(), conf);
+      Writable value = (Writable)
+        ReflectionUtils.newInstance(reader.getValueClass(), conf);
+      long position = reader.getPosition();
+      while (reader.next(key, value)) {
+        String syncSeen = reader.syncSeen() ? "*" : "";
+        System.out.printf("[%s%s]\t%s\t%s\n", position, syncSeen, key, value);
+        position = reader.getPosition(); // beginning of next record
+      }
+    } finally {
+      IOUtils.closeStream(reader);
     }
   }
 }
-// ^^ ListStatus
+// ^^ SequenceFileReadDemo

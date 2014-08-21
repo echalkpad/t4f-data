@@ -16,43 +16,31 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.hdfs.t2;
-// == WritableTestBase
-// == WritableTestBase-Deserialize
-import java.io.*;
-import org.apache.hadoop.io.Writable;
+package io.datalayer.hdfs;
+// == BytesWritableTest
+// == BytesWritableTest-Capacity
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
+import java.io.IOException;
+import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.util.StringUtils;
+import org.junit.Test;
 
-public class WritableTestBase {
+public class BytesWritableTest extends WritableTestBase {
   
-  // vv WritableTestBase
-  public static byte[] serialize(Writable writable) throws IOException {
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
-    DataOutputStream dataOut = new DataOutputStream(out);
-    writable.write(dataOut);
-    dataOut.close();
-    return out.toByteArray();
+  @Test
+  public void test() throws IOException {
+    // vv BytesWritableTest
+    BytesWritable b = new BytesWritable(new byte[] { 3, 5 });
+    byte[] bytes = serialize(b);
+    assertThat(StringUtils.byteToHexString(bytes), is("000000020305"));
+    // ^^ BytesWritableTest
+    
+    // vv BytesWritableTest-Capacity
+    b.setCapacity(11);
+    assertThat(b.getLength(), is(2));
+    assertThat(b.getBytes().length, is(11));
+    // ^^ BytesWritableTest-Capacity
   }
-  // ^^ WritableTestBase
-  
-  // vv WritableTestBase-Deserialize
-  public static byte[] deserialize(Writable writable, byte[] bytes)
-      throws IOException {
-    ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-    DataInputStream dataIn = new DataInputStream(in);
-    writable.readFields(dataIn);
-    dataIn.close();
-    return bytes;
-  }
-  // ^^ WritableTestBase-Deserialize
-  
-  public static String serializeToString(Writable src) throws IOException {
-    return StringUtils.byteToHexString(serialize(src));
-  }
-  
-  public static String writeTo(Writable src, Writable dest) throws IOException {
-    byte[] data = deserialize(dest, serialize(src));
-    return StringUtils.byteToHexString(data);
-  }
-
 }

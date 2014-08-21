@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.hdfs.t2;
+package io.datalayer.hdfs;
 import java.io.*;
 
 import org.apache.hadoop.io.*;

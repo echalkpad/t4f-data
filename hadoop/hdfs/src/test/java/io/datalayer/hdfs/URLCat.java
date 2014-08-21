@@ -16,49 +16,28 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.hdfs.t2;
-// cc MapFileWriteDemo Writing a MapFile
-import java.io.IOException;
-import java.net.URI;
+package io.datalayer.hdfs;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
+import java.io.InputStream;
+import java.net.URL;
+
+import org.apache.hadoop.fs.FsUrlStreamHandlerFactory;
 import org.apache.hadoop.io.IOUtils;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.MapFile;
-import org.apache.hadoop.io.Text;
 
-// vv MapFileWriteDemo
-public class MapFileWriteDemo {
-  
-  private static final String[] DATA = {
-    "One, two, buckle my shoe",
-    "Three, four, shut the door",
-    "Five, six, pick up sticks",
-    "Seven, eight, lay them straight",
-    "Nine, ten, a big fat hen"
-  };
-  
-  public static void main(String... args) throws IOException {
-    String uri = args[0];
-    Configuration conf = new Configuration();
-    FileSystem fs = FileSystem.get(URI.create(uri), conf);
+public class URLCat {
 
-    IntWritable key = new IntWritable();
-    Text value = new Text();
-    MapFile.Writer writer = null;
+  static {
+    URL.setURLStreamHandlerFactory(new FsUrlStreamHandlerFactory());
+  }
+  
+  public static void main(String... args) throws Exception {
+    InputStream in = null;
     try {
-      writer = new MapFile.Writer(conf, fs, uri,
-          key.getClass(), value.getClass());
-      
-      for (int i = 0; i < 1024; i++) {
-        key.set(i + 1);
-        value.set(DATA[i % DATA.length]);
-        writer.append(key, value);
-      }
+      in = new URL(args[0]).openStream();
+      IOUtils.copyBytes(in, System.out, 4096, false);
     } finally {
-      IOUtils.closeStream(writer);
+      IOUtils.closeStream(in);
     }
   }
+  
 }
-// ^^ MapFileWriteDemo

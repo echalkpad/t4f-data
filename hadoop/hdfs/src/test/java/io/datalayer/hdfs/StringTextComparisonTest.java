@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.hdfs.t2;
+package io.datalayer.hdfs;
 // cc StringTextComparisonTest Tests showing the differences between the String and Text classes
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

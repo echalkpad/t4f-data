@@ -16,29 +16,39 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.hdfs.t1;
-// cc URLCat Displays files from a Hadoop filesystem on standard output using a URLStreamHandler
-import java.io.InputStream;
-import java.net.URL;
+package io.datalayer.hdfs;
+// == MapWritableTest
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
-import org.apache.hadoop.fs.FsUrlStreamHandlerFactory;
-import org.apache.hadoop.io.IOUtils;
+import java.io.IOException;
+import org.apache.hadoop.io.*;
+import org.junit.Test;
 
-// vv URLCat
-public class URLCat {
-
-  static {
-    URL.setURLStreamHandlerFactory(new FsUrlStreamHandlerFactory());
-  }
+public class MapWritableTest extends WritableTestBase {
   
-  public static void main(String... args) throws Exception {
-    InputStream in = null;
-    try {
-      in = new URL(args[0]).openStream();
-      IOUtils.copyBytes(in, System.out, 4096, false);
-    } finally {
-      IOUtils.closeStream(in);
-    }
+  @Test
+  public void mapWritable() throws IOException {
+    // vv MapWritableTest
+    MapWritable src = new MapWritable();
+    src.put(new IntWritable(1), new Text("cat"));
+    src.put(new VIntWritable(2), new LongWritable(163));
+    
+    MapWritable dest = new MapWritable();
+    WritableUtils.cloneInto(dest, src);
+    assertThat((Text) dest.get(new IntWritable(1)), is(new Text("cat")));
+    assertThat((LongWritable) dest.get(new VIntWritable(2)), is(new LongWritable(163)));
+    // ^^ MapWritableTest
+  }
+
+  @Test
+  public void setWritableEmulation() throws IOException {
+    MapWritable src = new MapWritable();
+    src.put(new IntWritable(1), NullWritable.get());
+    src.put(new IntWritable(2), NullWritable.get());
+    
+    MapWritable dest = new MapWritable();
+    WritableUtils.cloneInto(dest, src);
+    assertThat(dest.containsKey(new IntWritable(1)), is(true));
   }
 }
-// ^^ URLCat

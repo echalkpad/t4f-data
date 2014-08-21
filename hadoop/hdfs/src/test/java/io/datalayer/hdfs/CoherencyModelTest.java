@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.hdfs.t1;
+package io.datalayer.hdfs;
 // == CoherencyModelTest
 // == CoherencyModelTest-NotVisibleAfterFlush
 // == CoherencyModelTest-VisibleAfterFlushAndSync

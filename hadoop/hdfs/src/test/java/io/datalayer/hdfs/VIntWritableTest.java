@@ -16,39 +16,36 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.hdfs.t2;
-// == MapWritableTest
+package io.datalayer.hdfs;
+// == VIntWritableTest
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
-import org.apache.hadoop.io.*;
+import org.apache.hadoop.io.VIntWritable;
+import org.apache.hadoop.util.StringUtils;
 import org.junit.Test;
 
-public class MapWritableTest extends WritableTestBase {
+public class VIntWritableTest extends WritableTestBase {
   
   @Test
-  public void mapWritable() throws IOException {
-    // vv MapWritableTest
-    MapWritable src = new MapWritable();
-    src.put(new IntWritable(1), new Text("cat"));
-    src.put(new VIntWritable(2), new LongWritable(163));
-    
-    MapWritable dest = new MapWritable();
-    WritableUtils.cloneInto(dest, src);
-    assertThat((Text) dest.get(new IntWritable(1)), is(new Text("cat")));
-    assertThat((LongWritable) dest.get(new VIntWritable(2)), is(new LongWritable(163)));
-    // ^^ MapWritableTest
+  public void test() throws IOException {
+    // vv VIntWritableTest
+    byte[] data = serialize(new VIntWritable(163));
+    assertThat(StringUtils.byteToHexString(data), is("8fa3"));
+    // ^^ VIntWritableTest
   }
-
+  
   @Test
-  public void setWritableEmulation() throws IOException {
-    MapWritable src = new MapWritable();
-    src.put(new IntWritable(1), NullWritable.get());
-    src.put(new IntWritable(2), NullWritable.get());
-    
-    MapWritable dest = new MapWritable();
-    WritableUtils.cloneInto(dest, src);
-    assertThat(dest.containsKey(new IntWritable(1)), is(true));
+  public void testSizes() throws IOException {
+    assertThat(serializeToString(new VIntWritable(1)), is("01")); // 1 byte
+    assertThat(serializeToString(new VIntWritable(-112)), is("90")); // 1 byte
+    assertThat(serializeToString(new VIntWritable(127)), is("7f")); // 1 byte
+    assertThat(serializeToString(new VIntWritable(128)), is("8f80")); // 2 byte
+    assertThat(serializeToString(new VIntWritable(163)), is("8fa3")); // 2 byte
+    assertThat(serializeToString(new VIntWritable(Integer.MAX_VALUE)),
+        is("8c7fffffff")); // 5 byte
+    assertThat(serializeToString(new VIntWritable(Integer.MIN_VALUE)),
+        is("847fffffff")); // 5 byte
   }
 }

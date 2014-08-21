@@ -16,33 +16,22 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.hdfs.t2;
-// == ArrayWritableTest
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+package io.datalayer.hdfs;
+// cc RegexExcludePathFilter A PathFilter for excluding paths that match a regular expression
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.PathFilter;
 
-import java.io.IOException;
-import org.apache.hadoop.io.*;
-import org.junit.Test;
-
-public class ArrayWritableTest extends WritableTestBase {
+// vv RegexExcludePathFilter
+public class RegexExcludePathFilter implements PathFilter {
   
-  @Test
-  public void test() throws IOException {
-    // vv ArrayWritableTest
-    ArrayWritable writable = new ArrayWritable(Text.class);
-    // ^^ ArrayWritableTest
-    writable.set(new Text[] { new Text("cat"), new Text("dog") });
-    
-    TextArrayWritable dest = new TextArrayWritable();
-    WritableUtils.cloneInto(dest, writable);
-    assertThat(dest.get().length, is(2));
-    // TODO: fix cast, also use single assert
-    assertThat((Text) dest.get()[0], is(new Text("cat")));
-    assertThat((Text) dest.get()[1], is(new Text("dog")));
-    
-    Text[] copy = (Text[]) dest.toArray();
-    assertThat(copy[0], is(new Text("cat")));
-    assertThat(copy[1], is(new Text("dog")));
+  private final String regex;
+
+  public RegexExcludePathFilter(String regex) {
+    this.regex = regex;
+  }
+
+  public boolean accept(Path path) {
+    return !path.toString().matches(regex);
   }
 }
+// ^^ RegexExcludePathFilter
