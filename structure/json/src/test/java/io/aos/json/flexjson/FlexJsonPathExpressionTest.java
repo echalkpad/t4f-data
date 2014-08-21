@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.data.flexjson;
+package io.aos.json.flexjson;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

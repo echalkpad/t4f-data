@@ -16,11 +16,11 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.data.jackson;
+package io.aos.json.jackson;
 
-import io.datalayer.data.jackson.model.User;
-import io.datalayer.data.jackson.model.User.Gender;
-import io.datalayer.data.jackson.model.User.Name;
+import io.aos.json.jackson.model.User;
+import io.aos.json.jackson.model.User.Gender;
+import io.aos.json.jackson.model.User.Name;
 
 import java.io.File;
 import java.io.IOException;

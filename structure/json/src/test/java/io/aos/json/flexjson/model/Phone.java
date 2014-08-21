@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.data.flexjson.model;
+package io.aos.json.flexjson.model;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;

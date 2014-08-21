@@ -16,18 +16,38 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.data.flexjson.model;
+package io.aos.json.flexjson.model;
 
-/**
- * Created by IntelliJ IDEA.
- * User: charlie
- * Date: Jun 24, 2007
- * Time: 7:07:45 PM
- */
-public class Superhero {
-    public String superpower;
+import java.util.List;
+import java.util.ArrayList;
 
-    public Superhero(String superpower) {
-        this.superpower = superpower;
+public class Network {
+    String name;
+    List people;
+
+
+    public Network(String name, Person... peeps ) {
+        this.name = name;
+        people = new ArrayList();
+        for( Person person : peeps ) {
+            people.add( person );
+        }
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List getPeople() {
+        return people;
+    }
+
+    public void setPeople(List people) {
+        this.people = people;
     }
 }

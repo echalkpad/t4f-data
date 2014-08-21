@@ -16,8 +16,24 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.data.flexjson.model;
+package io.aos.json.flexjson.model;
 
-public enum PhoneNumberType {
-        MOBILE, FAX, WORK, PAGER, HOME
+public class Zipcode {
+    private String zipcode;
+
+    public Zipcode() {
+    }
+
+    public Zipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
 }

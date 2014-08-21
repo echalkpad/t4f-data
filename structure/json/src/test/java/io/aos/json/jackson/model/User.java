@@ -16,38 +16,79 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.data.flexjson.model;
+package io.aos.json.jackson.model;
 
 import java.util.List;
-import java.util.ArrayList;
 
-public class Network {
-    String name;
-    List people;
+public class User {
 
+    public enum Gender {
+        MALE, FEMALE
+    };
 
-    public Network(String name, Person... peeps ) {
-        this.name = name;
-        people = new ArrayList();
-        for( Person person : peeps ) {
-            people.add( person );
+    public static class Name {
+        private String _first, _last;
+
+        public String getFirst() {
+            return _first;
+        }
+
+        public String getLast() {
+            return _last;
+        }
+
+        public void setFirst(String s) {
+            _first = s;
+        }
+
+        public void setLast(String s) {
+            _last = s;
         }
     }
 
+    private Gender _gender;
+    private Name _name;
+    private boolean _isVerified;
+    private byte[] _userImage;
+    private List<String> types;
 
-    public String getName() {
-        return name;
+    public List<String> getTypes() {
+        return types;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTypes(List<String> _types) {
+        this.types = _types;
     }
 
-    public List getPeople() {
-        return people;
+    public Name getName() {
+        return _name;
     }
 
-    public void setPeople(List people) {
-        this.people = people;
+    public boolean isVerified() {
+        return _isVerified;
+    }
+
+    public Gender getGender() {
+        return _gender;
+    }
+
+    public byte[] getUserImage() {
+        return _userImage;
+    }
+
+    public void setName(Name n) {
+        _name = n;
+    }
+
+    public void setVerified(boolean b) {
+        _isVerified = b;
+    }
+
+    public void setGender(Gender g) {
+        _gender = g;
+    }
+
+    public void setUserImage(byte[] b) {
+        _userImage = b;
     }
 }
