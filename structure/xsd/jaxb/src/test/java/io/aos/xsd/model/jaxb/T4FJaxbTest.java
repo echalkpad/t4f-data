@@ -16,7 +16,11 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.xsd.model.jaxb;
+package io.aos.xsd.model.jaxb;
+
+import io.aos.xsd.model.jaxb.Items;
+import io.aos.xsd.model.jaxb.ObjectFactory;
+import io.aos.xsd.model.jaxb.PurchaseOrderType;
 
 import java.io.InputStream;
 
