@@ -51,8 +51,8 @@
     </license>
   </licenses>
   <organization>
-    <name>T4F Data.io</name>
-    <url>http://t4f.io</url>
+    <name>AOS Data.io</name>
+    <url>http://aos.io</url>
   </organization>
   <mailingLists>
     <mailingList>
@@ -106,7 +106,6 @@
     <module>pubsub</module>
     <module>R</module>
     <module>rpc</module>
-    <module>sdk</module>
     <module>search</module>
     <module>senseidb</module>
     <module>spark</module>
