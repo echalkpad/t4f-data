@@ -94,8 +94,6 @@
     <module>cascading</module>
     <module>coordination</module>
     <module>cassandra</module>
-    <module>devops</module>
-    <module>game</module>
     <module>graph</module>
     <module>hadoop</module>
     <module>hbase</module>
