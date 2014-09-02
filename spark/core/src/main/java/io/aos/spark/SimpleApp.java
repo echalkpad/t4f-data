@@ -1,4 +1,4 @@
-package io.datalayer.spark;
+package io.aos.spark;
 
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;

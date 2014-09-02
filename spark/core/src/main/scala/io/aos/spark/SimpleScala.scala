@@ -18,30 +18,15 @@
  * under the License.                                           *
  * **************************************************************
  */
-/**
- * dly-scala -cp /c/spark.git/assembly/target/scala-2.10/spark-assembly-1.0.0-SNAPSHOT-hadoop2.4.0.jar ./SimpleApp1.scala localhost[1]
- */
-import org.apache.spark.SparkContext
-import org.apache.spark.SparkContext._
+package io.aos.spark
 
-object SimpleSpark {
+object SimpleScala {
+
+  def foo(x: Array[String]) = x.foldLeft("")((a, b) => a + b)
 
   def main(args: Array[String]) {
-    
-    val logFile = "/dataset/gutenberg/pg20417.txt" // Should be some file on your system
-    val spark = new SparkContext("local", "Simple App")
-//    val spark = new SparkContext("local", "Simple App", "YOUR_SPARK_HOME", List("target/scala-2.10/simple-project_2.10-1.0.jar"))
-    val logData = spark.textFile(logFile, 2).cache()
-    val numAs = logData.filter(line => line.contains("a")).count()
-    val numBs = logData.filter(line => line.contains("b")).count()
-    println("Lines with a: %s, Lines with b: %s".format(numAs, numBs))
-    
-    val myFile = spark.textFile("/dataset/gutenberg/pg20417.txt")
-    val counts = myFile.flatMap(line => line.split(" "))
-                        .map(word => (word, 1))
-                        .reduceByKey(_ + _)
-    counts.saveAsTextFile("out.txt")
-  
+    println("Hello World!")
+    println("concat arguments = " + foo(args))
   }
 
 }
