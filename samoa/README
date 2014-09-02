@@ -1,6 +1,6 @@
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 | BUILD A DISTRIBUTION                                                        |
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 $ git clone git@github.com:yahoo/samoa.git samoa.git
 $ cd samoa.git
 $ mvn install -DskipTests -Pstorm
@@ -19,4 +19,4 @@ $ java -cp ./slf4j-simple-1.7.2.jar:./target/SAMOA-Storm-0.0.1-SNAPSHOT.jar:/opt
 
 # The output will be a sequence of the evaluation metrics for accuracy, taken every 100,000 instances.
 # To run the example on Storm, please refer to the instructions on the wiki [http://github.com/yahoo/samoa/wiki/Executing-SAMOA-with-Apache-Storm]
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------

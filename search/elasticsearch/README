@@ -1,6 +1,6 @@
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 DATALAYER SEARCH ELASTISEARCH
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 - I kept running into cases where I needed full text search capabilities
 in my key-value based models only to discover key-value has none. 
 - In addition to full text search, I also needed the ability to filter 
@@ -10,15 +10,15 @@ ranges of data points in the searches and even highlight matches.
 - Non stored fiels are "lost", only the result of their analysis remains.
 - Blobs not aimed to be stored/searched.
 - Lazilly change/enrich the datamodel without reindexing everything
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 INSTALL
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.1.tar.gz
 tar xvfz elasticsearch-0.90.1.tar.gz
 cd elasticsearch-0.90.1
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 git clone https://github.com/elasticsearch/elasticsearch-servicewrapper.git elasticsearch-servicewrapper.git
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 rm -fr /opt/elasticsearch-1.0.0.RC1-SNAPSHOT
 cp /o/elasticsearch.git/target/releases/elasticsearch-1.0.0.RC1-SNAPSHOT.tar.gz /opt
 cd /opt
@@ -26,7 +26,7 @@ tar xvfz elasticsearch-1.0.0.RC1-SNAPSHOT.tar.gz
 rm elasticsearch-1.0.0.RC1-SNAPSHOT.tar.gz
 cp /t/data/search/elasticsearch/src/main/config/*.yml $ELASTICSEARCH_HOME/config
 cp -r /o/elasticsearch-servicewrapper.git/service $ELASTICSEARCH_HOME/bin
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 curl -XPUT 'http://localhost:9200/index-geo-index?pretty'
 curl -XPUT 'http://localhost:9200/index-geo-index/index-geo-type/_mapping?pretty' -d '
 {
@@ -80,7 +80,7 @@ curl -XPOST 'http://localhost:9200/index-geo-index/index-geo-type/_search?pretty
     }
 }
 '
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 {
   "size" : 100,
   "query" : {
@@ -95,7 +95,7 @@ curl -XPOST 'http://localhost:9200/index-geo-index/index-geo-type/_search?pretty
     }
   }
 }
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 {
     "query" : {
         "match_all" : {}
@@ -110,9 +110,9 @@ curl -XPOST 'http://localhost:9200/index-geo-index/index-geo-type/_search?pretty
         }
     }
 }
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 PLUGINS
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 $ELASTICSEARCH_HOME/bin/plugin -install mobz/elasticsearch-head
 $ELASTICSEARCH_HOME/bin/plugin -install lukas-vlcek/bigdesk
 $ELASTICSEARCH_HOME/bin/plugin -install karmi/elasticsearch-paramedic
@@ -124,9 +124,9 @@ Use git://github.com/royrusso/elasticsearch-HQ.git for realtime monitoring.
 + Check http://localhost:9200/_plugin/paramedic
 + Check http://localhost:9200/_plugin/segmentspy
 + Check http://localhost:9200/_plugin/inquisitor
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 OTHER PLUGINS
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 https://github.com/crate/elasticsearch-timefacets-plugin
 https://github.com/jprante/elasticsearch-index-termlist
 https://github.com/yakaz/elasticsearch-action-updatebyquery
@@ -138,13 +138,13 @@ https://github.com/bleskes/elasticfacets
 https://github.com/yakaz/elasticsearch-query-acrossvariants
 
 aos-elasticsearch-restart.sh
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 OTHER PLUGINS (RIVERS)
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 https://github.com/mallocator/Elasticsearch-HBase-River
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 BASIC COMMANDS
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 curl -XPOST 'http://localhost:9200/twitter?pretty'
 curl -i -XHEAD 'http://localhost:9200/twitter?pretty'
 curl -XDELETE 'http://localhost:9200/twitter?pretty'
@@ -197,11 +197,11 @@ curl -XPOST 'http://localhost:9200/articles/_search?pretty' -d '
     }
   }
 '   
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 OTHER COMMANDS
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 http://www.elasticsearch.org/guide/reference/api/index_
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 curl -XGET 'http://localhost:9200?pretty'
 curl -XPOST 'http://localhost:9200/twitter/_optimize?pretty'
 curl -XPUT 'http://localhost:9200/twitter/tweet/1?pretty' -d '{
@@ -221,9 +221,9 @@ curl -XPUT 'http://localhost:9200/twitter/tweet/1?op_type=create&pretty' -d '{
 curl -XGET 'http://localhost:9200/twitter/tweet/_mapping?pretty'
 curl -XGET 'http://localhost:9200/_all/_mapping'
 curl -XGET 'http://localhost:9200/_mapping'
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 USEFUL COMMANDS
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 http://www.elasticsearch.org/guide/reference/api/get
 ----------------------------------------------------
 curl -XGET 'http://localhost:9200/twitter/tweet/1?pretty'
@@ -278,7 +278,7 @@ http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-info
 # this will also give the plugin list
 curl -XGET 'http://localhost:9200/_nodes?all&pretty'
 
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 PLUGINS
 =======
@@ -435,7 +435,7 @@ STOP
 
 $ELASTICSEARCH_HOME/bin/service/elasticsearch stop
 
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 grep -r controller.registerHandler src/main/java | sed "s/<<???>>//g" | sort
 ----------------------------------------------------------------------------
@@ -710,4 +710,4 @@ PUT {index}/{type}/_warmer/{name}
 PUT {index}/{type}/{id}
 PUT {index}/{type}/{id}/_create
 
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------

@@ -1,11 +1,11 @@
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 + http://thrift.apache.org/docs/install
 + http://thrift.apache.org/docs/install/ubuntu
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 The following command install all the required tools and libraries to build and install 
 the Apache Thrift compiler on a Debian/Ubuntu Linux based system.
 sudo apt-get install libboost-dev libboost-test-dev libboost-program-options-dev libevent-dev automake libtool flex bison pkg-config g++ libssl-dev 
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 git clone http://git-wip-us.apache.org/repos/asf/thrift.git thrift.git
 cd thrift.git
 ./bootstrap.sh
@@ -13,4 +13,4 @@ cd thrift.git
 #cd compiler/cpp/
 make
 sudo make install
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------

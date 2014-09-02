@@ -1,8 +1,8 @@
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 LINKS
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 + https://issues.apache.org/jira/browse/HDFS-347 DFS read performance suboptimal when client co-located on nodes with data + HDFS-265
 + https://issues.apache.org/jira/browse/LUCENE-2756 IndexSearcher.rewrite() incorrectly rewrites queries  + LUCENE-3191
 + http://lucene.grantingersoll.com/2008/03/28/why-lucene-isnt-that-good-javalobby/   http://java.dzone.com/news/why-lucene-isnt-good?page=0%2C1  
 + http://mail-archives.apache.org/mod_mbox/hbase-user/201102.mbox/%3CAANLkTinZwuyBea=bM2EP0A2hEBDBuRCwutowmOqWWZ5D@mail.gmail.com%3E
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------

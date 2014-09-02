@@ -1,6 +1,6 @@
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 | DERBY                                                                       |
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 jdbc:derby:[subprotocol:][databaseName][;attribute=value]*
 embedded-directory (relative)
 org.apache.derby.jdbc.EmbeddedDriver in derby.jar (org.apache.derby.derby)
@@ -16,17 +16,17 @@ network
 org.apache.derby.jdbc.ClientDriver in derbyclient.jar (org.apache.derby.derbyclient)
 jdbc:derby://localhost:1527/sample;user=judy;password=no12see
 jdbc:derby:net://localhost:1621/DBAOS;create=true;upgrade=true;retrieveMessagesFromServerOnGetMessage=true;deferPrepares=true;
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 | H2                                                                          |
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 H2 In Memory
 jdbc:h2:mem:test
 
 H2 In Memory MySql compatible
 jdbc:h2:mem:test;MODE=MySQL
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 | HSQLDB                                                                      |
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 hsqldb.jar
 jdbc:hsqldb: followed by a protocol identifier (mem: file: res: hsql: http: hsqls: https:) 
 then followed by host and port identifiers in the case of servers, then followed by database identifier. 
@@ -37,16 +37,16 @@ jdbc:hsqldb:mem:testdb
 HSQLDB JDBC Driver
 org.hsqldb.jdbcDriver
 jdbc:hsqldb:hsql://<host>:<port>/<database>
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 | MYSQL                                                                       |
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 [http://dev.mysql.com/doc/refman/5.0/en/connector-j-reference-configuration-properties.html]
 jdbc:mysql://[host][,failoverhost...][:port]/[database][?propertyName1][=propertyValue1][&propertyName2][=propertyValue2]...
 jdbc:mysql://localhost:3306/dbname?profileSQL=true&username=...&password=....
 com.mysql.jdbc.Driver
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 | POSTGRESQL                                                                  |
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 jdbc:postgresql://[::1]:5740/accounting
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 

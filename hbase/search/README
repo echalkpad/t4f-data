@@ -1,8 +1,8 @@
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 HBASE SEARCH
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 + hbase-secondary-index
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 + https://github.com/jasonrutherglen/HBASE-SEARCH
 + https://github.com/jasonrutherglen/LUCENE-FOR-HBASE
 + http://www.infoq.com/articles/LuceneHbase
@@ -15,14 +15,14 @@ HBASE SEARCH
 + https://issues.apache.org/jira/browse/HBASE-2233 Support both Hadoop 0.20, 0.21, and 0.22
 + https://issues.apache.org/jira/browse/HBASE-4002
 + https://issues.apache.org/jira/browse/HBASE-2000
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 + http://anismiles.wordpress.com/2010/05/19/apache-lucene-and-cassandra
 + http://anismiles.wordpress.com/2010/05/27/lucandra-an-inside-story
 + http://www.infoq.com/articles/LuceneHbase
 + http://www.infoq.com/articles/LuceneSpatialSupport
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 + Huawei-Hadoop / hindex
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 + http://markmail.org/message/cn5otxd366rrgcf4 
 + https://svn.apache.org/repos/asf/hadoop/common/branches/branch-0.20-append/ 
 + https://github.com/facebook/hadoop-20-append 
@@ -50,10 +50,10 @@ Do we use distributed memory cache? (Hazelcast...)
 Are there JSON, Avro... requirements?
 Need for special queries? (Spatial with geohash...)
  List of existing JIRA to implement + Definition of additional JIRA
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 HBASE SECONDARY INDICES
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 + https://github.com/hbase-trx/hbase-transactional-tableindexed/Transaction and indexing extensions for hbase
 + http://www.lilyproject.org/lily/about/playground/hbaseindexes.html Lily indexes
 + https://github.com/ykulbak/ihbase support faster scans at the expense of larger RAM consumption
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
