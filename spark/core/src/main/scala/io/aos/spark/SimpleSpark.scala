@@ -23,6 +23,7 @@
  */
 package io.aos.spark
 
+import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
 
 object SimpleSpark {

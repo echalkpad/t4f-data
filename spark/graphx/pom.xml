@@ -21,7 +21,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>t4f-data-spark-graphx</artifactId>
-  <name>T4F Data Spark Grpahx</name>
+  <name>T4F Data Spark Graphx</name>
   <packaging>jar</packaging>
   <parent>
     <groupId>io.aos</groupId>
