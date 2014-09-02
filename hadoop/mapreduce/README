@@ -1,20 +1,20 @@
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 DATALAYER NOSQL HADOOP MAPREDUCE
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 paradigm
 + map:     (K1, V1)       -> list(K2, V2)
 + combine: (K2, list(V2)) -> list(K2, V2)
 + reduce:  (K2, list(V2)) -> list(K3, V3)
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 cat ~/wikipedia.txt | \
   sed -e 's/ /\n/g' | \
   grep . | \
   sort | \
   uniq -c > \
   ~/frequencies.txt
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 EXAMPLES
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 hadoop jar ${HADOOP_HOME}/share/hadoop/mapreduce/hadoop-mapreduce-examples-*.jar randomwriter randomwriter-out
 hadoop jar ${HADOOP_HOME}/share/hadoop/mapreduce/hadoop-mapreduce-examples-*.jar randomwriter -Dmapreduce.randomwriter.bytespermap=10000 -Ddfs.blocksize=536870912 -Ddfs.block.size=536870912 randomwriter-output
 look at e.g.
@@ -25,4 +25,4 @@ hadoop jar ${HADOOP_HOME}/share/hadoop/mapreduce/hadoop-mapreduce-examples-*.jar
 hadoop jar ${HADOOP_HOME}/share/hadoop/mapreduce/hadoop-mapreduce-examples-*.jar pi -Dmapreduce.clientfactory.class.name=org.apache.hadoop.mapred.YarnClientFactory 16 10000
 ---
 hadoop jar ${HADOOP_HOME}/share/hadoop/yarn/hadoop-yarn-applications-distributedshell-*.jar org.apache.hadoop.yarn.applications.distributedshell.Client -jar ${HADOOP_HOME}/share/hadoop/yarn/hadoop-yarn-applications-distributedshell-3.0.0-SNAPSHOT.jar -shell_command ls -shell_args / -num_containers 1
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
