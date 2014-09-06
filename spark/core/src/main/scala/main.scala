@@ -1,4 +1,4 @@
-package be.ing.apa.spark.scaling
+package io.aos.spark.scaling
 
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
@@ -21,7 +21,6 @@ object GlobalScalingContext {
 	implicit val sc = new SparkContext(sparkConf)
 
 }
-
 
 
 object EvaluateAndApply {

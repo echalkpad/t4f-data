@@ -1,4 +1,4 @@
-package be.ing.apa.spark.logistic
+package be.aos.spark.logistic
 
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf

@@ -1,4 +1,4 @@
-package be.ing.apa.spark.resampling
+package io.aos.spark.resampling
 
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf

@@ -25,7 +25,7 @@ object Main {
 	def main(args: Array[String]) {
 
 		// load the csv file...
-		val infile = System.getenv().get("APA_REPO") + "/algorithm/logistic-regression/data/donut/donut.csv"
+		val infile = "/algorithm/logistic-regression/data/donut/donut.csv"
 		val file = sc.textFile(infile)
 		// extract column names
 		val colNames = file.first.split(",").map( _.replaceAll("\"","") )
