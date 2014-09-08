@@ -4,7 +4,7 @@ import org.apache.spark.mllib.regression.{LinearRegressionWithSGD, LabeledPoint,
 import org.apache.spark.rdd.RDD
 import java.lang.Math
 import com.zinnia.ml.spark.util.RegressionUtil
-import org.apache.spark.mllib.util.MLUtils
+import io.aos.spark.mllib.util.MLUtils
 
 /**
  * Created with IntelliJ IDEA.

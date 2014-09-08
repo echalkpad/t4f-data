@@ -7,7 +7,7 @@ import org.apache.spark.mllib.regression.LabeledPoint
 import java.lang.Math
 import org.apache.spark.mllib.optimization.L1Updater
 import java.util.Random
-import org.apache.spark.mllib.util.MLUtils
+import io.aos.spark.mllib.util.MLUtils
 
 /**
  * Created with IntelliJ IDEA.

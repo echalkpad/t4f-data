@@ -1,4 +1,4 @@
-package be.ing.apa.spark.scaling
+package io.aos.spark.mllib.scaling
 
 import org.apache.spark.rdd.RDD
 import org.apache.spark.SparkContext

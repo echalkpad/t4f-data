@@ -1,4 +1,4 @@
-package io.aos.spark.core.resampling
+package io.aos.spark.mllib.resampling
 
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
@@ -18,9 +18,7 @@ object GlobalResamplingContext {
 }
 
 
-
 object Main2 {
-
 
 import GlobalResamplingContext._
 
