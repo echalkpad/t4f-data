@@ -18,6 +18,8 @@
  * under the License.                                           *
  * **************************************************************
  */
+package io.aos.spark.core
+
 object SimpleScala {
 
   def foo(x: Array[String]) = x.foldLeft("")((a, b) => a + b)

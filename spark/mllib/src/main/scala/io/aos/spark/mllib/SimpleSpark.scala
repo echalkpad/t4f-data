@@ -21,7 +21,7 @@
 /**
  * dly-scala -cp /c/spark.git/assembly/target/scala-2.10/spark-assembly-1.0.0-SNAPSHOT-hadoop2.4.0.jar ./SimpleApp1.scala localhost[1]
  */
-package io.aos.spark
+package io.aos.spark.mllib
 
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
@@ -30,9 +30,12 @@ object SimpleSpark {
 
   def main(args: Array[String]) {
     
-    val logFile = "/dataset/gutenberg/pg20417.txt" // Should be some file on your system
+    // Should be some file on your system
+    val logFile = "/dataset/gutenberg/pg20417.txt"
+      
     val spark = new SparkContext("local", "Simple App")
 //    val spark = new SparkContext("local", "Simple App", "YOUR_SPARK_HOME", List("target/scala-2.10/simple-project_2.10-1.0.jar"))
+    
     val logData = spark.textFile(logFile, 2).cache()
     val numAs = logData.filter(line => line.contains("a")).count()
     val numBs = logData.filter(line => line.contains("b")).count()

@@ -8,14 +8,34 @@
  #t4f-data-spark-core
 ```
 -------------------------------------------------------------------------------
-| EXAMPLE                                                                     |
+| SHELL                                                                       |
+-------------------------------------------------------------------------------
+scala> sc.parallelize(1 to 1000).count() # should return 1000
+scala> rdd.map(x=>x+1).reduce(x=>x+x)
+scala> rdd.map(_+1).reduce(_+_)
+scala> rdd.map(_+1).reduce((acc,x)=>acc+x)
+-------------------------------------------------------------------------------
+| PI                                                                          |
 -------------------------------------------------------------------------------
 $ cd $SPARK_HOME
 $ ./bin/run-example org.apache.spark.examples.SparkPi 2
 -------------------------------------------------------------------------------
-| SHELL                                                                       |
+estimate pi
++ cd $SPARK_HOME
++ ./bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn-cluster --driver-memory 1g --executor-memory 1g --executor-cores 1 examples/target/scala-2.10/spark-examples_2.10-1.0.1.jar
++ ./bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn-client --driver-memory 1g --executor-memory 1g --executor-cores 1 examples/target/scala-2.10/spark-examples_2.10-1.0.1.jar
 -------------------------------------------------------------------------------
-+ word-count
+$ spark-shell
+$ dly-spark-shell
+scala> val NUM_SAMPLES = 10000000000
+scala> val count = sc.parallelize(1 to NUM_SAMPLES).map{i =>
+  val x = Math.random()
+  val y = Math.random()
+  if (x*x + y*y < 1) 1 else 0
+}.reduce(_ + _)
+scala> println("Pi is roughly " + 4.0 * count / NUM_SAMPLES)
+-------------------------------------------------------------------------------
+| WORD COUNT                                                                  |
 -------------------------------------------------------------------------------
 $ dly-hadoop-start
 $ hdfs dfs -mkdir /word
@@ -35,19 +55,12 @@ scala> errors.filter(line => line.contains("MySQL")).count()
 scala> errors.filter(line => line.contains("MySQL")).collect()
 scala> errors.cache()
 -------------------------------------------------------------------------------
-+ pi-estimator
+| SCALA                                                                       |
 -------------------------------------------------------------------------------
-$ spark-shell
-$ dly-spark-shell
-scala> val NUM_SAMPLES = 10000000000
-scala> val count = sc.parallelize(1 to NUM_SAMPLES).map{i =>
-  val x = Math.random()
-  val y = Math.random()
-  if (x*x + y*y < 1) 1 else 0
-}.reduce(_ + _)
-scala> println("Pi is roughly " + 4.0 * count / NUM_SAMPLES)
+$ datalayer-spark-scala -cp "$SPARK_HOME/lib/*" /i/spark/core/src/main/scala/SimpleSpark.scala localhost[1]
 -------------------------------------------------------------------------------
-+ logistic-regression
+| LOGISTIC REGRESSION                                                         |
+-------------------------------------------------------------------------------
 scala> val points = spark.textFile(...).map(parsePoint).cache()
 scala> var w = Vector.random(D) // current separataos plane
 scala> for (i <- 1 to ITERATIONS) {
@@ -58,13 +71,15 @@ scala> for (i <- 1 to ITERATIONS) {
 }
 scala> println("Final separataos plane: " + w)
 -------------------------------------------------------------------------------
-| SCALA                                                                       |
+| STANDALONE APPLICATION                                                      |
 -------------------------------------------------------------------------------
-$ dly-spark-scala -cp "$SPARK_HOME/lib/*" /i/spark/core/src/main/scala/SimpleSpark.scala localhost[1]
+spark-submit --class "io.aos.spark.App" \
+  --master yarn-client \
+  $JAR \
+  "hdfs://path/file.csv" \
+spark-submit --class "io.aos.spark..EvaluateAndApply" \
+  --master yarn-cluster \
 -------------------------------------------------------------------------------
-
-5.3.2
-Standalone application
 A sample of standalone application is available in the repository in the /examples/spark-
 test directory. This application reads a csv file, extracts the column names and
 computes the mean and standard deviation of the first column.
@@ -318,10 +333,9 @@ sd_01,sd_03,totfinassets_finass_log,prp_spe_04,use_sai_06_log,beh_11_log,beh_spe
 coalescaos the231533 lines
 sd_01,sd_03,totfinassets_finass_log,prp_spe_04,use_sai_06_log,beh_11_log,beh_spend_06_log,
 saved data
-
 -------------------------------------------------------------------------------
-5.9
-R interface
+| SPARKR                                                                      |
+-------------------------------------------------------------------------------
 SparkR is an interface for R exposaos the RDD API of Spark. This provides
 an access from R to the distributed collections and the operations on them. By
 default, SparkR links to Hadoop 1, so we need to compile it from the source

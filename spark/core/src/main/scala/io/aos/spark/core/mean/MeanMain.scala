@@ -1,12 +1,11 @@
-package io.datalayer.apa.spark
+package io.aos.spark.core.mean
 
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
-import org.apache.spark.SparkContext._ 
+import org.apache.spark.SparkContext._
 import org.apache.spark.rdd.RDD
-
-// used for computing meand and standard deviation
 import org.apache.spark.rdd.DoubleRDDFunctions
+import scala.Array.canBuildFrom
 
 object Main {
 

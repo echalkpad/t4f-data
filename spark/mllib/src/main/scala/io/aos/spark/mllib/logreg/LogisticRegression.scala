@@ -1,20 +1,15 @@
-package be.aos.spark.logistic
+package io.aos.spark.mllib
 
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
-import org.apache.spark.SparkContext._ 
+import org.apache.spark.SparkContext._
 import org.apache.spark.rdd.RDD
-
-// used for computing meand and standard deviation
-import org.apache.spark.rdd.DoubleRDDFunctions
-
 import org.apache.spark.mllib.classification.LogisticRegressionWithSGD
 import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.linalg.Vectors
-import org.apache.spark.mllib.util.MLUtils
-import org.apache.spark.mllib.optimization.L1Updater
 import org.apache.spark.mllib.optimization.SquaredL2Updater
+import scala.Array.canBuildFrom
 
 /* Used to store a context common to all uses */
 
