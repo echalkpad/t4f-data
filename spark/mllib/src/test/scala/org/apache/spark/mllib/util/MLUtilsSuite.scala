@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package io.aos.spark.mllib.util
+package org.apache.spark.mllib.util
 
 import java.io.File
 
@@ -31,7 +31,7 @@ import com.google.common.io.Files
 
 import org.apache.spark.mllib.linalg.{DenseVector, SparseVector, Vectors}
 import org.apache.spark.mllib.regression.LabeledPoint
-import io.aos.spark.mllib.util.MLUtils._
+import org.apache.spark.mllib.util.MLUtils._
 import org.apache.spark.util.Utils
 
 class MLUtilsSuite extends FunSuite with LocalSparkContext {

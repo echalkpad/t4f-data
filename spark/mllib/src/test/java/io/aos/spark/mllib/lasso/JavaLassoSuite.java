@@ -20,14 +20,16 @@ package io.aos.spark.mllib.lasso;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.mllib.regression.LabeledPoint;
+import org.apache.spark.mllib.regression.LassoModel;
+import org.apache.spark.mllib.regression.LassoWithSGD;
+import org.apache.spark.mllib.util.LinearDataGenerator;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
-import io.aos.spark.mllib.util.LinearDataGenerator;
 
 public class JavaLassoSuite implements Serializable {
   private transient JavaSparkContext sc;
@@ -71,7 +73,7 @@ public class JavaLassoSuite implements Serializable {
     lassoSGDImpl.optimizer().setStepSize(1.0)
                           .setRegParam(0.01)
                           .setNumIterations(20);
-    LassoModel model = lassoSGDImpl.run(testRDD.rdd());
+    LassoModel model = (LassoModel) lassoSGDImpl.run(testRDD.rdd());
 
     int numAccurate = validatePrediction(validationData, model);
     Assert.assertTrue(numAccurate > nPoints * 4.0 / 5.0);

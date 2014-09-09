@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-package io.aos.spark.mllib
+package org.apache.spark.mllib.linalg.distributed
 
 import org.scalatest.FunSuite
 
 import breeze.linalg.{DenseVector => BDV, DenseMatrix => BDM, norm => brzNorm, svd => brzSvd}
 
-import io.aos.spark.mllib.util.LocalSparkContext
+import org.apache.spark.mllib.util.LocalSparkContext
 import org.apache.spark.mllib.linalg.{Matrices, Vectors, Vector}
 
 class RowMatrixSuite extends FunSuite with LocalSparkContext {

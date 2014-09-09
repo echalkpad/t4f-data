@@ -1,4 +1,4 @@
-package io.aos.spark.mllib.logreg
+package io.aos.spark.mllib.ridge
 
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
@@ -10,6 +10,8 @@ import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.optimization.SquaredL2Updater
 import scala.Array.canBuildFrom
+import org.apache.spark.mllib.regression.RidgeRegressionWithSGD
+import org.apache.spark.mllib.regression.LinearRegressionWithSGD
 
 object GlobalScalingContext {
   val sparkConf = new SparkConf().setAppName("Logistic Regression")
@@ -63,9 +65,15 @@ object CSVUtil {
 
 }
 
-object LogisticRegression {
+object Ridge {
 
   import GlobalScalingContext._
+
+  def predictionError(predictions: Seq[Double], input: Seq[LabeledPoint]) = {
+    predictions.zip(input).map { case (prediction, expected) =>
+      (prediction - expected.label) * (prediction - expected.label)
+    }.reduceLeft(_ + _) / predictions.size
+  }
 
   def main(args: Array[String]) {
 
@@ -83,24 +91,15 @@ object LogisticRegression {
     println("Data Count=" + data.count)
     println("##########################################################")
 
-    // Run training algorithm to build the model
-    val logistiReg = new LogisticRegressionWithSGD()
+    val ridgeReg = new RidgeRegressionWithSGD()
+    ridgeReg.optimizer.setNumIterations(iterations)
+                      .setRegParam(reg)
+                      .setStepSize(1.0)
+    val ridgeModel = ridgeReg.run(data)
 
-    logistiReg.optimizer
-      .setNumIterations(iterations)
-      .setRegParam(reg)
-      .setMiniBatchFraction(.1)
-      .setUpdater(new SquaredL2Updater())
-
-    val model = logistiReg.run(data)
-
-    // Clear the default threshold.
-    model.clearThreshold()
-
-    //model.setThreshold(0.5)
     // Compute raw scores on the test set. 
     val scoreAndLabels = data.map { point =>
-      val score = model.predict(point.features)
+      val score = ridgeModel.predict(point.features)
       //println(score + "\t" + point.label)
       (score, point.label)
     }
@@ -112,9 +111,9 @@ object LogisticRegression {
     println("##########################################################")
     println("Area under ROC=" + auROC)
     println("##########################################################")
-    println("Intercept=" + model.intercept)
+    println("Intercept=" + ridgeModel.intercept)
     println("##########################################################")
-    println("Model Weights=" + model.weights)
+    println("Model Weights=" + ridgeModel.weights)
     println("##########################################################")
 
   }

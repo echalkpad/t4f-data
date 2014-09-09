@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-package io.aos.spark.mllib
+package org.apache.spark.mllib.regression
 
 import org.scalatest.FunSuite
 
 import org.apache.spark.mllib.linalg.Vectors
-import io.aos.spark.mllib.util.{LinearDataGenerator, LocalSparkContext}
+import org.apache.spark.mllib.util.{LinearDataGenerator, LocalSparkContext}
 
 class LassoSuite extends FunSuite with LocalSparkContext {
 

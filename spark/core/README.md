@@ -32,9 +32,9 @@ scala> sc.parallelize(1 to 1000).count() # should return 1000
 | SUGAR                                                                       |
 -------------------------------------------------------------------------------
 
+scala> rdd.map(_+1).reduce((acc,x)=>acc+x)
 scala> rdd.map(x=>x+1).reduce(x=>x+x)
 scala> rdd.map(_+1).reduce(_+_)
-scala> rdd.map(_+1).reduce((acc,x)=>acc+x)
 
 -------------------------------------------------------------------------------
 | PI                                                                          |

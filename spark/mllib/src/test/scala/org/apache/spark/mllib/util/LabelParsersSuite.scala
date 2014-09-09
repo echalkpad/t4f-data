@@ -15,26 +15,27 @@
  * limitations under the License.
  */
 
-package io.aos.spark.mllib.util
+package org.apache.spark.mllib.util
 
-import org.scalatest.Suite
-import org.scalatest.BeforeAndAfterAll
+import org.scalatest.FunSuite
 
-import org.apache.spark.SparkContext
-
-trait LocalSparkContext extends BeforeAndAfterAll { self: Suite =>
-  @transient var sc: SparkContext = _
-
-  override def beforeAll() {
-    sc = new SparkContext("local", "test")
-    super.beforeAll()
+class LabelParsersSuite extends FunSuite {
+  test("binary label parser") {
+    for (parser <- Seq(BinaryLabelParser, BinaryLabelParser.getInstance())) {
+      assert(parser.parse("+1") === 1.0)
+      assert(parser.parse("1") === 1.0)
+      assert(parser.parse("0") === 0.0)
+      assert(parser.parse("-1") === 0.0)
+    }
   }
 
-  override def afterAll() {
-    if (sc != null) {
-      sc.stop()
+  test("multiclass label parser") {
+    for (parser <- Seq(MulticlassLabelParser, MulticlassLabelParser.getInstance())) {
+      assert(parser.parse("0") == 0.0)
+      assert(parser.parse("+1") === 1.0)
+      assert(parser.parse("1") === 1.0)
+      assert(parser.parse("2") === 2.0)
+      assert(parser.parse("3") === 3.0)
     }
-    System.clearProperty("spark.driver.port")
-    super.afterAll()
   }
 }
