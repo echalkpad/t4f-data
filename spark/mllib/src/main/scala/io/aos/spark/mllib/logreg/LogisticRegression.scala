@@ -93,7 +93,7 @@ object LogisticRegression {
       .setUpdater(new SquaredL2Updater())
 
     val model = logistiReg.run(data)
-
+    
     // Clear the default threshold.
     model.clearThreshold()
 
