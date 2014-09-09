@@ -93,20 +93,20 @@ object Lasso {
     println("##########################################################")
 
     val lassoReg = new LassoWithSGD()
-    lassoReg.optimizer.setNumIterations(10)
+    lassoReg.optimizer.setNumIterations(iterations)
                       .setRegParam(reg)
                       .setStepSize(1.0)
-    var ridgeModel = lassoReg.run(data)
+    var lassoModel = lassoReg.setIntercept(true).run(data)
     
-    for( i <- 1 to 10) {
-      ridgeModel = lassoReg.run(data, ridgeModel.weights)
-      println("================= Model Weights=" + ridgeModel.weights)
-    }
+//    for( i <- 1 to 10) {
+//      lassoModel = lassoReg.run(data, lassoModel.weights)
+//      println("================= Model Weights=" + lassoModel.weights)
+//    }
 
     // Compute raw scores on the test set. 
     val scoreAndLabels = data.map { point =>
-      val score = ridgeModel.predict(point.features)
-      //println(score + "\t" + point.label)
+      val score = lassoModel.predict(point.features)
+      // println(score + "\t" + point.label)
       (score, point.label)
     }
 
@@ -117,9 +117,9 @@ object Lasso {
     println("##########################################################")
     println("Area under ROC=" + auROC)
     println("##########################################################")
-    println("Intercept=" + ridgeModel.intercept)
+    println("Intercept=" + lassoModel.intercept)
     println("##########################################################")
-    println("Model Weights=" + ridgeModel.weights)
+    println("Model Weights=" + lassoModel.weights)
     println("##########################################################")
 
   }

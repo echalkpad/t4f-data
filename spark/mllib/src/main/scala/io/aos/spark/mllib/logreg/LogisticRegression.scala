@@ -92,15 +92,20 @@ object LogisticRegression {
       .setMiniBatchFraction(.1)
       .setUpdater(new SquaredL2Updater())
 
-    val model = logistiReg.run(data)
+    var logistModel = logistiReg.setIntercept(true).run(data)
     
-    // Clear the default threshold.
-    model.clearThreshold()
+//    for( i <- 1 to 10) {
+//      logistModel = logistiReg.setIntercept(true).run(data, logistModel.weights)
+//      println("================= Model Weights=" + logistModel.weights)
+//    }
 
-    //model.setThreshold(0.5)
+    // Clear the default threshold.
+    logistModel.clearThreshold()
+
+    // model.setThreshold(0.5)
     // Compute raw scores on the test set. 
     val scoreAndLabels = data.map { point =>
-      val score = model.predict(point.features)
+      val score = logistModel.predict(point.features)
       //println(score + "\t" + point.label)
       (score, point.label)
     }
@@ -112,9 +117,9 @@ object LogisticRegression {
     println("##########################################################")
     println("Area under ROC=" + auROC)
     println("##########################################################")
-    println("Intercept=" + model.intercept)
+    println("Intercept=" + logistModel.intercept)
     println("##########################################################")
-    println("Model Weights=" + model.weights)
+    println("Model Weights=" + logistModel.weights)
     println("##########################################################")
 
   }

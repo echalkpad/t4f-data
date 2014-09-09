@@ -10,19 +10,15 @@
 -------------------------------------------------------------------------------
 | SETUP                                                                       |
 -------------------------------------------------------------------------------
-
+```
 $ mvn clean install -DskipTests
-
 $ export T4F_SPARK_MLLIB_JAR=$PWD/target/t4f-data-spark-mllib-1.0.0-SNAPSHOT.jar
-
 $ wget https://raw.githubusercontent.com/aos-t4f/t4f-dataset/master/src/main/resources/donut/donut-2.csv
 $ hadoop dfs -put donut-2.csv /dataset/donut/donut-2.csv
-
+```
 -------------------------------------------------------------------------------
-| LOGISTIC REGRESSION                                                         |
+| PRELIMINARY NOTE                                                            |
 -------------------------------------------------------------------------------
-
-Preliminary note
 
 Logistic regression is implemented with Stochastic Gradient Descent (SGD), 
 a different algorithm than the one used in R (Iteratively Reweighted Least Squares).
@@ -35,20 +31,35 @@ deviation to renormalize. Thus Some knowledge about each feature distribution
 must be known in advance to preprocess the data.
 
 -------------------------------------------------------------------------------
+| LOGISTIC REGRESSION                                                         |
+-------------------------------------------------------------------------------
 
 With spark-submit
 
 We can run a 100 iterations stochastic gradient descent for Logistic 
 Regression on the cluster:
-
+```
 $ $SPARK_HOME/bin/spark-submit \
     --class "io.aos.spark.mllib.logreg.LogisticRegression" \
     --master yarn-client \
+    --driver-memory 4g \
+    --executor-memory 2g \
+    --executor-cores 4 \
     $T4F_SPARK_MLLIB_JAR \
-    /dataset/donut/donut-2.csv color 50 0.001 \
+    /dataset/donut/donut-2.csv color 100 0.001 \
     x y shape k k0 xx xy yy a b c bias
-
-(todo: fails with 100 iterations, let's use 10 for now)
+```
+```
+$ $SPARK_HOME/bin/spark-submit \
+    --class "io.aos.spark.mllib.logreg.LogisticRegression" \
+    --master yarn-cluster \
+    --driver-memory 4g \
+    --executor-memory 2g \
+    --executor-cores 4 \
+    $T4F_SPARK_MLLIB_JAR \
+    /dataset/donut/donut-2.csv color 100 0.001 \
+    x y shape k k0 xx xy yy a b c bias
+```
 
 We obtain a ROC of ??? on the donut training data.
 We note that the intercept is 0 and can’t yet let it be non-zero.
@@ -57,10 +68,8 @@ Note: What model.clearThreshold() means?
 
 -------------------------------------------------------------------------------
 
-With spark-shell
-
-(todo does not work, to be fixed...)
-
+With spark-shell (todo does not work, to be fixed...)
+```
 scala> val ITERATIONS = 1000
 scala> val points = sc.textFile("hdfs://dataset/donut/donut.csv").map(parsePoint).cache()
 scala> var w = Vector.random(D) // current separating plane
@@ -71,37 +80,41 @@ scala> for (i <- 1 to ITERATIONS) {
   w -= gradient
 }
 scala> println("Final separating plane: " + w)
-
--------------------------------------------------------------------------------
-| RIDGE                                                                       |
--------------------------------------------------------------------------------
-
-$ $SPARK_HOME/bin/spark-submit \
-    --class "io.aos.spark.mllib.ridge.Ridge" \
-    --master yarn-client \
-    $T4F_SPARK_MLLIB_JAR  \
-    /dataset/donut/donut-2.csv color 10 0.001 \
-    x y shape k k0 xx xy yy a b c bias
-
-(todo: fails with 100 iterations, let's use 10 for now)
-
+```
 -------------------------------------------------------------------------------
 | LASSO                                                                       |
 -------------------------------------------------------------------------------
-
+```
 $ $SPARK_HOME/bin/spark-submit \
     --class "io.aos.spark.mllib.lasso.Lasso" \
     --master yarn-client \
+    --driver-memory 4g \
+    --executor-memory 2g \
+    --executor-cores 4 \
     $T4F_SPARK_MLLIB_JAR  \
-    /dataset/donut/donut-2.csv color 10 0.001 \
+    /dataset/donut/donut-2.csv color 100 0.001 \
     x y shape k k0 xx xy yy a b c bias
-
+```
 -------------------------------------------------------------------------------
 | PCA                                                                         |
 -------------------------------------------------------------------------------
 
 (to do)
 
+-------------------------------------------------------------------------------
+| RIDGE                                                                       |
+-------------------------------------------------------------------------------
+```
+$ $SPARK_HOME/bin/spark-submit \
+    --class "io.aos.spark.mllib.ridge.Ridge" \
+    --master yarn-client \
+    --driver-memory 4g \
+    --executor-memory 2g \
+    --executor-cores 4 \
+    $T4F_SPARK_MLLIB_JAR  \
+    /dataset/donut/donut-2.csv color 100 0.001 \
+    x y shape k k0 xx xy yy a b c bias
+```
 -------------------------------------------------------------------------------
 | SCALING                                                                     |
 -------------------------------------------------------------------------------
@@ -159,21 +172,25 @@ ING_JAR) points to this file.
 Evaluate and Apply scaling
 
 We set the environment variable $SPARK_PUBLIC_DNS to the spark dns.
+
 The EvaluateAndApply scaling application is run on the training data (in csv
 format):
+
 $ # extract featurtes names from first line (from test set)
 $ FEATURES=‘head -1 $AOS_REPO/algorithm/logistic-regression/data/donut/donut-test.csv | se
 $ $SPARK_HOME/bin/spark-submit\
---class "be.aos.apa.spark.scalaos.EvaluateAndApply"\
---master spark://$SPARK_PUBLIC_DNS:7077 $SCALING_JAR \
-$AOS_REPO/algorithm/logistic-regression/data/donut/donut.csv \
-$AOS_DATA/donut/scaled \
-$AOS_DATA/donut/scale.csv \
-$FEATURES
-$AOS_REPO/algorithm/logistic-regression/data/donut/donut.csv is the train-
-ing set.
+    --class "be.aos.apa.spark.scalaos.EvaluateAndApply"\
+    --master spark://$SPARK_PUBLIC_DNS:7077 $SCALING_JAR \
+    $AOS_REPO/algorithm/logistic-regression/data/donut/donut.csv \
+    $AOS_DATA/donut/scaled \
+    $AOS_DATA/donut/scale.csv \
+    $FEATURES
+
+$AOS_REPO/algorithm/logistic-regression/data/donut/donut.csv is the train-ing set.
+
 $AOS_DATA/donut/scaled is the target directory to save the scaled trainaos
 set, in a file named part-00000.
+
 $AOS_DATA/donut/scale.csv is the file where the scaling parameters (feature,
 min, max) are saved:
 $ cat $AOS_DATA/donut/scale.csv
@@ -210,6 +227,7 @@ Scaling validation
 In order to check that scaling is working as expected, a test in R is run: check
 that the variables are bounded between 0 and 1. We check that the minimum
 (maximum) of each column is equal to 0 (1):
+
 > trainfile <- paste(Sys.getenv("AOS_DATA"), "donut/scaled/part-00000", sep="/")
 > sctr <- read.csv(trainfile,
 colClasses=rep("numeric",10))
@@ -224,7 +242,7 @@ colClasses=rep("numeric",10))
 
 -------------------------------------------------------------------------------
 
-Variable scaling: EvaluateAndApply
+EvaluateAndApply
 
 The evaluation of model-86 scaling parameters (min/max) and application of
 this scale on the training set is done:
@@ -246,6 +264,8 @@ We note that the master is yarn-cluster and we use URIs in the form hdfs://172.2
 to identify locations on the HDFS. Here the NN variable is the NameNode URL.
 After execution, the scales and scaled data are found in the HDFS at specifyed
 locations (/apa/model86/data/scale.csv and /apa/model86/data/train_scaled).
+
+-------------------------------------------------------------------------------
 
 Variable scaling: Apply
 

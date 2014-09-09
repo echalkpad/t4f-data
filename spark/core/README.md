@@ -93,19 +93,16 @@ $ datalayer-spark-scala -cp "$SPARK_HOME/lib/*" $DATALAYER_SRC_HOME/t4f-data.git
 
 This application reads a csv file, extracts the column names and
 computes the mean and standard deviation of the first column.
-
----
-
+```
 $ mvn package; $SPARK_HOME/bin/spark-submit  \
   ./target/t4f-data-spark-core-1.0.0-SNAPSHOT.jar \
   --class "io.aos.spark.core.mean.SimpleMean" \
   --master yarn-client
-
--------------------------------------------------------------------------------
-
+```
+```
 $ mvn package; $SPARK_HOME/bin/spark-submit  \
   ./target/t4f-data-spark-core-1.0.0-SNAPSHOT.jar \
   --class "io.aos.spark.core.count.SimpleCount" \
   --master yarn-client
-
+```
 -------------------------------------------------------------------------------

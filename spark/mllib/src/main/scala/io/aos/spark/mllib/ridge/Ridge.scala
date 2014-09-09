@@ -92,15 +92,15 @@ object Ridge {
     println("##########################################################")
 
     val ridgeReg = new RidgeRegressionWithSGD()
-    ridgeReg.optimizer.setNumIterations(10)
+    ridgeReg.optimizer.setNumIterations(iterations)
                       .setRegParam(reg)
                       .setStepSize(1.0)
-    var ridgeModel = ridgeReg.run(data)
+    var ridgeModel = ridgeReg.setIntercept(true).run(data)
     
-    for( i <- 1 to 10) {
-      ridgeModel = ridgeReg.run(data, ridgeModel.weights)
-      println("================= Model Weights=" + ridgeModel.weights)
-    }
+//    for( i <- 1 to 10) {
+//      ridgeModel = ridgeReg.run(data, ridgeModel.weights)
+//      println("================= Model Weights=" + ridgeModel.weights)
+//    }
 
     // Compute raw scores on the test set. 
     val scoreAndLabels = data.map { point =>
