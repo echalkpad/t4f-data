@@ -45,7 +45,7 @@ $ $SPARK_HOME/bin/spark-submit \
     --class "io.aos.spark.mllib.logreg.LogisticRegression" \
     --master yarn-client \
     $T4F_SPARK_MLLIB_JAR \
-    /dataset/donut/donut-2.csv color 10 0.001 \
+    /dataset/donut/donut-2.csv color 50 0.001 \
     x y shape k k0 xx xy yy a b c bias
 
 (todo: fails with 100 iterations, let's use 10 for now)
@@ -89,7 +89,12 @@ $ $SPARK_HOME/bin/spark-submit \
 | LASSO                                                                       |
 -------------------------------------------------------------------------------
 
-(to do)
+$ $SPARK_HOME/bin/spark-submit \
+    --class "io.aos.spark.mllib.lasso.Lasso" \
+    --master yarn-client \
+    $T4F_SPARK_MLLIB_JAR  \
+    /dataset/donut/donut-2.csv color 10 0.001 \
+    x y shape k k0 xx xy yy a b c bias
 
 -------------------------------------------------------------------------------
 | PCA                                                                         |
