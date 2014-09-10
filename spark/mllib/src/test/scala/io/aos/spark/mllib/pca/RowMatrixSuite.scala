@@ -56,79 +56,6 @@ class RowMatrixSuite extends FunSuite with LocalSparkContext {
     sparseMat = new RowMatrix(sc.parallelize(sparseData, 2))
   }
 
-  test("size") {
-    assert(denseMat.numRows() === m)
-    assert(denseMat.numCols() === n)
-    assert(sparseMat.numRows() === m)
-    assert(sparseMat.numCols() === n)
-  }
-
-  test("empty rows") {
-    val rows = sc.parallelize(Seq[Vector](), 1)
-    val emptyMat = new RowMatrix(rows)
-    intercept[RuntimeException] {
-      emptyMat.numCols()
-    }
-    intercept[RuntimeException] {
-      emptyMat.numRows()
-    }
-  }
-
-  test("toBreeze") {
-    val expected = BDM(
-      (0.0, 1.0, 2.0),
-      (3.0, 4.0, 5.0),
-      (6.0, 7.0, 8.0),
-      (9.0, 0.0, 1.0))
-    for (mat <- Seq(denseMat, sparseMat)) {
-      assert(mat.toBreeze() === expected)
-    }
-  }
-
-  test("gram") {
-    val expected =
-      Matrices.dense(n, n, Array(126.0, 54.0, 72.0, 54.0, 66.0, 78.0, 72.0, 78.0, 94.0))
-    for (mat <- Seq(denseMat, sparseMat)) {
-      val G = mat.computeGramianMatrix()
-      assert(G.toBreeze === expected.toBreeze)
-    }
-  }
-
-  test("svd of a full-rank matrix") {
-    for (mat <- Seq(denseMat, sparseMat)) {
-      val localMat = mat.toBreeze()
-      val (localU, localSigma, localVt) = brzSvd(localMat)
-      val localV: BDM[Double] = localVt.t.toDenseMatrix
-      for (k <- 1 to n) {
-        val svd = mat.computeSVD(k, computeU = true)
-        val U = svd.U
-        val s = svd.s
-        val V = svd.V
-        assert(U.numRows() === m)
-        assert(U.numCols() === k)
-        assert(s.size === k)
-        assert(V.numRows === n)
-        assert(V.numCols === k)
-        assertColumnEqualUpToSign(U.toBreeze(), localU, k)
-        assertColumnEqualUpToSign(V.toBreeze.asInstanceOf[BDM[Double]], localV, k)
-        assert(closeToZero(s.toBreeze.asInstanceOf[BDV[Double]] - localSigma(0 until k)))
-      }
-      val svdWithoutU = mat.computeSVD(n)
-      assert(svdWithoutU.U === null)
-    }
-  }
-
-  test("svd of a low-rank matrix") {
-    val rows = sc.parallelize(Array.fill(4)(Vectors.dense(1.0, 1.0)), 2)
-    val mat = new RowMatrix(rows, 4, 2)
-    val svd = mat.computeSVD(2, computeU = true)
-    assert(svd.s.size === 1, "should not return zero singular values")
-    assert(svd.U.numRows() === 4)
-    assert(svd.U.numCols() === 1)
-    assert(svd.V.numRows === 2)
-    assert(svd.V.numCols === 1)
-  }
-
   def closeToZero(G: BDM[Double]): Boolean = {
     G.valuesIterator.map(math.abs).sum < 1e-6
   }
@@ -156,33 +83,5 @@ class RowMatrixSuite extends FunSuite with LocalSparkContext {
     }
   }
 
-  test("multiply a local matrix") {
-    val B = Matrices.dense(n, 2, Array(0.0, 1.0, 2.0, 3.0, 4.0, 5.0))
-    for (mat <- Seq(denseMat, sparseMat)) {
-      val AB = mat.multiply(B)
-      assert(AB.numRows() === m)
-      assert(AB.numCols() === 2)
-      assert(AB.rows.collect().toSeq === Seq(
-        Vectors.dense(5.0, 14.0),
-        Vectors.dense(14.0, 50.0),
-        Vectors.dense(23.0, 86.0),
-        Vectors.dense(2.0, 32.0)
-      ))
-    }
-  }
 
-  test("compute column summary statistics") {
-    for (mat <- Seq(denseMat, sparseMat)) {
-      val summary = mat.computeColumnSummaryStatistics()
-      // Run twice to make sure no internal states are changed.
-      for (k <- 0 to 1) {
-        assert(summary.mean === Vectors.dense(4.5, 3.0, 4.0), "mean mismatch")
-        assert(summary.variance === Vectors.dense(15.0, 10.0, 10.0), "variance mismatch")
-        assert(summary.count === m, "count mismatch.")
-        assert(summary.numNonzeros === Vectors.dense(3.0, 3.0, 4.0), "nnz mismatch")
-        assert(summary.max === Vectors.dense(9.0, 7.0, 8.0), "max mismatch")
-        assert(summary.min === Vectors.dense(0.0, 0.0, 1.0), "column mismatch.")
-      }
-    }
-  }
 }
