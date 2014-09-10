@@ -35,6 +35,8 @@ object Pca {
     val pc = matrix.computePrincipalComponents(matrix.numCols().toInt)
 
     println("##########################################################")
+    println("Principal components number of rows=" + pc.numRows)
+    println("Principal components number of columns=" + pc.numCols)
     println("Principal components are:\n" + pc)
     println("##########################################################")
 
