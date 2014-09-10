@@ -38,20 +38,20 @@ object CsvUtil {
 
   }
 
-  def readMatrix(file: String, target: String, featList: List[String])(implicit sc: SparkContext): RDD[Vector] = {
+  def readMatrix(file: String)(implicit sc: SparkContext): RDD[Vector] = {
 
     val lines = sc.textFile(file)
 
     // Extract column names -> index
-    val colNames = lines.first.split(",").map(_.replaceAll("\"", ""))
+    val colNames = lines.first.split(" ").map(_.replaceAll("\"", ""))
       .zipWithIndex.map(tup => (tup._1 -> tup._2)).toMap
 
     // Features is the list of column names excluding target
-    val features = colNames.filter(elt => elt._1 != target && featList.contains(elt._1)).map(_._1)
+    val features = colNames.map(_._1)
 
     lines.zipWithIndex.filter(elt => elt._2 != 0).map(elt => elt._1).map(line => {
       // The row with all features
-      val fullRow = line.split(",")
+      val fullRow = line.split(" ")
       // Extract the feature from this row
       val featVals = features.map(feature => {
         val idx = colNames(feature)

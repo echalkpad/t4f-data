@@ -47,8 +47,7 @@ $ $SPARK_HOME/bin/spark-submit \
     --executor-memory 2g \
     --executor-cores 4 \
     $T4F_SPARK_MLLIB_JAR  \
-    /dataset/donut/donut-2.csv color \
-    x y shape k k0 xx xy yy a b c bias
+    /dataset/donut/donut-2.csv
 ```
 -------------------------------------------------------------------------------
 | LOGISTIC REGRESSION                                                         |

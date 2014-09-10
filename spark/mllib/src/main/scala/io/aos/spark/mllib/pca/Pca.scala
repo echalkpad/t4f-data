@@ -26,10 +26,8 @@ object Pca {
   def main(args: Array[String]) {
 
     val datafile = args(0)
-    val targetFeature = args(1)
-    val featlist = args.drop(2).toList
 
-    val rows = CsvUtil.readMatrix(datafile, targetFeature, featlist)
+    val rows = CsvUtil.readMatrix(datafile)
 
     val matrix = new RowMatrix(rows)
 
