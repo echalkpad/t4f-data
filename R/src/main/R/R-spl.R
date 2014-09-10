@@ -494,6 +494,30 @@ att(x, "name")
 
 # -----------------------------------------------------------------------------
 
+## First control, then treatment:
+gl(2, 8, labels = c("Control", "Treat"))
+## 20 alternating 1s and 2s
+gl(2, 1, 20)
+## alternating pairs of 1s and 2s
+gl(2, 2, 20)
+
+# -----------------------------------------------------------------------------
+
+m0 <- matrix(NA, 4, 0)
+rownames(m0)
+
+m2 <- cbind(1, 1:4)
+m2
+colnames(m2, do.NULL = FALSE)
+colnames(m2) <- c("x","Y")
+rownames(m2) <- rownames(m2, do.NULL = FALSE, prefix = "Obs.")
+m3 <- cbind(1, 1:4)
+m3
+colnames(m3) <- colnames(m3, do.NULL = FALSE, prefix = "Col")
+m3
+
+# -----------------------------------------------------------------------------
+
 pairs(iris)
 pairs(iris[1:4], main = "Edgar Anderson's Iris Data", pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
 
@@ -650,6 +674,20 @@ head(residuals(M, type="pearson")^2)
 
 d <- data.frame(x=1:10000, y=sample(c(rep(1,100), 0), 10000, replace=T))
 head((d$y-d$p)^2/d$p)
+
+# -----------------------------------------------------------------------------
+
+
+# vertically
+x = data.frame(a=1:2, b=2:3, c=3:4, d=4:5, row.names=c("row_1", "another_row1"))
+y = data.frame(a=c(10,20), b=c(20,30), c=c(30,40), row.names=c("row_2", "another_row2"))
+merge(x, y, all=T, sort=F)
+merge(x, y, by=c("row.names", "a","b","c"), all.x=T, all.y=T, sort=F)
+
+# horizontally
+x = data.frame(a=1:2, b=2:3, c=3:4, d=4:5, row.names=c("row_1", "another_row1"))
+y = data.frame(a=1:2, b=2:3, c=3:4, d=4:5, row.names=c("row_1", "another_row1"))
+rbind(x, y)
 
 # -----------------------------------------------------------------------------
 # 10. CONTINUOUS VS DISCRETE
