@@ -14,6 +14,25 @@ import org.apache.spark.rdd.RDD
 
 object CsvUtil {
 
+  def readLabeledPoints(file: String, target: String)(implicit sc: SparkContext): RDD[LabeledPoint] = {
+    val lines = sc.textFile(file)
+    // extract column names -> index
+    val colNames = lines.first.split(",").map(_.replaceAll("\"", ""))
+      .zipWithIndex.map(tup => (tup._1 -> tup._2)).toMap
+    //features is the list of column names excluding target
+    val features = colNames.filter(_._1 != target).map(_._1)
+    lines.zipWithIndex.filter(elt => elt._2 != 0).map(elt => elt._1).map(line => {
+      // the row with all features
+      val fullRow = line.split(",")
+      // extract the feature from this row
+      val featVals = features.map(feature => {
+        val idx = colNames(feature)
+        fullRow(idx).toDouble
+      })
+      LabeledPoint(fullRow(colNames(target)).toDouble, Vectors.dense(1.0 +: featVals.toList.toArray))
+    })
+  }
+
   def readLabeledPoints(file: String, target: String, featList: List[String])(implicit sc: SparkContext): RDD[LabeledPoint] = {
 
     val lines = sc.textFile(file)

@@ -15,7 +15,7 @@ import io.aos.spark.mllib.util.CsvUtil
 import org.apache.spark.mllib.linalg.Matrices
 
 object GlobalScalingContext {
-  val sparkConf = new SparkConf().setAppName("PCA");
+  val sparkConf = new SparkConf().setAppName("PCA").setMaster("local");
   implicit val sc = new SparkContext(sparkConf)
 }
 
@@ -30,6 +30,10 @@ object Pca {
     val rows = CsvUtil.readMatrix(datafile)
 
     val matrix = new RowMatrix(rows)
+    
+    println("Matrix number of rows=" + matrix.numRows)
+    println("Matrix number of columns=" + matrix.numCols)
+
 
     // Compute principal components.
     val pc = matrix.computePrincipalComponents(matrix.numCols().toInt)
