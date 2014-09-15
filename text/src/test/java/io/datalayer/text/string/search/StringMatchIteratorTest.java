@@ -16,18 +16,12 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.algorithm.string.search;
+package io.datalayer.text.string.search;
 
-import io.datalayer.algorithm.string.search.BruteForceStringSearcher;
-import io.datalayer.algorithm.string.search.StringMatch;
-import io.datalayer.algorithm.string.search.StringMatchIterator;
-import io.datalayer.data.iterator.AosIterator;
-import io.datalayer.data.iterator.IteratorOutOfBoundsException;
 import junit.framework.TestCase;
 
 /**
  * Test cases for {@link StringMatchIterator}.
- *
  */
 public class StringMatchIteratorTest extends TestCase {
     public void test() {
@@ -66,7 +60,8 @@ public class StringMatchIteratorTest extends TestCase {
         try {
             iterator.current();
             fail();
-        } catch (IteratorOutOfBoundsException e) {
+        }
+        catch (IteratorOutOfBoundsException e) {
             // expected
         }
     }

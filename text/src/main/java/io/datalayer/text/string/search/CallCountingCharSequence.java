@@ -16,48 +16,48 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.algorithm.string.search;
+package io.datalayer.text.string.search;
 
 /**
- * A {@link StringSearcher} that uses a brute-force algorithm.
+ * A {@link CharSequence} that decorates another to count the number of times {@link #charAt(int)} is called.
  *
  */
-public class BruteForceStringSearcher implements StringSearcher {
-    /** The pattern for which to search. */
-    private final CharSequence _pattern;
+public class CallCountingCharSequence implements CharSequence {
+    /** The underlying sequence. */
+    private final CharSequence _charSequence;
+
+    /** The number of times {@link #charAt(int)} is called. */
+    private int _callCount;
 
     /**
      * Constructor.
      *
-     * @param pattern The pattern for which to search.
+     * @param charSequence The underlying sequence.
      */
-    public BruteForceStringSearcher(CharSequence pattern) {
-        assert pattern != null : "pattern can't be null";
-        assert pattern.length() > 0 : "pattern can't be empty";
-
-        _pattern = pattern;
+    public CallCountingCharSequence(CharSequence charSequence) {
+        assert charSequence != null : "charSequence can't be null";
+        _charSequence = charSequence;
     }
 
-    public StringMatch search(CharSequence text, int from) {
-        assert text != null : "text can't be null";
-        assert from >= 0 : "from can't be < 0";
+    /**
+     * Obtains the number of times {@link #charAt(int)} has been called.
+     *
+     * @return The call count.
+     */
+    public int getCallCount() {
+        return _callCount;
+    }
 
-        int s = from;
+    public int length() {
+        return _charSequence.length();
+    }
 
-        while (s <= text.length() - _pattern.length()) {
-            int i = 0;
+    public char charAt(int index) {
+        ++_callCount;
+        return _charSequence.charAt(index);
+    }
 
-            while (i < _pattern.length() && _pattern.charAt(i) == text.charAt(s + i)) {
-                ++i;
-            }
-
-            if (i == _pattern.length()) {
-                return new StringMatch(_pattern, text, s);
-            }
-
-            ++s;
-        }
-
-        return null;
+    public CharSequence subSequence(int start, int end) {
+        return _charSequence.subSequence(start, end);
     }
 }

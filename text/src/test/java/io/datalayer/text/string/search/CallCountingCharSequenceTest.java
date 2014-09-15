@@ -16,34 +16,32 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.algorithm.string.search;
+package io.datalayer.text.string.search;
 
-import io.datalayer.algorithm.string.search.BoyerMooreStringSearcher;
-import io.datalayer.algorithm.string.search.StringMatch;
-import io.datalayer.algorithm.string.search.StringSearcher;
-
+import junit.framework.TestCase;
 
 /**
- * Concrete test class for {@link BoyerMooreStringSearcher}.
- *
+ * Test cases for {@link CallCountingCharSequence}.
  */
-public class BoyerMooreStringSearcherTest extends AbstractStringSearcherTestCase {
-    protected StringSearcher createSearcher(CharSequence pattern) {
-        return new BoyerMooreStringSearcher(pattern);
+public class CallCountingCharSequenceTest extends TestCase {
+    
+    public void test() {
+
+        String text = "Hello, World";
+        CallCountingCharSequence sequence = new CallCountingCharSequence(text);
+
+        assertEquals(0, sequence.getCallCount());
+        assertEquals(text.length(), sequence.length());
+
+        for (int i = text.length() - 1; i >= 0; --i) {
+            assertEquals(text.charAt(i), sequence.charAt(i));
+        }
+
+        for (int i = text.length() - 1; i >= 0; --i) {
+            assertEquals(text.charAt(i), sequence.charAt(i));
+        }
+
+        assertEquals(text.length() * 2, sequence.getCallCount());
     }
 
-    public void testShiftsDontErroneouslyIgnoreMatches() {
-        String text = "aababaa";
-        String pattern = "baba";
-
-        StringSearcher searcher = createSearcher(pattern);
-
-        StringMatch match = searcher.search(text, 0);
-        assertNotNull(match);
-        assertEquals(text, match.getText());
-        assertEquals(pattern, match.getPattern());
-        assertEquals(2, match.getIndex());
-
-        assertNull(searcher.search(text, match.getIndex() + 1));
-    }
 }

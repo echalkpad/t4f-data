@@ -25,7 +25,7 @@ object Pca {
 
   def main(args: Array[String]) {
 
-    val datafile = args(0)
+    val datafile = "/dataset/donut/donut-2.csv"
 
     val rows = CsvUtil.readMatrix(datafile)
 
@@ -33,7 +33,6 @@ object Pca {
     
     println("Matrix number of rows=" + matrix.numRows)
     println("Matrix number of columns=" + matrix.numCols)
-
 
     // Compute principal components.
     val pc = matrix.computePrincipalComponents(matrix.numCols().toInt)

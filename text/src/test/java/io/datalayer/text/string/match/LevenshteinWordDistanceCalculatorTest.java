@@ -16,9 +16,8 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.algorithm.string.match;
+package io.datalayer.text.string.match;
 
-import io.datalayer.algorithm.string.match.LevenshteinWordDistanceCalculator;
 import junit.framework.TestCase;
 
 /**

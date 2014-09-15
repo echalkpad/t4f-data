@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.algorithm.string.match;
+package io.datalayer.text.string.match;
 
 /**
  * Determines the similarity between words using the Levenshtein Word Distance algorithm.

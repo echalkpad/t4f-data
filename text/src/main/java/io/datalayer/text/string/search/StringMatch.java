@@ -16,31 +16,48 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.algorithm.string.search;
-
-import io.datalayer.algorithm.string.search.CallCountingCharSequence;
-import junit.framework.TestCase;
+package io.datalayer.text.string.search;
 
 /**
- * Test cases for {@link CallCountingCharSequence}.
+ * Represents a pattern match within some text.
  *
  */
-public class CallCountingCharSequenceTest extends TestCase {
-    public void test() {
-        String text = "Hello, World";
-        CallCountingCharSequence sequence = new CallCountingCharSequence(text);
+public class StringMatch {
+    /** The pattern that was searched for. */
+    private final CharSequence _pattern;
 
-        assertEquals(0, sequence.getCallCount());
-        assertEquals(text.length(), sequence.length());
+    /** The text containing the match. */
+    private final CharSequence _text;
 
-        for (int i = text.length() - 1; i >= 0; --i) {
-            assertEquals(text.charAt(i), sequence.charAt(i));
-        }
+    /** The position (0, 1, 2...) within the text at which tha pattern ocurred. */
+    private final int _index;
 
-        for (int i = text.length() - 1; i >= 0; --i) {
-            assertEquals(text.charAt(i), sequence.charAt(i));
-        }
+    /**
+     * Constructor.
+     *
+     * @param pattern The pattern that was searched for.
+     * @param text The text containing the match.
+     * @param index The position (0, 1, 2...) within the text at which tha pattern ocurred.
+     */
+    public StringMatch(CharSequence pattern, CharSequence text, int index) {
+        assert text != null : "text can't be null";
+        assert pattern != null : "pattern can't be null";
+        assert index >= 0 : "index can't be < 0";
 
-        assertEquals(text.length() * 2, sequence.getCallCount());
+        _text = text;
+        _pattern = pattern;
+        _index = index;
+    }
+
+    public CharSequence getPattern() {
+        return _pattern;
+    }
+
+    public CharSequence getText() {
+        return _text;
+    }
+
+    public int getIndex() {
+        return _index;
     }
 }

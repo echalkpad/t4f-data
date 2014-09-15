@@ -1,10 +1,60 @@
--------------------------------------------------------------------------------
-+ textcat
-+ gate
+# T4F Data Text
+
+## Libraries
+
+### Gate
+
++ Download Gate from https://gate.ac.uk/
++ Extract and run $GATE_HOME/bin/gate.sh
++ Check the installed plugins (Annie should be at least present)
++ Right-click the 'Applications' node in the tree, and select 'Ready Made Application > ANNIE > ANNIE'
++ Right-click the 'Language Resources' node in the tree, and select 'New > Gate Document'
++ Right-click the 'Language Resources' node in the tree, and select 'New > Gate Corpus'
++ Add there the 'edit' button (on the right), click the 'Add' button and add some Documents in the Corpus.
++ Double-click to the ANNIE node, on the bottom panel, select the Corpus.
++ Right-click the ANNIE node, select 'Run Application'
++ Double-click on the document of your choice, and see the 'Annotation Sets' (select on the top bar)
+
+### Weka
+
++ Download Weka from http://www.cs.waikato.ac.nz/ml/weka/
++ Extract, cd $WEKA_HOME and run 'java -jar weka.jar'
++ Install via 'Tools > Package Manager'
++ Get the book 'Data Mining - Practical Machine Learning Tools and Techniques' and play
+
+### Distributed Text Mining
+
+See:
+
++ http://markahall.blogspot.be/2013/10/weka-and-hadoop-part-1.html
++ http://wiki.pentaho.com/display/BAD/Weka+Execution+in+Hadoop
++ http://wiki.pentaho.com/display/BAD/Kettle+on+Spark
++ http://apache-spark-user-list.1001560.n3.nabble.com/Prediction-using-Classification-with-text-attributes-in-Apache-Spark-MLLib-td8166.html
++ http://spark-summit.org/2014/talk/text-analytics-on-spark
++ http://spark-summit.org/2014/talk/streamlining-search-indexing-using-elastic-search-and-spark
+
+## Python
+
++ http://www.clips.ua.ac.be/pattern
++ http://www.nltk.org
+
+### Lingpipe
+
 + lingpipe
--------------------------------------------------------------------------------
-| REGEXP                                                                      |
--------------------------------------------------------------------------------
+
+### OpenNLP
+
++ opennlp
+
+### Textcat
+
++ texcat
+
+## Language Detection
+
++ https://code.google.com/p/language-detection
+
+## Regular Expressions
 
 A compiled representation of a regular expression.
 

@@ -16,19 +16,52 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.algorithm.string.search;
+package io.datalayer.text.string.search;
 
 /**
- * A generic interface for string searching.
- *
+ * Iterator based on that defined in Design Patterns (Gamma et. al).
  */
-public interface StringSearcher {
+public interface AosIterator {
     /**
-     * Searches for a match.
+     * (Re)positions the iterator to the first item.
      *
-     * @param text The text within which to search.
-     * @param from The position (0, 1, 2...) from which to start.
-     * @return A match; or <code>null</code> if none found.
+     * @throws UnsupportedOperationException if not implemented.
      */
-    public StringMatch search(CharSequence text, int from);
+    public void first();
+
+    /**
+     * (Re)positions the iterator to the last item.
+     *
+     * @throws UnsupportedOperationException if not implemented.
+     */
+    public void last();
+
+    /**
+     * Checks to see if the iterator refers to an item.
+     *
+     * @return <code>true</code> if the end has been reached; otherwise <code>false</code>.
+     */
+    public boolean isDone();
+
+    /**
+     * Positions to the next item.
+     *
+     * @throws UnsupportedOperationException if not implemented.
+     */
+    public void next();
+
+    /**
+     * Positions to the previous item.
+     *
+     * @throws UnsupportedOperationException if not implemented.
+     */
+    public void previous();
+
+    /**
+     * Obtains the value of the current item.
+     *
+     * @return The value of the current item.
+     * @throws IteratorOutOfBoundsException if there is no current item.
+     */
+    public Object current() throws IteratorOutOfBoundsException;
 }

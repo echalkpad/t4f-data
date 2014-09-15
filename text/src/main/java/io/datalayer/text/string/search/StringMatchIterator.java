@@ -16,15 +16,11 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.algorithm.string.search;
-
-import io.datalayer.data.iterator.AosIterator;
-import io.datalayer.data.iterator.IteratorOutOfBoundsException;
+package io.datalayer.text.string.search;
 
 /**
  * An {@link AosIterator} over a {@link StringSearcher}. Successfull calls to {@link #current} will return a
  * {@link StringMatch}.
- *
  */
 public class StringMatchIterator implements AosIterator {
     /** The underlying searcher to use. */

@@ -99,7 +99,6 @@
     <module>hbase</module>
     <module>hive</module>
     <module>math</module>
-    <module>models</module>
     <module>parser</module>
     <module>pig</module>
     <module>presto</module>

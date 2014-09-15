@@ -16,10 +16,7 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.algorithm.string.search;
-
-
-import io.datalayer.data.iterator.AosIterator;
+package io.datalayer.text.string.search;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -30,7 +27,6 @@ import java.nio.charset.Charset;
 
 /**
  * Compares the performance of several {@link StringSearcher}s by searching a file for a pattern.
- *
  */
 public final class ComparativeStringSearcher {
     /** The number of expected command-line arguments. */

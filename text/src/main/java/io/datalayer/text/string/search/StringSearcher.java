@@ -16,18 +16,19 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.algorithm.string.match;
+package io.datalayer.text.string.search;
 
 /**
- * Generic interface for encoding strings according to various Soundex algorithms.
+ * A generic interface for string searching.
  *
  */
-public interface PhoneticEncoder {
+public interface StringSearcher {
     /**
-     * Encodes a string.
+     * Searches for a match.
      *
-     * @param string The string to encode.
-     * @return The encoded value.
+     * @param text The text within which to search.
+     * @param from The position (0, 1, 2...) from which to start.
+     * @return A match; or <code>null</code> if none found.
      */
-    public String encode(CharSequence string);
+    public StringMatch search(CharSequence text, int from);
 }

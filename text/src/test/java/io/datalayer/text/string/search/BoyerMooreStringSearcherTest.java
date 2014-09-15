@@ -16,48 +16,29 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.algorithm.string.search;
+package io.datalayer.text.string.search;
 
 /**
- * A {@link CharSequence} that decorates another to count the number of times {@link #charAt(int)} is called.
- *
+ * Concrete test class for {@link BoyerMooreStringSearcher}.
  */
-public class CallCountingCharSequence implements CharSequence {
-    /** The underlying sequence. */
-    private final CharSequence _charSequence;
+public class BoyerMooreStringSearcherTest extends AbstractStringSearcherTestCase {
 
-    /** The number of times {@link #charAt(int)} is called. */
-    private int _callCount;
-
-    /**
-     * Constructor.
-     *
-     * @param charSequence The underlying sequence.
-     */
-    public CallCountingCharSequence(CharSequence charSequence) {
-        assert charSequence != null : "charSequence can't be null";
-        _charSequence = charSequence;
+    protected StringSearcher createSearcher(CharSequence pattern) {
+        return new BoyerMooreStringSearcher(pattern);
     }
 
-    /**
-     * Obtains the number of times {@link #charAt(int)} has been called.
-     *
-     * @return The call count.
-     */
-    public int getCallCount() {
-        return _callCount;
-    }
+    public void testShiftsDontErroneouslyIgnoreMatches() {
+        String text = "aababaa";
+        String pattern = "baba";
 
-    public int length() {
-        return _charSequence.length();
-    }
+        StringSearcher searcher = createSearcher(pattern);
 
-    public char charAt(int index) {
-        ++_callCount;
-        return _charSequence.charAt(index);
-    }
+        StringMatch match = searcher.search(text, 0);
+        assertNotNull(match);
+        assertEquals(text, match.getText());
+        assertEquals(pattern, match.getPattern());
+        assertEquals(2, match.getIndex());
 
-    public CharSequence subSequence(int start, int end) {
-        return _charSequence.subSequence(start, end);
+        assertNull(searcher.search(text, match.getIndex() + 1));
     }
 }

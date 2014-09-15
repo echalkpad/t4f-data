@@ -1,24 +1,26 @@
--------------------------------------------------------------------------------
-DATALAYER SEARCH ELASTISEARCH
--------------------------------------------------------------------------------
-- I kept running into cases where I needed full text search capabilities
-in my key-value based models only to discover key-value has none. 
-- In addition to full text search, I also needed the ability to filter 
-ranges of data points in the searches and even highlight matches.
-- Indexing latency
-- Change in analysis rules
-- Non stored fiels are "lost", only the result of their analysis remains.
-- Blobs not aimed to be stored/searched.
-- Lazilly change/enrich the datamodel without reindexing everything
--------------------------------------------------------------------------------
-INSTALL
--------------------------------------------------------------------------------
-wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.1.tar.gz
+# T4F Data Search Elasticsearch
+
+## Why
+
++ I kept running into cases where I needed full text search capabilities
+  in my key-value based models only to discover key-value has none. 
++ In addition to full text search, I also needed the ability to filter 
+  ranges of data points in the searches and even highlight matches.
++ Indexing latency
++ Change in analysis rules
++ Non stored fiels are "lost", only the result of their analysis remains.
++ Blobs not aimed to be stored/searched.
++ Lazilly change/enrich the datamodel without reindexing everything
+
+## Install
+```
+wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.tar.gz
 tar xvfz elasticsearch-0.90.1.tar.gz
 cd elasticsearch-0.90.1
--------------------------------------------------------------------------------
+```
+
 git clone https://github.com/elasticsearch/elasticsearch-servicewrapper.git elasticsearch-servicewrapper.git
--------------------------------------------------------------------------------
+
 rm -fr /opt/elasticsearch-1.0.0.RC1-SNAPSHOT
 cp /o/elasticsearch.git/target/releases/elasticsearch-1.0.0.RC1-SNAPSHOT.tar.gz /opt
 cd /opt
@@ -26,8 +28,9 @@ tar xvfz elasticsearch-1.0.0.RC1-SNAPSHOT.tar.gz
 rm elasticsearch-1.0.0.RC1-SNAPSHOT.tar.gz
 cp /t/data/search/elasticsearch/src/main/config/*.yml $ELASTICSEARCH_HOME/config
 cp -r /o/elasticsearch-servicewrapper.git/service $ELASTICSEARCH_HOME/bin
--------------------------------------------------------------------------------
+
 curl -XPUT 'http://localhost:9200/index-geo-index?pretty'
+
 curl -XPUT 'http://localhost:9200/index-geo-index/index-geo-type/_mapping?pretty' -d '
 {
     "index-geo-type" : {
@@ -110,23 +113,24 @@ curl -XPOST 'http://localhost:9200/index-geo-index/index-geo-type/_search?pretty
         }
     }
 }
--------------------------------------------------------------------------------
-PLUGINS
--------------------------------------------------------------------------------
+
+# Plugins
+
 $ELASTICSEARCH_HOME/bin/plugin -install mobz/elasticsearch-head
 $ELASTICSEARCH_HOME/bin/plugin -install lukas-vlcek/bigdesk
 $ELASTICSEARCH_HOME/bin/plugin -install karmi/elasticsearch-paramedic
 $ELASTICSEARCH_HOME/bin/plugin -install polyfractal/elasticsearch-segmentspy
 $ELASTICSEARCH_HOME/bin/plugin -install polyfractal/elasticsearch-inquisitor
+
 Use git://github.com/royrusso/elasticsearch-HQ.git for realtime monitoring.
 + Check http://localhost:9200/_plugin/head
 + Check http://localhost:9200/_plugin/bigdesk
 + Check http://localhost:9200/_plugin/paramedic
 + Check http://localhost:9200/_plugin/segmentspy
 + Check http://localhost:9200/_plugin/inquisitor
--------------------------------------------------------------------------------
-OTHER PLUGINS
--------------------------------------------------------------------------------
+
+# Other Pluginss
+
 https://github.com/crate/elasticsearch-timefacets-plugin
 https://github.com/jprante/elasticsearch-index-termlist
 https://github.com/yakaz/elasticsearch-action-updatebyquery
@@ -203,6 +207,23 @@ OTHER COMMANDS
 http://www.elasticsearch.org/guide/reference/api/index_
 -------------------------------------------------------------------------------
 curl -XGET 'http://localhost:9200?pretty'
+
+
+curl -XPUT 'http://localhost:9200/twitter/' -d '
+index :
+    number_of_shards : 3 
+    number_of_replicas : 2
+'
+
+curl -XPUT 'http://localhost:9200/twitter/' -d '{
+    "settings" : {
+        "index" : {
+            "number_of_shards" : 1,
+            "number_of_replicas" : 1
+        }
+    }
+}'
+   
 curl -XPOST 'http://localhost:9200/twitter/_optimize?pretty'
 curl -XPUT 'http://localhost:9200/twitter/tweet/1?pretty' -d '{
     "user" : "eric",

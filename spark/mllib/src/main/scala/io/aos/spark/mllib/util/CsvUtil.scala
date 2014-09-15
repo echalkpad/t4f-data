@@ -13,17 +13,19 @@ import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.rdd.RDD
 
 object CsvUtil {
+  
+  def SEPARATOR = ","
 
   def readLabeledPoints(file: String, target: String)(implicit sc: SparkContext): RDD[LabeledPoint] = {
     val lines = sc.textFile(file)
     // extract column names -> index
-    val colNames = lines.first.split(",").map(_.replaceAll("\"", ""))
+    val colNames = lines.first.split(SEPARATOR).map(_.replaceAll("\"", ""))
       .zipWithIndex.map(tup => (tup._1 -> tup._2)).toMap
     //features is the list of column names excluding target
     val features = colNames.filter(_._1 != target).map(_._1)
     lines.zipWithIndex.filter(elt => elt._2 != 0).map(elt => elt._1).map(line => {
       // the row with all features
-      val fullRow = line.split(",")
+      val fullRow = line.split(SEPARATOR)
       // extract the feature from this row
       val featVals = features.map(feature => {
         val idx = colNames(feature)
@@ -38,7 +40,7 @@ object CsvUtil {
     val lines = sc.textFile(file)
 
     // Extract column names -> index
-    val colNames = lines.first.split(",").map(_.replaceAll("\"", ""))
+    val colNames = lines.first.split(SEPARATOR).map(_.replaceAll("\"", ""))
       .zipWithIndex.map(tup => (tup._1 -> tup._2)).toMap
 
     // Features is the list of column names excluding target
@@ -46,7 +48,7 @@ object CsvUtil {
 
     lines.zipWithIndex.filter(elt => elt._2 != 0).map(elt => elt._1).map(line => {
       // The row with all features
-      val fullRow = line.split(",")
+      val fullRow = line.split(SEPARATOR)
       // Extract the feature from this row
       val featVals = features.map(feature => {
         val idx = colNames(feature)
@@ -62,7 +64,7 @@ object CsvUtil {
     val lines = sc.textFile(file)
 
     // Extract column names -> index
-    val colNames = lines.first.split(" ").map(_.replaceAll("\"", ""))
+    val colNames = lines.first.split(SEPARATOR).map(_.replaceAll("\"", ""))
       .zipWithIndex.map(tup => (tup._1 -> tup._2)).toMap
 
     // Features is the list of column names excluding target
@@ -70,7 +72,7 @@ object CsvUtil {
 
     lines.zipWithIndex.filter(elt => elt._2 != 0).map(elt => elt._1).map(line => {
       // The row with all features
-      val fullRow = line.split(" ")
+      val fullRow = line.split(SEPARATOR)
       // Extract the feature from this row
       val featVals = features.map(feature => {
         val idx = colNames(feature)

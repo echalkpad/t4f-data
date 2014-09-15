@@ -16,10 +16,8 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.datalayer.algorithm.string.search;
+package io.datalayer.text.string.search;
 
-import io.datalayer.algorithm.string.search.StringMatch;
-import io.datalayer.algorithm.string.search.StringSearcher;
 import junit.framework.TestCase;
 
 /**
