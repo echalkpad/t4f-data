@@ -11,7 +11,11 @@
 
 This repository contains tutorial on data algorithms used in the AOS libraries.
 
-# Communities
+Use the https://github.com/aos-io/t4f-dataset repository to get data to play with.
+
+Btw, Google Refine allows you to visualize and clean your data.
+
+# Communities of Interest
 
 + apache
 + cran
@@ -22,7 +26,7 @@ This repository contains tutorial on data algorithms used in the AOS libraries.
 + spring
 + ubuntu
 
-# Technologies
+# Technologies of Interest
 
 + hadoop
 + r
