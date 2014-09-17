@@ -1,16 +1,18 @@
 -------------------------------------------------------------------------------
+```
  _____ ___ _____ 
 |_   _| | |   __|
   | | |_  |   __|
-  |_|   |_|__|   
+  |_|   |_|__|
                                                            
  #t4f-data
+```
 -------------------------------------------------------------------------------
 
-Tutorial on data algorithms used in the AOS libraries.
+This repository contains tutorial on data algorithms used in the AOS libraries.
 
--------------------------------------------------------------------------------
-communities
+# Communities
+
 + apache
 + cran
 + eclipse
@@ -19,10 +21,11 @@ communities
 + mozilla
 + spring
 + ubuntu
--------------------------------------------------------------------------------
-technologies
+
+# Technologies
+
 + hadoop
 + r
 + spark
 + vert.x
--------------------------------------------------------------------------------
+
