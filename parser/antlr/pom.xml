@@ -29,18 +29,8 @@
   <artifactId>t4f-data-parser-antlr</artifactId>
   <name>T4F Data Parser Antlr</name>
   <packaging>jar</packaging>
-  <dependencies>
-    <dependency>
-      <groupId>org.antlr</groupId>
-      <artifactId>antlr4-runtime</artifactId>
-    </dependency>
-  </dependencies>
   <build>
     <plugins>
-<!--       <plugin> -->
-<!--         <groupId>org.codehaus.mojo</groupId> -->
-<!--         <artifactId>antlr-maven-plugin</artifactId> -->
-<!--       </plugin> -->
       <plugin>
         <groupId>org.antlr</groupId>
         <artifactId>antlr4-maven-plugin</artifactId>
