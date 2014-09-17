@@ -22,6 +22,14 @@
 + Install via 'Tools > Package Manager'
 + Get the book 'Data Mining - Practical Machine Learning Tools and Techniques' and play
 
+### Tag Helper
+
+http://www.cs.cmu.edu/~cprose/TagHelper.html
+
+### Google
+
+...
+
 ### Distributed Text Mining
 
 See:
@@ -38,15 +46,15 @@ See:
 + http://www.clips.ua.ac.be/pattern
 + http://www.nltk.org
 
-### Lingpipe
+## Lingpipe
 
 + lingpipe
 
-### OpenNLP
+## OpenNLP
 
 + opennlp
 
-### Textcat
+## Textcat
 
 + texcat
 
