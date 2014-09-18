@@ -11,9 +11,26 @@
 
 # T4F Data Text
 
-## Libraries
+This repository covers some useful text mining models.
 
-### Gate
+## Text Mining Scope
+
+Text mining and or natural language processing is a "huge" field. There are many topics covered amongst them we can find the followings:
+
+*   Automatic summarization
+*   Sentiment analysis
+*   Language detection
+*   Spelling and grammar
+*   Topic extraction
+*   ...
+
+## Text Mining Tools
+
+An interesting slide on several open-source text mining tools available. [Here](http://www.cs.wayne.edu/~amarcus/ESEC.FSE.09.06.2011.Software.Tools.pdf).
+
+In the following you will find details on a non-exhaustive list of available tools:
+
+### [Gate](https://gate.ac.uk/)  (java)
 
 + Download Gate from https://gate.ac.uk/
 + Extract and run $GATE_HOME/bin/gate.sh
@@ -26,7 +43,11 @@
 + Right-click the ANNIE node, select 'Run Application'
 + Double-click on the document of your choice, and see the 'Annotation Sets' (select on the top bar)
 
-### Weka
+### WEKA (java)
+
+Weka does not seem to support text as such. Will require preprocessing before we can use it as a tool for our goal. I currently see 3 packages available for text classification only: [DMNBtext](https:// http://weka.sourceforge.net/doc.packages/DMNBtext), [SparseGenerativeModel](http://sourceforge.net/projects/sgmweka/) and [bayesianLogisticRegression](https:// http://www.stat.rutgers.edu/~madigan/PAPERS/shortFat-v3a.pdf).
+
+**note**: package manager is available since v3.7.2, so be sure to download the latest version (not the "stable" one)
 
 + Download Weka from http://www.cs.waikato.ac.nz/ml/weka/
 + Extract, cd $WEKA_HOME and run 'java -jar weka.jar'
@@ -37,7 +58,43 @@
 
 http://www.cs.cmu.edu/~cprose/TagHelper.html
 
-### Distributed Text Mining
+### [Pattern](http://www.clips.ua.ac.be/pattern) (Python)
+
+Includes many API access points (including Twitter, Facebook and Wikipedia) and many interesting text mining/analyses methods.
+
+`pip install pattern` should be enough to be able to use the Python module. And then you should be able to run the following code:
+
+```
+from pattern.web import Twitter, plaintext
+from pattern.en import parse, sentiment, ngrams, pprint
+brand = "coca-cola"
+twitter = Twitter(language='en')
+for tweet in twitter.search(brand, cached=False, count=5):
+    print plaintext(tweet.text)
+    print sentiment(tweet.text)
+```
+
+### NLPTK (Python)
+
+[more to come]
+
+### Lingpipe
+
++ lingpipe
+
+### OpenNLP
+
++ opennlp
+
+### Textcat
+
++ texcat
+
+### Language Detection
+
++ https://code.google.com/p/language-detection
+
+## Distributed Text Mining
 
 See:
 
@@ -48,30 +105,9 @@ See:
 + http://spark-summit.org/2014/talk/text-analytics-on-spark
 + http://spark-summit.org/2014/talk/streamlining-search-indexing-using-elastic-search-and-spark
 
-## Python
-
-+ http://www.clips.ua.ac.be/pattern
-+ http://www.nltk.org
-
-## Lingpipe
-
-+ lingpipe
-
-## OpenNLP
-
-+ opennlp
-
-## Textcat
-
-+ texcat
-
-## Language Detection
-
-+ https://code.google.com/p/language-detection
-
 ## Regular Expressions
 
-A compiled representation of a regular expression.
+This section takes the way JAVA implements regular expression, quite useful in text manipulation.
 
 A regular expression, specified as a string, must first be compiled into an instance of this class. The resulting pattern can then be used to create a Matcher object that can match arbitrary character sequences against the regular expression. All of the state involved in performing a match resides in the matcher, so many matchers can share the same pattern.
 
