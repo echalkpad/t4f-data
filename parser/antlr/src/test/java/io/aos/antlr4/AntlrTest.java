@@ -26,7 +26,7 @@ public class AntlrTest {
             IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
         // InputStream is = new FileInputStream(...);
-        ANTLRInputStream input = new ANTLRInputStream("100+2*34" + "\n");
+        ANTLRInputStream input = new ANTLRInputStream("100 + 2 * 34" + "\n");
         Simple1Lexer lexer = new Simple1Lexer((CharStream) input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         tokens.fill();
