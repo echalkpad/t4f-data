@@ -29,12 +29,4 @@
   <artifactId>t4f-data-parser-antlr</artifactId>
   <name>T4F Data Parser Antlr</name>
   <packaging>jar</packaging>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.antlr</groupId>
-        <artifactId>antlr4-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
 </project>
