@@ -22,18 +22,11 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.aos</groupId>
-    <artifactId>t4f-data</artifactId>
+    <artifactId>t4f-data-parser</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <artifactId>t4f-data-parser</artifactId>
-  <name>T4F Data Parser</name>
-  <packaging>pom</packaging>
-  <modules>
-    <module>antlr</module>
-    <module>ebnf</module>
-    <module>jcc</module>
-    <module>mime4j</module>
-    <module>mvel</module>
-  </modules>
+  <artifactId>t4f-data-parser-ebnf</artifactId>
+  <name>T4F Data Parser EBNF</name>
+  <packaging>jar</packaging>
 </project>

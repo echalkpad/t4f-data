@@ -34,7 +34,7 @@ grun Expr prog -gui
 or
 grun Expr prog -tree
 ```
-Type after the following (^D is CTRL-D)
+Type after the following (^D is CTRL-D - That ^D means EOF on unix; it's ^Z in Windows.)
 ```
 100+2*34
 ^D
@@ -43,3 +43,4 @@ You should see as output the following:
 ```
 (prog (expr (expr 100) + (expr (expr 2) * (expr 34))) \n)
 ```
+-------------------------------------------------------------------------------
