@@ -1,5 +1,12 @@
 package io.aos.antlr4;
 
+import io.aos.antlr4.drink.DrinkLexer;
+import io.aos.antlr4.drink.DrinkParser;
+import io.aos.antlr4.simple1.Simple1BaseListener;
+import io.aos.antlr4.simple1.Simple1Lexer;
+import io.aos.antlr4.simple1.Simple1Listener;
+import io.aos.antlr4.simple1.Simple1Parser;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 
@@ -8,21 +15,17 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.DiagnosticErrorListener;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.atn.PredictionMode;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.Test;
-
-import simple1.Simple1BaseListener;
-import simple1.Simple1Lexer;
-import simple1.Simple1Listener;
-import simple1.Simple1Parser;
 
 public class AntlrTest {
 
     public static final String SEPARATOR = "===============================";
 
     @Test
-    public void testSimple2() throws NoSuchMethodException, SecurityException, InterruptedException,
+    public void testSimple1() throws NoSuchMethodException, SecurityException, InterruptedException,
             IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
         // InputStream is = new FileInputStream(...);
@@ -32,8 +35,8 @@ public class AntlrTest {
         tokens.fill();
 
         System.out.println(SEPARATOR + " TOKENS " + SEPARATOR);
-        for (Object tok : tokens.getTokens()) {
-            System.out.println(tok);
+        for (Token token : tokens.getTokens()) {
+            System.out.println(token.getText() + " " + token);
         }
 
         Simple1Parser parser = new Simple1Parser(tokens);
@@ -48,25 +51,42 @@ public class AntlrTest {
         parser.setTokenStream(tokens);
         parser.setBuildParseTree(true);
 
-        ParserRuleContext tree = parser.prog();
-        // Method startRule = parser.getClass().getMethod("prog");
-        // ParserRuleContext tree = (ParserRuleContext) startRule.invoke(parser,
-        // (Object[])null);
+        ParserRuleContext parserRuleContext = parser.prog();
 
         System.out.println(SEPARATOR + " TREE " + SEPARATOR);
-        System.out.println(tree.toStringTree(parser));
+        System.out.println(parserRuleContext.toStringTree(parser));
+
+        System.out.println(SEPARATOR + "GUI " + SEPARATOR);
+        parserRuleContext.inspect(parser);
+        TimeUnit.SECONDS.sleep(10);
 
         // tree.save(parser, this.psFile);
 
-        ParserRuleContext entryPoint = parser.prog();
+        ParserRuleContext prog = parser.prog();
         ParseTreeWalker walker = new ParseTreeWalker();
         Simple1Listener listener = new Simple1BaseListener();
-        walker.walk(listener, entryPoint);
+        walker.walk(listener, prog);
 
-        System.out.println(SEPARATOR + "GUI " + SEPARATOR);
-        tree.inspect(parser);
-        TimeUnit.SECONDS.sleep(10);
+    }
+    
+    @Test
+    public void testDrink() {
 
+        // Get our lexer
+        DrinkLexer lexer = new DrinkLexer(new ANTLRInputStream("the cup of tea"));
+     
+        // Get a list of matched tokens
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+     
+        // Pass the tokens to the parser
+        DrinkParser parser = new DrinkParser(tokens);
+     
+        // Specify our entry point
+        ParserRuleContext parserRuleContext = parser.drinkSentence();
+     
+        System.out.println(SEPARATOR + " TREE " + SEPARATOR);
+        System.out.println(parserRuleContext.toStringTree(parser));
+        
     }
 
 }

@@ -9,9 +9,12 @@
 ```
 -------------------------------------------------------------------------------
 
-To generate synatax and diagram from Scala EBNF
+To generate synatax and diagram from EBNF, you can use:
+
++ Railroad Diagram Generator http://bottlecaps.de/rr/ui
+
+If you want to generate EBNF from Scala, you can use:
 
 + https://github.com/bwmcadams/SyntaxDiagramGenerator.git
-+ Railroad Diagram Generator http://bottlecaps.de/rr/ui
 
 -------------------------------------------------------------------------------
