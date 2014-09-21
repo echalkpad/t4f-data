@@ -31,12 +31,24 @@
   </parent>
   <dependencies>
     <dependency>
+      <groupId>uk.ac.gate</groupId>
+      <artifactId>gate-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xml-apis</groupId>
+      <artifactId>xml-apis</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.apache.opennlp</groupId>
       <artifactId>opennlp-tools</artifactId>
     </dependency>
     <dependency>
-      <groupId>uk.ac.gate</groupId>
-	  <artifactId>gate-core</artifactId>
+      <groupId>org.apache.opennlp</groupId>
+      <artifactId>opennlp-uima</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.opennlp</groupId>
+      <artifactId>opennlp-maxent</artifactId>
     </dependency>
     <dependency>
       <groupId>com.twitter</groupId>

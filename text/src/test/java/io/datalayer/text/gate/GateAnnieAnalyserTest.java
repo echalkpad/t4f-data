@@ -26,15 +26,15 @@ import gate.Factory;
 import gate.FeatureMap;
 import gate.Gate;
 import gate.GateConstants;
-import gate.ProcessingResource;
 import gate.corpora.RepositioningInfo;
 import gate.creole.ANNIEConstants;
+import gate.creole.ConditionalSerialAnalyserController;
 import gate.creole.ResourceInstantiationException;
-import gate.creole.SerialAnalyserController;
 import gate.util.GateException;
+import gate.util.persistence.PersistenceManager;
 
 import java.io.File;
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -42,19 +42,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Ignore
-public class GateAnnieAnalyser {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GateAnnieAnalyser.class);
-    private static final String GATE_HOME_FOLDER = "/Users/echarles/opt/gate-7.0-build4195-BIN";
-    private SerialAnalyserController _annieController;
+public class GateAnnieAnalyserTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GateAnnieAnalyserTest.class);
+    private static final String GATE_HOME_FOLDER = "/opt/gate";
+    private ConditionalSerialAnalyserController annieController;
 
     @Test
-    public void test() throws MalformedURLException, GateException {
+    public void test() throws GateException, IOException {
 
         System.setProperty("gate.home", GATE_HOME_FOLDER);
 
@@ -64,9 +62,17 @@ public class GateAnnieAnalyser {
         Gate.getCreoleRegister().registerDirectories(new File(pluginsHome, "ANNIE").toURL());
 
         initAnnie();
-
+        
+        List<GateAnalysisResult> results = analyseText("Hello everybody, I am Datalayer and I was born in Brussels");
+        
+        for (GateAnalysisResult result: results) {
+            for (Annotation annotation: result.sortedAnnotationList) {
+                System.out.println(annotation);
+            }
+        }
+        
     }
-
+    
     public List<GateAnalysisResult> analyseText(String text) {
 
         Corpus corpus = null;
@@ -100,12 +106,12 @@ public class GateAnnieAnalyser {
 
                 AnnotationSet defaultAnnotSet = doc.getAnnotations();
 
-                Set annotTypesRequired = new HashSet();
+                Set<String> annotTypesRequired = new HashSet<String>();
                 annotTypesRequired.add("Token");
                 annotTypesRequired.add("FirstPerson");
                 annotTypesRequired.add("Person");
                 annotTypesRequired.add("JobTitle");
-                annotTypesRequired.add("Location");
+                annotTypesRequired.add(ANNIEConstants.LOCATION_ANNOTATION_TYPE);
                 annotTypesRequired.add("Identifier");
                 annotTypesRequired.add("Organization");
                 annotTypesRequired.add("Address");
@@ -182,37 +188,39 @@ public class GateAnnieAnalyser {
     /**
      * Initialise the ANNIE system. This creates a "corpus pipeline" application
      * that can be used to run sets of documents through the extraction system.
+     * @throws IOException 
      */
-    public void initAnnie() throws GateException {
+    public void initAnnie() throws GateException, IOException {
 
         LOGGER.debug("Initializing Annie.");
 
         // Create a serial analyser controller to run ANNIE with
-        _annieController = (SerialAnalyserController) Factory.createResource("gate.creole.SerialAnalyserController",
+        annieController = (ConditionalSerialAnalyserController) Factory.createResource("gate.creole.ConditionalSerialAnalyserController",
                 Factory.newFeatureMap(), Factory.newFeatureMap(), "ANNIE_" + Gate.genSym());
 
+        annieController = (ConditionalSerialAnalyserController)
+                 PersistenceManager.loadObjectFromFile(new File(new File(
+                     Gate.getPluginsHome(), ANNIEConstants.PLUGIN_DIR),
+                       ANNIEConstants.DEFAULT_FILE));
+/*
         // Load each PR as defined in ANNIEConstants
         for (int i = 0; i < ANNIEConstants.PR_NAMES.length; i++) {
-
-            FeatureMap params = Factory.newFeatureMap(); // use default
-                                                         // parameters
+            FeatureMap params = Factory.newFeatureMap();
             ProcessingResource pr = (ProcessingResource) Factory.createResource(ANNIEConstants.PR_NAMES[i], params);
-
             // Add the PR to the pipeline controller
-            _annieController.add(pr);
-
+            annieController.add(pr);
         }
-
+*/
         LOGGER.debug("Annie is initialized.");
 
     }
 
     public void setCorpus(Corpus corpus) {
-        _annieController.setCorpus(corpus);
+        annieController.setCorpus(corpus);
     }
 
     public void execute() throws GateException {
-        _annieController.execute();
+        annieController.execute();
     }
 
     public static class SortedAnnotationList extends Vector<Annotation> {
