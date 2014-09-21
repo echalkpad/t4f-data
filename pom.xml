@@ -22,71 +22,10 @@
   <packaging>pom</packaging>
   <parent>
     <groupId>io.aos</groupId>
-    <artifactId>aos-parent</artifactId>
+    <artifactId>t4f-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath></relativePath>
   </parent>
-  <properties>
-    <t4f.version>${project.version}</t4f.version>
-  </properties>
-  <ciManagement>
-    <url>http://github.com/t4f/io.aos/issues</url>
-  </ciManagement>
-  <scm>
-    <connection>scm:git:git@github.com:t4f/io.aos.git</connection>
-    <developerConnection>scm:git:git@github.com:t4f/io.aos.git</developerConnection>
-    <url>git@github.com:aos-io/aos.git</url>
-   </scm>
-  <developers>
-    <developer>
-      <name>Eric Charles</name>
-      <email>eric@t4f.io</email>
-    </developer>
-  </developers>
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  <organization>
-    <name>AOS Data.io</name>
-    <url>http://aos.io</url>
-  </organization>
-  <mailingLists>
-    <mailingList>
-      <name></name>
-      <subscribe></subscribe>
-      <unsubscribe></unsubscribe>
-      <post></post>
-      <archive></archive>
-    </mailingList>
-  </mailingLists>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>io.aos</groupId>
-        <artifactId>t4f-data-structure-core</artifactId>
-        <version>${t4f.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.aos</groupId>
-        <artifactId>t4f-data-sql-jdbc</artifactId>
-        <version>${t4f.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.aos</groupId>
-        <artifactId>t4f-data-sql-server</artifactId>
-        <version>${t4f.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.aos</groupId>
-        <artifactId>t4f-data-nosql-hadoop-common</artifactId>
-        <version>${t4f.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <modules>
     <module>akka</module>
     <module>algorithm</module>
@@ -113,53 +52,4 @@
     <module>sql</module>
     <module>text</module>
   </modules>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <forkMode>pertest</forkMode>
-          <argLine>-Xms256m -Xmx512m</argLine>
-          <testFailureIgnore>false</testFailureIgnore>
-          <skip>false</skip>
-          <environmentVariables>
-            <JAVA_HOME>${java.home}</JAVA_HOME>
-          </environmentVariables>
-          <includes>
-            <include>**/*IntegrationTest.java</include>
-          </includes>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  <profiles>
-    <profile>
-      <id>t4f-public</id>
-      <activation>
-        <file>
-          <exists>pom.xml</exists>
-        </file>
-      </activation>
-<!--
-      <distributionManagement>
-        <repository>
-          <id>aos.public-release</id>
-          <name>AOS Public Release Repository</name>
-          <url>https://oss.sonatype.org/content/groups/public</url>
-        </repository>
-        <snapshotRepository>
-          <id>aos.public-snapshot</id>
-          <name>AOS Public Snapshot Repository</name>
-          <url>https://oss.sonatype.org/content/groups/public</url>
-        </snapshotRepository>
-        <site>
-          <id>aos.site</id>
-          <name>AOS Site</name>
-          <url>http://aos.io</url>
-        </site>
-      </distributionManagement>
--->
-    </profile>
-  </profiles>
 </project>
