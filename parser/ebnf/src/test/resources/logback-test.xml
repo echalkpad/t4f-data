@@ -11,7 +11,7 @@
 		<appender-ref ref="STDERR" />
 	</logger>
 	
-	<logger name="io.aos.parser.ebnf" level="WARN" additivity="true">
+	<logger name="io.aos.ebnf" level="WARN" additivity="true">
 		<appender-ref ref="STDERR" />
 	</logger>
 

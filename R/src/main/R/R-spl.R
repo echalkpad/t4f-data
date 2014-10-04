@@ -150,6 +150,7 @@ install.packages("animation", dependencies=TRUE)
 install.packages("bcp", dependencies=TRUE)
 install.packages("bcpa", dependencies=TRUE)
 install.packages("changepoint", dependencies=TRUE)
+install.packages("clue", dependencies=TRUE)
 install.packages("data.table", dependencies=TRUE)
 install.packages("ff", dependencies=TRUE)
 install.packages("forecast", dependencies=TRUE)
@@ -157,6 +158,7 @@ install.packages("foreach", dependencies=TRUE)
 install.packages("gcookbook", dependencies=TRUE)
 install.packages('IQCC', dependencies=TRUE)
 install.packages('iterators', dependencies=TRUE)
+install.packages('jvmr', dependencies=TRUE)
 install.packages('knitr', dependencies=TRUE)
 install.packages('lattice', dependencies=TRUE)
 install.packages("popbio", dependencies=TRUE)
@@ -173,6 +175,7 @@ install.packages("SnowballC", dependencies=TRUE)
 install.packages("stringr", dependencies=TRUE)
 install.packages("strucchange", dependencies=TRUE)
 install.packages("textir", dependencies=TRUE)
+install.packages("t", dependencies=TRUE)
 install.packages("topicmodels", dependencies=TRUE)
 install.packages("tm", dependencies=TRUE)
 install.packages("wordcloud", dependencies=TRUE)
@@ -189,6 +192,18 @@ R CMD javareconf -e
 
 -----------------------------------------------------------------------------
 
+library(tm)
+
+# Load the tweets
+tweets <- unique(read.table('data/tweets_25bahman.csv', sep="\t", quote="", comment.char="", header=FALSE, nrows=100000, stringsAsFactors=FALSE))
+names(tweets) <- c("id", "date", "user", "text")
+
+# Build the corpus and then apply the tm pre-processing methods
+corpus <- Corpus(VectorSource(tweets$text))
+corpus <- tm_map(tm_map(tm_map(corpus, stripWhitespace), tolower), stemDocument)
+
+-----------------------------------------------------------------------------
+
 install.packages(c("rj", "rj.gd"), repos="http://download.walware.de/rj-1.1")
 
 script.R
@@ -196,7 +211,6 @@ script.R
 R CMD BATCH script.R
 
 11 down vote
-
 
 I got similar issue and was able to resolve it by running
 

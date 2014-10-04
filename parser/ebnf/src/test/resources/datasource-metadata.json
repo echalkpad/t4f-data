@@ -1,11 +1,11 @@
 {
    "dataSources":{
-      "customer1-visitors":["sdp_v1"],
-      "customer2-visitors":["sdp_v1"],
-      "customer3-visitors": ["sdp_v1"]
+      "customer1-visitors":["t4f_ebnf_v1"],
+      "customer2-visitors":["t4f_ebnf_v1"],
+      "customer3-visitors": ["t4f_ebnf_v1"]
    },
    "objectFields":{
-      "sdp_v1":{
+      "t4f_ebnf_v1":{
          "conversionflag":{
             "dataType":"boolean"
          },

@@ -11,26 +11,108 @@
 
 # T4F Data Text
 
-This repository covers some useful text mining models.
+This repository reviews useful tools to mine text, also infamously known as `Text Mining`.
 
-## Text Mining Scope
+## About Text Mining
 
-Text mining and or natural language processing is a "huge" field. There are many topics covered amongst them we can find the followings:
+Text mining and or natural language processing is a `huge` field. There are many topics covered amongst them we can find the followings:
 
-*   Automatic summarization
-*   Sentiment analysis
-*   Language detection
-*   Spelling and grammar
-*   Topic extraction
-*   ...
++ Cleaning
 
-## Text Mining Tools
+ + Tokenizing
+ + Sentence Segmentation a.k.a. Sentence Boundary Detection)
+ + Part-of-Speech (POS) Tagging
+ + Stemming (reduces the complexity without any severe loss of information, allows us to generate new bag of words, define new patterns)
+ + Parsing
+ + Stripping
+ + Lower Casing (neutralize wrong typology, make word comparison easier)
+ + Removal of stop words... (neutralize common words in a language that are not relevant in an analysis, neutralize common words in a field of activities)
+ + Removal of punctuation, numbers, stop words... (neutralize wrong typology, make word comparison easier
+ + Word Replacement
+ + Chunker
+ + Parser
+
++ Simple Analysis
+
+ + Named Entity Extraction.
+ + Chunking: Dividing a text in syntactically correlated parts of words.
+ + Word count: Gives a list of n words and their frequencies in the corpus.
+ + Spelling and Grammar Checker
+ + Language Detection (refine analysis based on language specific features)
+ + Clustering
+ + Classifier
+ + Frequent Terms: Similar to the word count, we do just specify a a minimum frequency for the output
+ + Word Cloud: A word cloud is a visual representation for text data. It can quickly reveal the importance of each word trough colors and size.
+
++ Advanced Analysis
+
+ + Key Phrase Extraction (Noun Phrase Extraction)
+ + Topic extraction
+ + Automatic Summarization
+ + Mood & modality: Grammatical mood refers to the use of auxiliary verbs (e.g., could, would) and adverbs (e.g., definitely, maybe) to express uncertainty. 
+ + Readability: Test the readability of a text. It returns a value between 0.0-1.0, based on Flesch Reading Ease, which measures word count and word length (= number of syllables per word).
+ + Associations: Allow us to find the correlation between a corpus and a targeted word Source code.
+ + Sentiment Analysis
+ + Collocations
+ + Coreference Resolution: Links multiple mentions of an entity in a document together
+ + Thesaurus: Lists words grouped together according to similarity of meaning - Create a list of synonym related to the target words, a part of the typology issue can be handeled
+ + Ontology
+ + Lemmatization: Provide better (generalizable) lexical information that can be used by other components in the pipeline, and (possibly) also for indexing the processed text in a search engine. Lemmatization is not to be confused with stemming, in which frequent suffixes such as -ing and -ed are simply removed: having is stemmed to hav, while it is lemmatized to have.
+ + Relation Finding
++  Prepositional Phrase Attachment
+
+ + Base data is useful:
+  + Key words: Key words is a necessary step in order to target the business case
+  + List of synonyms: 
+  + Words without vowels: Detect used abbreviation which can be change with the real word.
+
++ Language Specifics
+ + Indefinite article
+ + Pluralization + singularization
+ + Comparative + superlative
+ + Verb conjugation
+ + Quantification
+ + Spelling
+ + n-grams
+ + Parser (tokenizer, tagger, chunker)
+ + Parse trees
+ + Sentiment
+ + Mood & modality
+ + WordNet
+ + Wordlists
+
++ Metrics
+ + Documentation
+  + Profiler
+  + Accuracy, precision and recall
+  +  Inter-rater agreement (Fleiss)
+ + Text metrics
+  + Similarity (Levenshtein, Dice)
+  + Readability (Flesch): test the readability of a text. It returns a value between 0.0-1.0, based on Flesch Reading Ease, which measures word count and word length (= number of syllables per word).
+  + Type-token ratio
+  + Intertextuality
+  + Cooccurrence
+ + Statistics
+  + Mean, variance, standard deviation
+  + Normal distribution
+  + Histogram
+  + Moment
+  + Quantile & box plot
+  + Fisher's exact test
+  + Pearson's chi-squared test
+  + Kolmogorov-Smirnov test
+
+## Tools
 
 An interesting slide on several open-source text mining tools available. [Here](http://www.cs.wayne.edu/~amarcus/ESEC.FSE.09.06.2011.Software.Tools.pdf).
 
 In the following you will find details on a non-exhaustive list of available tools:
 
-### [Gate](https://gate.ac.uk/)  (java)
+### [R-Project](http://www.r-project.org) (R)
+
+The [Text Mining Infrastructure in R book](http://www.jstatsoft.org/v25/i05) summaries .
+
+### [Gate](https://gate.ac.uk) (java)
 
 + Download Gate from https://gate.ac.uk/
 + Extract and run $GATE_HOME/bin/gate.sh
@@ -43,20 +125,24 @@ In the following you will find details on a non-exhaustive list of available too
 + Right-click the ANNIE node, select 'Run Application'
 + Double-click on the document of your choice, and see the 'Annotation Sets' (select on the top bar)
 
-### WEKA (java)
+### [Weka](http://www.cs.waikato.ac.nz/ml/weka) (java)
 
 Weka does not seem to support text as such. Will require preprocessing before we can use it as a tool for our goal. I currently see 3 packages available for text classification only: [DMNBtext](https:// http://weka.sourceforge.net/doc.packages/DMNBtext), [SparseGenerativeModel](http://sourceforge.net/projects/sgmweka/) and [bayesianLogisticRegression](https:// http://www.stat.rutgers.edu/~madigan/PAPERS/shortFat-v3a.pdf).
 
-**note**: package manager is available since v3.7.2, so be sure to download the latest version (not the "stable" one)
+**note**: package manager is available since v3.7.2, so be sure to download the latest version (not the "stable" one).
 
 + Download Weka from http://www.cs.waikato.ac.nz/ml/weka/
 + Extract, cd $WEKA_HOME and run 'java -jar weka.jar'
 + Install via 'Tools > Package Manager'
 + Get the book 'Data Mining - Practical Machine Learning Tools and Techniques' and play
 
-### Tag Helper
+### [OpenNLP](https://opennlp.apache.org) (Java)
 
-http://www.cs.cmu.edu/~cprose/TagHelper.html
++ opennlp
+
+### [NLPTK](http://www.nltk.org) (Python)
+
+[more to come]
 
 ### [Pattern](http://www.clips.ua.ac.be/pattern) (Python)
 
@@ -74,25 +160,17 @@ for tweet in twitter.search(brand, cached=False, count=5):
     print sentiment(tweet.text)
 ```
 
-### NLPTK (Python)
+### [scikit-learn](http://scikit-learn.org) (Python)
 
 [more to come]
 
-### Lingpipe
+### Other Miscellaneous
 
-+ lingpipe
-
-### OpenNLP
-
-+ opennlp
-
-### Textcat
-
-+ texcat
-
-### Language Detection
-
-+ https://code.google.com/p/language-detection
++ [Lingpipe](http://alias-i.com/lingpipe)
++ [Tag Helper](http://www.cs.cmu.edu/~cprose/TagHelper.html)
++ [Apache Stanbol](https://stanbol.apache.org)
++ [Texcat Language Detection](http://textcat.sourceforge.net) Language guessing.
++ [Language Detection Java Library](https://code.google.com/p/language-detection)
 
 ## Distributed Text Mining
 
@@ -334,6 +412,3 @@ Since:
     1.4
 See Also:
     String.split(String, int), String.split(String), Serialized Form
-    
-    
-    

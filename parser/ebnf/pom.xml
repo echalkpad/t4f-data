@@ -21,6 +21,12 @@
   <artifactId>t4f-data-parser-ebnf</artifactId>
   <name>T4F Data Parser EBNF</name>
   <packaging>jar</packaging>
+  <repositories>
+    <repository>
+      <id>scalaz</id>
+      <url>http://dl.bintray.com/scalaz/releases</url>
+    </repository>
+  </repositories>
   <dependencies>
     <dependency>
       <groupId>joda-time</groupId>
@@ -50,5 +56,9 @@
         <groupId>org.skyscreamer</groupId>
         <artifactId>jsonassert</artifactId>
     </dependency>   
+    <dependency>
+      <groupId>org.specs2</groupId>
+      <artifactId>specs2_2.10</artifactId>
+    </dependency>
   </dependencies>
 </project>
