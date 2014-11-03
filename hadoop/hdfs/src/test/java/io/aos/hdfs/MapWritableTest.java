@@ -16,49 +16,39 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.aos.string.search;
+package io.aos.hdfs;
+// == MapWritableTest
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
-/**
- * A {@link CharSequence} that decorates another to count the number of times {@link #charAt(int)} is called.
- *
- */
-public class CallCountingCharSequence implements CharSequence {
-    /** The underlying sequence. */
-    private final CharSequence _charSequence;
+import java.io.IOException;
+import org.apache.hadoop.io.*;
+import org.junit.Test;
 
-    /** The number of times {@link #charAt(int)} is called. */
-    private int _callCount;
+public class MapWritableTest extends WritableTestBase {
+  
+  @Test
+  public void mapWritable() throws IOException {
+    // vv MapWritableTest
+    MapWritable src = new MapWritable();
+    src.put(new IntWritable(1), new Text("cat"));
+    src.put(new VIntWritable(2), new LongWritable(163));
+    
+    MapWritable dest = new MapWritable();
+    WritableUtils.cloneInto(dest, src);
+    assertThat((Text) dest.get(new IntWritable(1)), is(new Text("cat")));
+    assertThat((LongWritable) dest.get(new VIntWritable(2)), is(new LongWritable(163)));
+    // ^^ MapWritableTest
+  }
 
-    /**
-     * Constructor.
-     *
-     * @param charSequence The underlying sequence.
-     */
-    public CallCountingCharSequence(CharSequence charSequence) {
-        assert charSequence != null : "charSequence can't be null";
-        _charSequence = charSequence;
-    }
-
-    /**
-     * Obtains the number of times {@link #charAt(int)} has been called.
-     *
-     * @return The call count.
-     */
-    public int getCallCount() {
-        return _callCount;
-    }
-
-    public int length() {
-        return _charSequence.length();
-    }
-
-    public char charAt(int index) {
-        ++_callCount;
-        return _charSequence.charAt(index);
-    }
-
-    public CharSequence subSequence(int start, int end) {
-        return _charSequence.subSequence(start, end);
-    }
-
+  @Test
+  public void setWritableEmulation() throws IOException {
+    MapWritable src = new MapWritable();
+    src.put(new IntWritable(1), NullWritable.get());
+    src.put(new IntWritable(2), NullWritable.get());
+    
+    MapWritable dest = new MapWritable();
+    WritableUtils.cloneInto(dest, src);
+    assertThat(dest.containsKey(new IntWritable(1)), is(true));
+  }
 }

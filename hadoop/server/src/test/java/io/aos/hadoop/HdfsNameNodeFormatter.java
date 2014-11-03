@@ -16,49 +16,35 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.aos.string.search;
+package io.aos.hadoop;
+
+import org.apache.hadoop.hdfs.server.namenode.NameNode;
 
 /**
- * A {@link CharSequence} that decorates another to count the number of times {@link #charAt(int)} is called.
- *
+ * hdfs namenode -format
+ * 
+ * java 
+ * 
+ *   -Dproc_namenode 
+ *   -Xmx1000m 
+ *   -Djava.net.preferIPv4Stack=true 
+ *   -Dhadoop.log.dir=/opt/hadoop-3.0.0-SNAPSHOT/logs 
+ *   -Dhadoop.log.file=hadoop.log 
+ *   -Dhadoop.home.dir=/opt/hadoop-3.0.0-SNAPSHOT 
+ *   -Dhadoop.id.str=eric 
+ *   -Dhadoop.root.LOGGER=INFO,console 
+ *   -Dhadoop.policy.file=hadoop-policy.xml 
+ *   -Djava.net.preferIPv4Stack=true
+ *   -Dhadoop.security.LOGGER=INFO,RFAS
+ *   -Dhdfs.audit.LOGGER=INFO,NullAppender
+ *   -Dhadoop.security.LOGGER=INFO,NullAppender 
+ *    
+ *    org.apache.hadoop.hdfs.server.namenode.NameNode -format AosHadoopCluster
  */
-public class CallCountingCharSequence implements CharSequence {
-    /** The underlying sequence. */
-    private final CharSequence _charSequence;
+public class HdfsNameNodeFormatter {
 
-    /** The number of times {@link #charAt(int)} is called. */
-    private int _callCount;
-
-    /**
-     * Constructor.
-     *
-     * @param charSequence The underlying sequence.
-     */
-    public CallCountingCharSequence(CharSequence charSequence) {
-        assert charSequence != null : "charSequence can't be null";
-        _charSequence = charSequence;
-    }
-
-    /**
-     * Obtains the number of times {@link #charAt(int)} has been called.
-     *
-     * @return The call count.
-     */
-    public int getCallCount() {
-        return _callCount;
-    }
-
-    public int length() {
-        return _charSequence.length();
-    }
-
-    public char charAt(int index) {
-        ++_callCount;
-        return _charSequence.charAt(index);
-    }
-
-    public CharSequence subSequence(int start, int end) {
-        return _charSequence.subSequence(start, end);
+    public static void main(String... args) throws Exception {
+        NameNode.main(new String[]{"-format", "AosHadoopCluster"});
     }
 
 }

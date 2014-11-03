@@ -23,6 +23,7 @@ import io.aos.json.jackson.model.User.Gender;
 import io.aos.json.jackson.model.User.Name;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,7 +55,7 @@ public class JacksonTest {
         System.out.println(user.getGender());
         System.out.println(user.getTypes().size());
         user.setGender(Gender.FEMALE);
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("./target/user1.json"), user);
+        mapper.writeValue(new File("./target/user1.json"), user);
     }
 
     @Test
@@ -65,7 +66,7 @@ public class JacksonTest {
         System.out.println(user.get("name"));
         System.out.println(user.get("types").getClass());
         user.put("name", "new name");
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("./target/user2.json"), user);
+        mapper.writeValue(new File("./target/user2.json"), user);
     }
 
     @Test
@@ -80,7 +81,7 @@ public class JacksonTest {
         userData.put("userImage", "Rm9vYmFyIQ==");
         ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
         mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("./target/user3.json"), userData);
+        mapper.writeValue(new File("./target/user3.json"), userData);
     }
 
     @Test
@@ -100,7 +101,7 @@ public class JacksonTest {
         userData.put("technologies", Lists.newArrayList("hadoop", "java", "R"));
         ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
         mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("./target/user3.1.json"), userData);
+        mapper.writeValue(new File("./target/user3.1.json"), userData);
     }
 
     @Test
@@ -109,7 +110,7 @@ public class JacksonTest {
         m.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
         // can either use mapper.readTree(source), or mapper.readValue(source,
         // JsonNode.class);
-        JsonNode rootNode = m.readTree(new File("./src/test/resources/user.json"));
+        JsonNode rootNode = m.readTree(new FileInputStream(new File("./src/test/resources/user.json")));
         // ensure that "last name" isn't "Xmler"; if is, change to "Jsoner"
         JsonNode nameNode = rootNode.path("name");
         String lastName = nameNode.path("last").getTextValue();
@@ -117,7 +118,7 @@ public class JacksonTest {
             ((ObjectNode) nameNode).put("last", "Jsoner");
         }
         // and write it out:
-        m.writerWithDefaultPrettyPrinter().writeValue(new File("user-modified.json"), rootNode);
+        m.writeValue(new File("user-modified.json"), rootNode);
     }
     
     @Test

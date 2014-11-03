@@ -41,9 +41,11 @@ java -Djava.awt.headless=true net.t32leaves.syntaxDiagramGenerator.Main src/main
 
 Creates a whole bunch of files.  Have fun!
 -------------------------------------------------------------------------------
++ spark-sql (org.apache.spark.sql.catalyst)
++ scala-mahout-binding
 + https://github.com/stephentu/scala-sql-parser.git
++ https://github.com/mpollmeier/gremlin-scala
 + https://github.com/squeryl/squeryl
 + https://github.com/json4s/json4s.git
-+ scala-mahout-binding
 + https://github.com/djspiewak/gll-combinators.git
 -------------------------------------------------------------------------------

@@ -16,49 +16,27 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.aos.string.search;
+package io.aos.hdfs;
+// cc StreamCompressor A program to compress data read from standard input and write it to standard output
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.io.IOUtils;
+import org.apache.hadoop.io.compress.CompressionCodec;
+import org.apache.hadoop.io.compress.CompressionOutputStream;
+import org.apache.hadoop.util.ReflectionUtils;
 
-/**
- * A {@link CharSequence} that decorates another to count the number of times {@link #charAt(int)} is called.
- *
- */
-public class CallCountingCharSequence implements CharSequence {
-    /** The underlying sequence. */
-    private final CharSequence _charSequence;
+// vv StreamCompressor
+public class StreamCompressor {
 
-    /** The number of times {@link #charAt(int)} is called. */
-    private int _callCount;
-
-    /**
-     * Constructor.
-     *
-     * @param charSequence The underlying sequence.
-     */
-    public CallCountingCharSequence(CharSequence charSequence) {
-        assert charSequence != null : "charSequence can't be null";
-        _charSequence = charSequence;
-    }
-
-    /**
-     * Obtains the number of times {@link #charAt(int)} has been called.
-     *
-     * @return The call count.
-     */
-    public int getCallCount() {
-        return _callCount;
-    }
-
-    public int length() {
-        return _charSequence.length();
-    }
-
-    public char charAt(int index) {
-        ++_callCount;
-        return _charSequence.charAt(index);
-    }
-
-    public CharSequence subSequence(int start, int end) {
-        return _charSequence.subSequence(start, end);
-    }
-
+  public static void main(String... args) throws Exception {
+    String codecClassname = args[0];
+    Class<?> codecClass = Class.forName(codecClassname);
+    Configuration conf = new Configuration();
+    CompressionCodec codec = (CompressionCodec)
+      ReflectionUtils.newInstance(codecClass, conf);
+    
+    CompressionOutputStream out = codec.createOutputStream(System.out);
+    IOUtils.copyBytes(System.in, out, 4096, false);
+    out.finish();
+  }
 }
+// ^^ StreamCompressor

@@ -44,6 +44,16 @@
     </property>
 
     <property>
+      <name>yarn.nodemanager.vmem-pmem-ratio</name>
+      <value>5</value>
+    </property>
+
+    <property><name>yarn.nodemanager.vmem-check-enabled</name>
+      <value>false</value>
+      <description>Whether virtual memory limits will be enforced for containers.</description>
+    </property>
+
+    <property>
       <name>yarn.nodemanager.delete.thread-count</name>
       <value>0</value>
     </property>

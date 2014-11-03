@@ -16,49 +16,27 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.aos.string.search;
+package io.aos.mapreduce.count;
 
-/**
- * A {@link CharSequence} that decorates another to count the number of times {@link #charAt(int)} is called.
- *
- */
-public class CallCountingCharSequence implements CharSequence {
-    /** The underlying sequence. */
-    private final CharSequence _charSequence;
+import java.io.IOException;
+import java.util.StringTokenizer;
 
-    /** The number of times {@link #charAt(int)} is called. */
-    private int _callCount;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
 
-    /**
-     * Constructor.
-     *
-     * @param charSequence The underlying sequence.
-     */
-    public CallCountingCharSequence(CharSequence charSequence) {
-        assert charSequence != null : "charSequence can't be null";
-        _charSequence = charSequence;
-    }
+public class WordCountMapper extends Mapper<Object, Text, Text, IntWritable> {
+    private final Text word = new Text();
+    private final IntWritable one = new IntWritable(1);
 
-    /**
-     * Obtains the number of times {@link #charAt(int)} has been called.
-     *
-     * @return The call count.
-     */
-    public int getCallCount() {
-        return _callCount;
-    }
-
-    public int length() {
-        return _charSequence.length();
-    }
-
-    public char charAt(int index) {
-        ++_callCount;
-        return _charSequence.charAt(index);
-    }
-
-    public CharSequence subSequence(int start, int end) {
-        return _charSequence.subSequence(start, end);
+    public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
+        context.getCounter("CounterGroup", "MAP_INPUT_RECORDS").increment(1);
+        StringTokenizer iter = new StringTokenizer(value.toString());
+        while (iter.hasMoreTokens()) {
+            word.set(iter.nextToken());
+            context.write(word, one);
+            context.getCounter("CounterGroup", "MAP_OUTPUT_RECORDS").increment(1);
+        }
     }
 
 }
