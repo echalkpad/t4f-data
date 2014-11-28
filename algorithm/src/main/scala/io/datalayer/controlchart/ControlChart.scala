@@ -20,18 +20,12 @@
  */
 
 package io.datalayer.controlchart
-/** This package provide a class to compute a Shewhart Control Chart.
-  * ==Overview==
-  * It embeds all utility functions needed to compute the chart as
-  * - A CSV file reader [[ReadCSV]]
-  * - A class to find every csv files in a folder [[io.datalayer.controlchart.ReadCSVFolderCSV]]
-  * - Basic stat function as #computeMean(),
-  *   [[io.datalayer.controlchart.Stat.computeStdDev()]], [[io.datalayer.controlchart.Stat.computeVariance()]]
-  *   [[io.datalayer.controlchart.Stat.computeIntegral()]].
-  */
+
 
 import java.io.File
-import org.sameersingh.scalaplot._
+import org.sameersingh.scalaplot.MemXYSeries
+import org.sameersingh.scalaplot.XYPlotStyle
+import org.sameersingh.scalaplot.Implicits._
 
 object Stat {
   def computeMean(input: Array[Float]): Float = {
@@ -120,13 +114,10 @@ class ControlChart(data: Array[Float]) {
     outliers.foreach(x => print("Data value : \t"  + data(x) + " \t-- " + x + "\n"))
   }
 
-  def plotASCII(input : Array[Double]) = {
-    val y = input.toSeq
-    val xy: XYSeries = (1 to input.length).toList.map(_.toDouble).toSeq -> y
+  val series = new MemXYSeries((1 to data.length).toList.map(_.toDouble).toSeq, data.map(_.toDouble).toSeq)
+  series.plotStyle = XYPlotStyle.Points
 
-    output(ASCII, plot(xy))
+  def plotASCII() = {
+    output(ASCII, plot(series))
   }
-
-  val shellPlot = plotASCII(data.map(_.toDouble))
 }
-
