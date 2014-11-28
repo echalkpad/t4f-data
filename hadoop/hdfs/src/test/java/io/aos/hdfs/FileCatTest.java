@@ -16,49 +16,42 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.aos.string.search;
+package io.aos.hdfs;
 
-/**
- * A {@link CharSequence} that decorates another to count the number of times {@link #charAt(int)} is called.
- *
- */
-public class CallCountingCharSequence implements CharSequence {
-    /** The underlying sequence. */
-    private final CharSequence _charSequence;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.net.URI;
 
-    /** The number of times {@link #charAt(int)} is called. */
-    private int _callCount;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IOUtils;
+import org.junit.Ignore;
+import org.junit.Test;
 
-    /**
-     * Constructor.
-     *
-     * @param charSequence The underlying sequence.
-     */
-    public CallCountingCharSequence(CharSequence charSequence) {
-        assert charSequence != null : "charSequence can't be null";
-        _charSequence = charSequence;
-    }
+public class FileCatTest {
 
-    /**
-     * Obtains the number of times {@link #charAt(int)} has been called.
-     *
-     * @return The call count.
-     */
-    public int getCallCount() {
-        return _callCount;
-    }
+    @Test
+    @Ignore
+    public static void test() throws Exception {
 
-    public int length() {
-        return _charSequence.length();
-    }
+        String uri = "your hadoop file uri...";
 
-    public char charAt(int index) {
-        ++_callCount;
-        return _charSequence.charAt(index);
-    }
+        Configuration conf = new Configuration();
+        FileSystem fs = FileSystem.get(URI.create(uri), conf);
+        InputStream in = null;
 
-    public CharSequence subSequence(int start, int end) {
-        return _charSequence.subSequence(start, end);
+        in = fs.open(new Path(uri));
+        IOUtils.copyBytes(in, System.out, 4096, false);
+
+        // for very small files, try to copy in a String
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        IOUtils.copyBytes(in, ps, 4096, false);
+        String content = baos.toString("UTF-8");
+        System.out.println(content);
+
     }
 
 }

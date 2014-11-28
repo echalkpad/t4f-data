@@ -16,49 +16,23 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.aos.string.search;
+package io.aos.hdfs;
+// cc TextIterator Iterating over the characters in a Text object
+import java.nio.ByteBuffer;
 
-/**
- * A {@link CharSequence} that decorates another to count the number of times {@link #charAt(int)} is called.
- *
- */
-public class CallCountingCharSequence implements CharSequence {
-    /** The underlying sequence. */
-    private final CharSequence _charSequence;
+import org.apache.hadoop.io.Text;
 
-    /** The number of times {@link #charAt(int)} is called. */
-    private int _callCount;
-
-    /**
-     * Constructor.
-     *
-     * @param charSequence The underlying sequence.
-     */
-    public CallCountingCharSequence(CharSequence charSequence) {
-        assert charSequence != null : "charSequence can't be null";
-        _charSequence = charSequence;
+// vv TextIterator
+public class TextIterator {
+  
+  public static void main(String... args) {    
+    Text t = new Text("\u0041\u00DF\u6771\uD801\uDC00");
+    
+    ByteBuffer buf = ByteBuffer.wrap(t.getBytes(), 0, t.getLength());
+    int cp;
+    while (buf.hasRemaining() && (cp = Text.bytesToCodePoint(buf)) != -1) {
+      System.out.println(Integer.toHexString(cp));
     }
-
-    /**
-     * Obtains the number of times {@link #charAt(int)} has been called.
-     *
-     * @return The call count.
-     */
-    public int getCallCount() {
-        return _callCount;
-    }
-
-    public int length() {
-        return _charSequence.length();
-    }
-
-    public char charAt(int index) {
-        ++_callCount;
-        return _charSequence.charAt(index);
-    }
-
-    public CharSequence subSequence(int start, int end) {
-        return _charSequence.subSequence(start, end);
-    }
-
+  }  
 }
+// ^^ TextIterator

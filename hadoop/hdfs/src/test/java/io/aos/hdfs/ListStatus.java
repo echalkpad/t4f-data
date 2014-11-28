@@ -16,49 +16,34 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.aos.string.search;
+package io.aos.hdfs;
+// cc ListStatus Shows the file statuses for a collection of paths in a Hadoop filesystem 
+import java.net.URI;
 
-/**
- * A {@link CharSequence} that decorates another to count the number of times {@link #charAt(int)} is called.
- *
- */
-public class CallCountingCharSequence implements CharSequence {
-    /** The underlying sequence. */
-    private final CharSequence _charSequence;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.FileUtil;
+import org.apache.hadoop.fs.Path;
 
-    /** The number of times {@link #charAt(int)} is called. */
-    private int _callCount;
+// vv ListStatus
+public class ListStatus {
 
-    /**
-     * Constructor.
-     *
-     * @param charSequence The underlying sequence.
-     */
-    public CallCountingCharSequence(CharSequence charSequence) {
-        assert charSequence != null : "charSequence can't be null";
-        _charSequence = charSequence;
+  public static void main(String... args) throws Exception {
+    String uri = args[0];
+    Configuration conf = new Configuration();
+    FileSystem fs = FileSystem.get(URI.create(uri), conf);
+    
+    Path[] paths = new Path[args.length];
+    for (int i = 0; i < paths.length; i++) {
+      paths[i] = new Path(args[i]);
     }
-
-    /**
-     * Obtains the number of times {@link #charAt(int)} has been called.
-     *
-     * @return The call count.
-     */
-    public int getCallCount() {
-        return _callCount;
+    
+    FileStatus[] status = fs.listStatus(paths);
+    Path[] listedPaths = FileUtil.stat2Paths(status);
+    for (Path p : listedPaths) {
+      System.out.println(p);
     }
-
-    public int length() {
-        return _charSequence.length();
-    }
-
-    public char charAt(int index) {
-        ++_callCount;
-        return _charSequence.charAt(index);
-    }
-
-    public CharSequence subSequence(int start, int end) {
-        return _charSequence.subSequence(start, end);
-    }
-
+  }
 }
+// ^^ ListStatus

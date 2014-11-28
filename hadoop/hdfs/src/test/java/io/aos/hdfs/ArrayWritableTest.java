@@ -16,49 +16,33 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.aos.string.search;
+package io.aos.hdfs;
+// == ArrayWritableTest
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
-/**
- * A {@link CharSequence} that decorates another to count the number of times {@link #charAt(int)} is called.
- *
- */
-public class CallCountingCharSequence implements CharSequence {
-    /** The underlying sequence. */
-    private final CharSequence _charSequence;
+import java.io.IOException;
+import org.apache.hadoop.io.*;
+import org.junit.Test;
 
-    /** The number of times {@link #charAt(int)} is called. */
-    private int _callCount;
-
-    /**
-     * Constructor.
-     *
-     * @param charSequence The underlying sequence.
-     */
-    public CallCountingCharSequence(CharSequence charSequence) {
-        assert charSequence != null : "charSequence can't be null";
-        _charSequence = charSequence;
-    }
-
-    /**
-     * Obtains the number of times {@link #charAt(int)} has been called.
-     *
-     * @return The call count.
-     */
-    public int getCallCount() {
-        return _callCount;
-    }
-
-    public int length() {
-        return _charSequence.length();
-    }
-
-    public char charAt(int index) {
-        ++_callCount;
-        return _charSequence.charAt(index);
-    }
-
-    public CharSequence subSequence(int start, int end) {
-        return _charSequence.subSequence(start, end);
-    }
-
+public class ArrayWritableTest extends WritableTestBase {
+  
+  @Test
+  public void test() throws IOException {
+    // vv ArrayWritableTest
+    ArrayWritable writable = new ArrayWritable(Text.class);
+    // ^^ ArrayWritableTest
+    writable.set(new Text[] { new Text("cat"), new Text("dog") });
+    
+    TextArrayWritable dest = new TextArrayWritable();
+    WritableUtils.cloneInto(dest, writable);
+    assertThat(dest.get().length, is(2));
+    // TODO: fix cast, also use single assert
+    assertThat((Text) dest.get()[0], is(new Text("cat")));
+    assertThat((Text) dest.get()[1], is(new Text("dog")));
+    
+    Text[] copy = (Text[]) dest.toArray();
+    assertThat(copy[0], is(new Text("cat")));
+    assertThat(copy[1], is(new Text("dog")));
+  }
 }

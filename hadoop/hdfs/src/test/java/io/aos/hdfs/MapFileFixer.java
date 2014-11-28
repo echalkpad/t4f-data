@@ -16,49 +16,37 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.aos.string.search;
+package io.aos.hdfs;
+// cc MapFileFixer Re-creates the index for a MapFile
+import java.net.URI;
 
-/**
- * A {@link CharSequence} that decorates another to count the number of times {@link #charAt(int)} is called.
- *
- */
-public class CallCountingCharSequence implements CharSequence {
-    /** The underlying sequence. */
-    private final CharSequence _charSequence;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.MapFile;
+import org.apache.hadoop.io.SequenceFile;
 
-    /** The number of times {@link #charAt(int)} is called. */
-    private int _callCount;
+// vv MapFileFixer
+public class MapFileFixer {
 
-    /**
-     * Constructor.
-     *
-     * @param charSequence The underlying sequence.
-     */
-    public CallCountingCharSequence(CharSequence charSequence) {
-        assert charSequence != null : "charSequence can't be null";
-        _charSequence = charSequence;
-    }
-
-    /**
-     * Obtains the number of times {@link #charAt(int)} has been called.
-     *
-     * @return The call count.
-     */
-    public int getCallCount() {
-        return _callCount;
-    }
-
-    public int length() {
-        return _charSequence.length();
-    }
-
-    public char charAt(int index) {
-        ++_callCount;
-        return _charSequence.charAt(index);
-    }
-
-    public CharSequence subSequence(int start, int end) {
-        return _charSequence.subSequence(start, end);
-    }
-
+  public static void main(String... args) throws Exception {
+    String mapUri = args[0];
+    
+    Configuration conf = new Configuration();
+    
+    FileSystem fs = FileSystem.get(URI.create(mapUri), conf);
+    Path map = new Path(mapUri);
+    Path mapData = new Path(map, MapFile.DATA_FILE_NAME);
+    
+    // Get key and value types from data sequence file
+    SequenceFile.Reader reader = new SequenceFile.Reader(fs, mapData, conf);
+    Class keyClass = reader.getKeyClass();
+    Class valueClass = reader.getValueClass();
+    reader.close();
+    
+    // Create the map file index file
+    long entries = MapFile.fix(fs, map, keyClass, valueClass, false, conf);
+    System.out.printf("Created MapFile %s with %d entries\n", map, entries);
+  }
 }
+// ^^ MapFileFixer

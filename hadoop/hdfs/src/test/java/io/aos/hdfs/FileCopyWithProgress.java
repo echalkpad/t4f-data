@@ -16,49 +16,37 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.aos.string.search;
+package io.aos.hdfs;
+// cc FileCopyWithProgress Copies a local file to a Hadoop filesystem, and shows progress
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
 
-/**
- * A {@link CharSequence} that decorates another to count the number of times {@link #charAt(int)} is called.
- *
- */
-public class CallCountingCharSequence implements CharSequence {
-    /** The underlying sequence. */
-    private final CharSequence _charSequence;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IOUtils;
+import org.apache.hadoop.util.Progressable;
 
-    /** The number of times {@link #charAt(int)} is called. */
-    private int _callCount;
-
-    /**
-     * Constructor.
-     *
-     * @param charSequence The underlying sequence.
-     */
-    public CallCountingCharSequence(CharSequence charSequence) {
-        assert charSequence != null : "charSequence can't be null";
-        _charSequence = charSequence;
-    }
-
-    /**
-     * Obtains the number of times {@link #charAt(int)} has been called.
-     *
-     * @return The call count.
-     */
-    public int getCallCount() {
-        return _callCount;
-    }
-
-    public int length() {
-        return _charSequence.length();
-    }
-
-    public char charAt(int index) {
-        ++_callCount;
-        return _charSequence.charAt(index);
-    }
-
-    public CharSequence subSequence(int start, int end) {
-        return _charSequence.subSequence(start, end);
-    }
-
+// vv FileCopyWithProgress
+public class FileCopyWithProgress {
+  public static void main(String... args) throws Exception {
+    String localSrc = args[0];
+    String dst = args[1];
+    
+    InputStream in = new BufferedInputStream(new FileInputStream(localSrc));
+    
+    Configuration conf = new Configuration();
+    FileSystem fs = FileSystem.get(URI.create(dst), conf);
+    OutputStream out = fs.create(new Path(dst), new Progressable() {
+      public void progress() {
+        System.out.print(".");
+      }
+    });
+    
+    IOUtils.copyBytes(in, out, 4096, true);
+  }
 }
+// ^^ FileCopyWithProgress

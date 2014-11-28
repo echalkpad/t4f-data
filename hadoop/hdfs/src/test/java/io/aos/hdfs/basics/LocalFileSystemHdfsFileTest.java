@@ -16,49 +16,43 @@
  * specific language governing permissions and limitations      *
  * under the License.                                           *
  ****************************************************************/
-package io.aos.string.search;
+package io.aos.hdfs.basics;
 
-/**
- * A {@link CharSequence} that decorates another to count the number of times {@link #charAt(int)} is called.
- *
- */
-public class CallCountingCharSequence implements CharSequence {
-    /** The underlying sequence. */
-    private final CharSequence _charSequence;
+import java.io.IOException;
 
-    /** The number of times {@link #charAt(int)} is called. */
-    private int _callCount;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    /**
-     * Constructor.
-     *
-     * @param charSequence The underlying sequence.
-     */
-    public CallCountingCharSequence(CharSequence charSequence) {
-        assert charSequence != null : "charSequence can't be null";
-        _charSequence = charSequence;
+public class LocalFileSystemHdfsFileTest extends AbstractHdfsFileTest {
+    private static final Logger LOG = LoggerFactory.getLogger(LocalFileSystemHdfsFileTest.class);
+    private static FileSystem hdfs;
+
+    @BeforeClass
+    public static void beforeClass() throws IOException {
+        AbstractHdfsFileTest.beforeClass();
+        hdfs = FileSystem.get(getConfiguration());
+        hdfs.makeQualified(new Path(FILE_NAME));
+        hdfs.makeQualified(HDFS_FILE_1);
+        hdfs.makeQualified(HDFS_FILE_2);
+        hdfs.makeQualified(HDFS_FILE_3);
+    }
+    
+    @AfterClass
+    public static void tearDown() throws IOException {
+        hdfs.close();
     }
 
-    /**
-     * Obtains the number of times {@link #charAt(int)} has been called.
-     *
-     * @return The call count.
-     */
-    public int getCallCount() {
-        return _callCount;
+    protected FileSystem getFileSystem() {
+        return hdfs;
     }
 
-    public int length() {
-        return _charSequence.length();
-    }
-
-    public char charAt(int index) {
-        ++_callCount;
-        return _charSequence.charAt(index);
-    }
-
-    public CharSequence subSequence(int start, int end) {
-        return _charSequence.subSequence(start, end);
+    @Override
+    protected Logger getLogger() {
+        return LOG;
     }
 
 }
